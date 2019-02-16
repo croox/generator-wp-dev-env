@@ -1,38 +1,259 @@
 'use strict';
 const Generator = require('yeoman-generator');
 const chalk = require('chalk');
-const yosay = require('yosay');
+const childProcess = require('child_process');
+const gradient = require('gradient-string');
+const figlet = require('figlet');
+
+const {
+	findIndex,
+	get,
+	startCase,
+	snakeCase,
+	upperFirst,
+} = require('lodash');
+
+const ui_chooseType = require('./ui_chooseType');
+const ui_setup = require('./ui_setup');
+const generate = require('./generate');
+const ui_block = require('../block/ui_block');
+const getDestPkg = require('../../utils/getDestPkg');
+const pkg = require('../../package.json');
+
 
 module.exports = class extends Generator {
-  prompting() {
-    // Have Yeoman greet the user.
-    this.log(
-      yosay(`Welcome to the outstanding ${chalk.red('generator-wp-dev-env')} generator!`)
-    );
 
-    const prompts = [
-      {
-        type: 'confirm',
-        name: 'someAnswer',
-        message: 'Would you like to enable this option?',
-        default: true
-      }
-    ];
+	initializing() {
+		const destPkg = getDestPkg( this );
 
-    return this.prompt(prompts).then(props => {
-      // To access props later use this.props.someAnswer;
-      this.props = props;
-    });
-  }
+		this.props = {
+			uiElements: [
+				{
+					name: 'ui_chooseType',
+					func: ui_chooseType,
+					when: answers => true,
+				},
+				{
+					name: 'ui_setup',
+					func: ui_setup,
+					when: answers => destPkg === null,	// if initializing
+				},
+				{
+					name: 'ui_block',
+					func: ui_block,
+					when: answers => 'block' === answers.type,
+				},
 
-  writing() {
-    this.fs.copy(
-      this.templatePath('dummyfile.txt'),
-      this.destinationPath('dummyfile.txt')
-    );
-  }
+			],
+			lastUiEl: 0,
+			answers: {},
+			cancel: null,
+		};
 
-  install() {
-    this.installDependencies();
-  }
+		this.tplContext = {};
+
+	}
+
+	_updateProps( result ) {
+		if ( result ) {
+			this.props = {
+				...this.props,
+				answers: {
+					...this.props.answers,
+					...( result.answers && result.answers ),
+				},
+				lastUiEl: findIndex( this.props.uiElements, element => element.name === result.uiElementName ),
+			};
+		}
+	}
+
+	_validate(){
+		this.props.lastUiEl = 0;
+		const { answers } = this.props;
+
+		if ( this.props.cancel === true )
+			return false;
+
+		let isValid = true;
+
+		// nonsense test
+		// isValid = answers.type = 'theme' ? false : isValid;
+
+		return isValid ? isValid : this.prompting();
+	}
+
+	prompting() {
+		const self = this;
+
+		// print header
+		console.log( '' );
+		console.log( gradient.rainbow( figlet.textSync( 'wp-dev-env', {
+			font: 'ANSI Shadow',
+			horizontalLayout: 'fitted',
+			verticalLayout: 'fitted'
+		} ) ) );
+		console.log( '' );
+
+		self._updateProps();
+
+		const whatNext = ( result ) => {
+			if ( result.answers ) {
+				self._updateProps( result )
+				// hasNext ? go next possible : return all answers
+				const getNext = counter => {
+					counter = counter ? counter : 1;
+					const next = get( self.props.uiElements, [self.props.lastUiEl + counter], false );
+					return next ? next.when && ! next.when( self.props.answers ) ? getNext( counter + 1 ) : next : false;
+				}
+				const next = getNext();
+				return next
+					? new Promise( resolve => resolve( next.func( self ).then( whatNext ) ) )
+					: self.props.answers;
+			} else {
+				// hasLast ? go back : return false
+				return findIndex( self.props.uiElements, element => element.name === result.uiElementName ) > 0
+					? new Promise( resolve => resolve( self.props.uiElements[self.props.lastUiEl]['func'](self).then( whatNext ) ) )
+					: false;
+			}
+		};
+
+		return new Promise( resolve => resolve( self.props.uiElements[self.props.lastUiEl]['func'](self).then( whatNext ) ) )
+			.then( answers => false === answers ? self.props.cancel = true : null )
+			.then( self._setTplContext.bind( self ) )
+			.then( self._validate.bind( self ) );
+
+	}
+
+	_setTplContext() {
+
+		const { answers } = this.props;
+
+		this.tplContext = {
+			...( undefined !== answers.setup && answers.setup ),
+			...( undefined !== answers.block && { block: answers.block } ),
+			generator: {
+				version: pkg.version,
+			},
+			startCase: startCase,
+			upperFirst: upperFirst,
+			snakeCase: snakeCase,
+		};
+
+		// type 				:: type of generator
+		// projectType 			:: plugin || theme
+		// projectTypeExplicit	:: plugin || theme || childtheme
+		this.tplContext.type = answers.type;
+		if ( answers.setup ) {
+			// is generating new roject
+			this.tplContext.projectType = 'childtheme' === answers.type ? 'theme' : answers.type ;
+			this.tplContext.projectTypeExplicit = answers.type;
+		} else {
+			// project exists, generating sub
+			const destPkg = getDestPkg( this );
+			if ( null === destPkg ) return this.props.cancel = true;
+			[
+				'projectType',
+				'funcPrefix',
+				'name',
+				'textDomain',
+			].map( prop => this.tplContext[prop] = destPkg[prop] );
+			this.tplContext.projectTypeExplicit = destPkg.template ? 'childtheme' : destPkg.projectType;
+
+		}
+
+		this.tplContext.project_class = startCase( this.tplContext.funcPrefix ) + '_' + startCase( this.tplContext.name ).replace( / /g, '_' );
+
+		if ( this.tplContext.projectTypeExplicit !== 'childtheme' && this.tplContext.template ) {
+			// ??? ... we should not reach here
+			this.log( chalk.red( 'debug error, we shouldnt have template if no childtheme. something went wrong' ), this.tplContext );		// ??? debug
+		}
+	};
+
+	writing() {
+		if ( true === this.props.cancel )
+			return;
+
+		const options = {
+			cancel: this.props.cancel,
+			calledBy: 'app',
+			tplContext: this.tplContext,
+			// answers: this.props.answers,
+		};
+
+		// console.log( '' );		// ??? debug
+		// console.log( '' );		// ??? debug
+		// console.log( 'debug options.tplContext' );		// ??? debug
+		// console.log( options.tplContext );		// ??? debug
+		// console.log( '' );		// ??? debug
+		// console.log( '' );		// ??? debug
+
+		this._callSubgenerator( options );
+
+		if ( ['theme','childtheme','plugin'].includes( this.tplContext.type ) ) {
+			generate( this, options );
+		}
+	}
+
+	_callSubgenerator( options ) {
+		// generate with subgenerator
+		switch ( options.tplContext.type ) {
+			case 'block':
+				this.composeWith( require.resolve('../block'), options );
+				break;
+		}
+
+	}
+
+	install() {
+		if ( true === this.props.cancel )
+			return;
+
+		if ( ! ['theme','childtheme','plugin'].includes( this.props.answers.type ) )
+			return;
+
+		this.installDependencies({
+			bower: false,
+			npm: true,
+		}).then( () => {
+			if ( this.options.git !== 'false' ) {
+				[
+					'grunt build',
+					'git init',
+					'git add .',
+					'git commit -m "Hurray, just generated a new plugin!"',
+
+				].map( cmd => {
+					this.log('');
+					this.log( chalk.green( 'running ' ) + chalk.yellow( cmd ) );
+					this.log('');
+					childProcess.execSync( cmd, { stdio:'inherit' } );
+				} );
+			}
+
+
+			[
+				'',
+				'',
+				'',
+				chalk.green.bold( '✔ Everything is ready!' ),
+				'',
+				'',
+				'',
+				chalk.cyan( 'What to do next?' ),
+				'',
+				'	run ' + chalk.yellow( 'yo wp-dev-env' ),
+				'		' + chalk.italic( 'to choose a subgenerator.' ),
+				'',
+				'	run ' + chalk.yellow( 'grunt' ),
+				'		' + chalk.italic( 'to see available grunt tasks.' ),
+				'',
+				'	edit and rename ' + chalk.yellow( './wp_installs-sample.json' ),
+				'		' + chalk.italic( 'to let grunt knonw about some sync desitinations.' ),
+				'',
+			].map( str => this.log( str ) );
+
+
+		});
+
+	}
 };

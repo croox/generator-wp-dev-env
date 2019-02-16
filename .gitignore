@@ -1,2 +1,12 @@
 node_modules
 coverage
+package-lock.json
+
+
+# ignore certain file patterns
+*.marks
+*/**/*.marks
+*~
+*/**/*~
+#*#
+*/**/#*#

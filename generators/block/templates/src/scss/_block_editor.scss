@@ -1,0 +1,23 @@
+/*--------------------------------------------------------------
+# Editor style <%= block.displayName %>
+# Block Registered by: <%= block.class_name %>::register_block
+# Enqueued by: <%= block.class_name %>::enqueue_assets_editor
+#
+# Enqueued in editor only
+--------------------------------------------------------------*/
+
+.wp-block-<%= funcPrefix %>-<%= block.name %> {
+
+    &.align-left {
+        text-align: left;
+    }
+
+    &.align-center {
+        text-align: center;
+    }
+
+    &.align-right {
+        text-align: right;
+    }
+
+}

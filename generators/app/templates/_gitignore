@@ -1,0 +1,43 @@
+
+# ignore all
+*/**/*
+/*
+
+# include some root files
+!.gitignore
+!Gruntfile.js
+!package.json
+!package-lock.json
+!.eslintrc.json
+!bower.json
+!.bowerrc
+!composer.json
+!composer.lock
+!CHANGELOG.md
+!.gwde_nextRelease.json
+!README.md
+<%= 'theme' === projectType ? '!style.css' : '!' + name + '.php' %>
+
+# include dir grunt
+!/grunt
+!grunt/**/*
+
+# include dir src
+!/src
+!src/**/*
+
+# include dir dist/trunk
+!/dist
+/dist/*
+!dist/trunk
+!dist/trunk/**/*
+!dist/assets
+!dist/assets/**/*
+
+# ignore certain file patterns
+*.marks
+*/**/*.marks
+*~
+*/**/*~
+#*#
+*/**/#*#
