@@ -1,10 +1,6 @@
 const chalk = require('chalk');
-const gradient = require('gradient-string');
 const figlet = require('figlet');
-const {
-	prompt,
-	placeholder,
-} = require('enquirer');
+const { prompt } = require('enquirer');
 const {
 	startCase,
 	get,
@@ -17,7 +13,7 @@ const validateForm = require( '../../utils/validateForm' );
 
 const ui_setup = function( self ){
 
-	console.log( chalk.green( figlet.textSync( 'Setup', {
+	console.log( chalk.green( figlet.textSync( get( self.props.answers, ['type'], 'Setup' ), {
 		font: 'Ogre',
 		horizontalLayout: 'fitted',
 		verticalLayout: 'fitted'
@@ -64,6 +60,7 @@ const ui_setup = function( self ){
 		}
 	};
 
+	const projectType = 'plugin' === get( self.props.answers, ['type'], '' ) ? 'plugin' : 'theme';
 	const projectTypeExplicit = get( self.props.answers, ['type'], '' );
 	const projectTypeExplicitSC = startCase( projectTypeExplicit );
 
@@ -150,7 +147,7 @@ const ui_setup = function( self ){
 
 				{
 					name: 'uri',
-					message: projectTypeExplicitSC + ' URL',
+					message: startCase( projectType ) + ' URL',
 					onChoice( state, choice, i ) {
 						const name = this.values.name || getInitial( 'name' );
 						const author = this.values.author || getInitial( 'author' );

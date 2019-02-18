@@ -1,3 +1,4 @@
+<?php
 /**
  * Block Name: <%= block.displayName %>
  *
@@ -8,14 +9,14 @@
 $avatar = get_field('avatar');
 
 // create id attribute for specific styling
-$id = '<%= block.displayName %>-' . $block['id'];
+$id = '<%= block.name %>-' . $block['id'];
 
 // create align class ("alignwide") from block setting ("wide")
 $align_class = $block['align'] ? 'align' . $block['align'] : '';
 
 ?>
-<blockquote id="<?php echo $id; ?>" class="<%= block.displayName %> <?php echo $align_class; ?>">
-    <p><?php the_field('<%= block.displayName %>'); ?></p>
+<blockquote id="<?php echo $id; ?>" class="<%= block.name %> <?php echo $align_class; ?>">
+    <p><?php the_field('<%= block.name %>'); ?></p>
     <cite>
     	<img src="<?php echo $avatar['url']; ?>" alt="<?php echo $avatar['alt']; ?>" />
     	<span><?php the_field('author'); ?></span>

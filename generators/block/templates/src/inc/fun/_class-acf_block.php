@@ -7,6 +7,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 
 // https://www.advancedcustomfields.com/blog/acf-5-8-introducing-acf-blocks-for-gutenberg/
+// https://www.advancedcustomfields.com/resources/acf_register_block/
 
 class <%= block.class_name %> {
 

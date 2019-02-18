@@ -28,7 +28,7 @@ const generate = self => {
 				dest: 'src/inc/fun/class-' + tplContext.block.handle + '.php',
 			},
 			{
-				src: 'src/template_parts/block/content-acf-block.php',
+				src: 'src/template_parts/block/_content-acf-block.php',
 				dest: 'src/template_parts/block/content-' + tplContext.block.name + '.php',
 			},
 		] : [

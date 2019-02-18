@@ -1,6 +1,5 @@
 'use strict';
 const Generator = require('yeoman-generator');
-const chalk = require('chalk');
 const {
 	startCase,
 	snakeCase,
@@ -51,9 +50,11 @@ module.exports = class extends Generator {
 		if ( this._shouldCancel() )
 			return;
 
-		this.npmInstall( [
-			'classnames',
-		], { 'save-dev': true } );
+		if ( ! this.options.tplContext.block.isAcfBlock ) {
+			this.npmInstall( [
+				'classnames',
+			], { 'save-dev': true } );
+		}
 
 	}
 };
