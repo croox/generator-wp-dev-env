@@ -92,12 +92,12 @@ const generate = ( self, options ) => {
 		{ src: '_Gruntfile.js',			dest: 'Gruntfile.js' },
 		{ src: '_README.md',			dest: 'README.md' },
 		// src
-		{ src: 'src/root_files/_readme.txt',	dest: 'src/root_files/readme.txt' },
+		{ src: 'src/_readme.txt',	dest: 'src/readme.txt' },
 		...( 'plugin' === tplContext.projectType ? [
-			{ src: 'src/root_files/_plugin_main_file.php',	dest: 'src/root_files/' + tplContext.name + '.php' },
+			{ src: 'src/_plugin_main_file.php',	dest: 'src/' + tplContext.name + '.php' },
  		] : [] ),
 		...( 'theme' === tplContext.projectType ? [
-			{ src: 'src/root_files/_functions.php',	dest: 'src/root_files/functions.php' },
+			{ src: 'src/_functions.php',	dest: 'src/functions.php' },
 			// ... ???
 		] : [] ),
 	].map( tpl => self.fs.copyTpl(

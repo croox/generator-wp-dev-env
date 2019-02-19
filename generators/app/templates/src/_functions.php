@@ -16,8 +16,8 @@ class <%= project_class %> {
 	const VERSION = 'wde_replace_version';
 	const DB_VERSION = 0;			// int	increase the number if the database needs an update
 	const THEME_SLUG = 'wde_replace_name';
-	const THEME_NAME = 'wde_replace_displayName';
-	<% if ( template ) { %>const THEME_PARENT = '<%= template %>';<% } %>
+	const THEME_NAME = 'wde_replace_displayName';<% if ( typeof template !== 'undefined' ) { %>
+	const THEME_PARENT = '<%= template %>';<% }%>
 	const THEME_PREFIX = 'wde_replace_funcPrefix';
 	protected $deactivate_notice = '';
 	protected $deps = array(

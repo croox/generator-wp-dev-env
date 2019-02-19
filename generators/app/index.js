@@ -11,6 +11,7 @@ const {
 	startCase,
 	snakeCase,
 	upperFirst,
+	isUndefined,
 } = require('lodash');
 
 const ui_chooseType = require('./ui_chooseType');
@@ -137,6 +138,7 @@ module.exports = class extends Generator {
 			startCase: startCase,
 			upperFirst: upperFirst,
 			snakeCase: snakeCase,
+			isUndefined: isUndefined,
 		};
 
 		// type 				:: type of generator
@@ -251,7 +253,6 @@ module.exports = class extends Generator {
 				'		' + chalk.italic( 'to let grunt know about some sync desitinations.' ),
 				'',
 			].map( str => this.log( str ) );
-
 
 		});
 

@@ -1,6 +1,7 @@
 const chalk = require('chalk');
 const figlet = require('figlet');
 const { prompt } = require('enquirer');
+const semver = require('semver')
 const {
 	startCase,
 	get,
@@ -53,9 +54,14 @@ const ui_setup = function( self ){
 			case 'textDomain':
 				return getInitial( 'funcPrefix', prompt );
 
+			case 'wpRequiresAtLeast':
+				return '4.7.0';
 
-			case 'version':
-				return '0.0.0';
+			case 'wpVersionTested':
+				return '5.0.3';
+
+			case 'phpRequiresAtLeast':
+				return '5.6.0';
 
 		}
 	};
@@ -71,7 +77,8 @@ const ui_setup = function( self ){
 			type: 'form',
 			initial: get( self.props.answers, ['setup'], null ),
 			validate( value, state, field ) {
-				return validateForm( value, state, {
+
+				const formValidation = validateForm( value, state, {
 					shouldSlug: [
 						'name',
 						...( 'childtheme' === projectTypeExplicit ? ['template'] : [] ),
@@ -93,6 +100,13 @@ const ui_setup = function( self ){
 						'phpRequiresAtLeast',
 					],
 				} );
+				if ( true !== formValidation )
+					return formValidation;
+
+				if ( semver.compare( value['wpRequiresAtLeast'], value['wpVersionTested'] ) > 0 )
+					return 'Required wp version can\'t be higher then tested wp verison';
+
+				return true;
 			},
 			choices: [
 
@@ -196,21 +210,25 @@ const ui_setup = function( self ){
 				{
 					name: 'wpRequiresAtLeast',
 					message: 'WP Requires At Least',
-					initial: getInitial( 'version' ),
+					initial: getInitial( 'wpRequiresAtLeast' ),
 				},
 
 				{
 					name: 'wpVersionTested',
 					message: 'WP Version Tested',
 					onChoice( state, choice, i ) {
-						choice.initial = this.values.wpRequiresAtLeast || getInitial( 'version' );
+						choice.initial = this.values.wpRequiresAtLeast && semver.valid( this.values.wpRequiresAtLeast )
+							? 1 === semver.compare( this.values.wpRequiresAtLeast, getInitial( 'wpVersionTested' ) )
+								? this.values.wpRequiresAtLeast
+								: getInitial( 'wpVersionTested' )
+							: getInitial( 'wpVersionTested' );
 					}
 				},
 
 				{
 					name: 'phpRequiresAtLeast',
 					message: 'PHP Requires At Least',
-					initial: '7.2.0',
+					initial:getInitial( 'phpRequiresAtLeast' )
 				},
 			],
 
