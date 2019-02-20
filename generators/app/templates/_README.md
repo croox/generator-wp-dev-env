@@ -7,7 +7,7 @@ WordPress <%= startCase( projectType ) %> <%= displayName %>
 * Contribution welcome :)
 * For **support**, to **request new <%= projectType %>-features** or inform me about **issues and bugs** [create a new issue on Github](<%= repositoryUri %>/issues/new) ~~or [add a new topic to WP's support forum](https://wordpress.org/support/<%= projectType %>/<%= name %>)~~
 * ~~Love to get your **feedback**, [Create a new review and rate this <%= startCase( projectType ) %>](https://wordpress.org/support/<%= projectType %>/<%= name %>/reviews/#new-post),~~ write a tutorial and tell your friends.
-* [Tell me](<%= authorUri %>) your wishes, maybe get me a bowl of rice and some masala: [Donate]<%= donateLink %>)
+* [Tell me](<%= authorUri %>) your wishes, maybe get me a bowl of rice and some masala: [Donate](<%= donateLink %>)
 
 ## How to install:
 
