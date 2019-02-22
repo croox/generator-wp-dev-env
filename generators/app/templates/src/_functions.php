@@ -117,11 +117,11 @@ class <%= project_class %> {
 
 		// include template_functions and _tags
 		include_once( self::theme_dir_path() . 'inc/<%= funcPrefix %>_include_fun.php' );
-		<%= funcPrefix %>_include_fun();
+		if ( function_exists( '<%= funcPrefix %>_include_fun' ) ) <%= funcPrefix %>_include_fun();
 		include_once( self::theme_dir_path() . 'inc/<%= funcPrefix %>_include_template_functions.php' );
-		<%= funcPrefix %>_include_template_functions();
+		if ( function_exists( '<%= funcPrefix %>_include_template_functions' ) ) <%= funcPrefix %>_include_template_functions();
 		include_once( self::theme_dir_path() . 'inc/<%= funcPrefix %>_include_template_tags.php' );
-		<%= funcPrefix %>_include_template_tags();
+		if ( function_exists( '<%= funcPrefix %>_include_template_tags' ) ) <%= funcPrefix %>_include_template_tags();
 
 		add_action( 'after_setup_theme', array( $this, 'load_textdomain' ) );
 		$this->register_post_types_and_taxs();
@@ -281,7 +281,7 @@ class <%= project_class %> {
 	// include files to add user roles and capabilities
 	protected function add_roles_and_capabilities() {
 		include_once( self::theme_dir_path() . 'inc/<%= funcPrefix %>_include_roles_capabilities.php' );
-		<%= funcPrefix %>_include_roles_capabilities();
+		if ( function_exists( '<%= funcPrefix %>_include_roles_capabilities' ) ) <%= funcPrefix %>_include_roles_capabilities();
 	}
 
 	// check DB_VERSION and require the update class if necessary
@@ -317,7 +317,7 @@ class <%= project_class %> {
 		// // we don't need to enqueue it so. Just WP wants it to be existing
 		// wp_enqueue_style( '<%= funcPrefix %>', self::theme_dir_url() . '/style.css' );
 		// array_push($this->style_deps, '<%= funcPrefix %>' );
-		if ( defined( 'THEME_PARENT' ) && 'enfold' === THEME_PARENT && get_stylesheet_directory_uri() !== get_template_directory_uri() ) {
+		if ( defined( 'self::THEME_PARENT' ) && 'enfold' === self::THEME_PARENT && get_stylesheet_directory_uri() !== get_template_directory_uri() ) {
 			// if parent is enfold we need to deregister the child style.css again
 			wp_deregister_style( 'avia-style' );
 		}
@@ -327,9 +327,9 @@ class <%= project_class %> {
 	}
 
 	public function enqueue_scripts(){
-		if ( get_stylesheet_directory_uri() !== get_template_directory_uri() && is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
-			wp_enqueue_script( 'comment-reply' );
-		}
+		<%= typeof template !== 'undefined' ? '// ' : '' %>if ( get_stylesheet_directory_uri() !== get_template_directory_uri() && is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
+		<%= typeof template !== 'undefined' ? '// ' : '' %>	wp_enqueue_script( 'comment-reply' );
+		<%= typeof template !== 'undefined' ? '// ' : '' %>}
 	}
 
 	public function enqueue_scripts_admin(){
