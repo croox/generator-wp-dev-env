@@ -31,7 +31,6 @@
 		"jest": "^23.5.0",
 		"lint-staged": "^8.1.0",
 		"prettier": "^1.15.2",
-		"slugg": "^1.2.1",
 		"yeoman-assert": "^3.1.0",
 		"yeoman-test": "^1.7.0"
 	},
@@ -39,6 +38,7 @@
 		"npm": ">= 4.0.0"
 	},
 	"dependencies": {
+		"slugg": "^1.2.1",
 		"chalk": "^2.1.0",
 		"childprocess": "^2.0.2",
 		"enquirer": "^2.3.0",
