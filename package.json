@@ -10,7 +10,8 @@
 		"url": "https://github.com/jhotadhari"
 	},
 	"files": [
-		"generators"
+		"generators",
+		"utils"
 	],
 	"keywords": [
 		"WordPress",
