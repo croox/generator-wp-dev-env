@@ -219,6 +219,7 @@ module.exports = class extends Generator {
 		}).then( () => {
 			if ( this.options.git !== 'false' ) {
 				[
+					'composer install',
 					'grunt build',
 					'git init',
 					'git add .',
@@ -231,7 +232,6 @@ module.exports = class extends Generator {
 					childProcess.execSync( cmd, { stdio:'inherit' } );
 				} );
 			}
-
 
 			[
 				'',

@@ -26,6 +26,37 @@ const generate = ( self, options ) => {
 			},
 		},
 		{
+			dest: 'composer.json',
+			data: {
+				require: {},
+				['require-dev']: {
+					['croox/wp-dev-env-frame']: '*',
+					['composer/installers']: '*',
+				},
+				extra: {
+					['installer-paths']: {
+						['vendor/{$vendor}/{$name}']: [
+							"webdevstudios/cmb2",
+						],
+					},
+				},
+				repositories: [
+					{
+						type: 'package',
+						package: {
+							name: 'croox/wp-dev-env-frame',
+							version: '0.0.0',
+							source: {
+								url: 'https://github.com/croox/wp-dev-env-frame.git',
+								type: 'git',
+								reference: '0.0.0'
+							},
+						},
+					},
+				],
+			},
+		},
+		{
 			dest: 'package.json',
 			data: {
 				name: tplContext.name,
@@ -58,7 +89,7 @@ const generate = ( self, options ) => {
 				},
 				devDependencies: {
 					grunt: '^1.0.3',
-					['wp-dev-env-grunt']: 'git+https://github.com/croox/wp-dev-env-grunt.git',
+					['wp-dev-env-grunt']: 'git+https://github.com/croox/wp-dev-env-grunt.git#0.0.2',
 				},
 				['browserify-shim']: {
 					jquery: 'global:jQuery',
