@@ -106,11 +106,23 @@ const generate = ( self, options ) => {
 		tplContext
 	) );
 
+	// copy directory structure
 	copyDirStructure( self, null, {
 		...( 'plugin' === tplContext.projectType && { exclude: ['src/templates'] } ),
 	} );
+
+	// generate json
 	generateJson();
+
+	// copy templates
 	copyTpls();
+
+	// copy all readme
+	self.fs.copyTpl(
+		self.templatePath( '**/readme.md' ),
+		self.destinationPath(),
+		tplContext
+	);
 
 };
 

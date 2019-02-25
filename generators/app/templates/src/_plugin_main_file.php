@@ -54,10 +54,10 @@ class <%= project_class %> {
 	}
 
 	public function hooks() {
-		register_activation_hook( __FILE__, array( $this, 'on_activate' ) );
+		register_activation_hook( __FILE__, array( $this, 'activate' ) );
 		register_deactivation_hook( __FILE__, array( $this, 'on_deactivate' ) );
 		register_uninstall_hook( __FILE__, array( __CLASS__, 'on_uninstall' ) );
-		add_action( 'plugins_loaded', array( $this, 'start_plugin' ), 9 );
+		add_action( 'plugins_loaded', array( $this, 'start' ), 9 );
 	}
 
 	public static function plugin_dir_url(){
@@ -77,12 +77,13 @@ class <%= project_class %> {
 	}
 
 
-	public function start_plugin() {
+	public function start() {
 		if ( $this->check_dependencies() ){
 			add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
 			$this->register_post_types_and_taxs();
+			$this->add_roles_and_capabilities();
 			$this->maybe_update();	// I think mass a plugin update does not run activation hooks
-			add_action( 'plugins_loaded', array( $this, 'include_inc_fun' ) );
+			$this->auto_include();
 			do_action( '<%= funcPrefix %>_plugin_loaded' );
 		} else {
 			add_action( 'admin_init', array( $this, 'deactivate' ) );
@@ -90,7 +91,7 @@ class <%= project_class %> {
 
 	}
 
-	public function on_activate() {
+	public function activate() {
 		if ( $this->check_dependencies() ){
 			$this->init_options();
 			$this->register_post_types_and_taxs();
@@ -228,6 +229,26 @@ class <%= project_class %> {
 		<%= funcPrefix %>_include_roles_capabilities();
 	}
 
+	protected function auto_include() {
+		// init cmb2
+		if ( file_exists( self::theme_dir_path() . 'vendor/webdevstudios/cmb2/init.php' ) ) {
+			require_once self::theme_dir_path() . 'vendor/webdevstudios/cmb2/init.php';
+		}
+		// include template_functions and _tags
+		if ( file_exists( self::theme_dir_path() . 'inc/<%= funcPrefix %>_include_fun.php' ) ) {
+			include_once( self::theme_dir_path() . 'inc/<%= funcPrefix %>_include_fun.php' );
+			if ( function_exists( '<%= funcPrefix %>_include_fun' ) ) <%= funcPrefix %>_include_fun();
+		}
+		if ( file_exists( self::theme_dir_path() . 'inc/<%= funcPrefix %>_include_template_functions.php' ) ) {
+			include_once( self::theme_dir_path() . 'inc/<%= funcPrefix %>_include_template_functions.php' );
+			if ( function_exists( '<%= funcPrefix %>_include_template_functions' ) ) <%= funcPrefix %>_include_template_functions();
+		}
+		if ( file_exists( self::theme_dir_path() . 'inc/<%= funcPrefix %>_include_template_tags.php' ) ) {
+			include_once( self::theme_dir_path() . 'inc/<%= funcPrefix %>_include_template_tags.php' );
+			if ( function_exists( '<%= funcPrefix %>_include_template_tags' ) ) <%= funcPrefix %>_include_template_tags();
+		}
+	}
+
 	// check DB_VERSION and require the update class if necessary
 	protected function maybe_update() {
 		if ( get_option( '<%= funcPrefix %>_db_version' ) < self::DB_VERSION ) {
@@ -245,11 +266,6 @@ class <%= project_class %> {
 		);
 		// just a test string to ensure generated pot file will not be empty
 		$test = __( 'test', '<%= funcPrefix %>' );
-	}
-
-	public function include_inc_fun() {
-		include_once( self::plugin_dir_path() . 'inc/<%= funcPrefix %>_include_fun.php' );
-		<%= funcPrefix %>_include_fun();
 	}
 
 }

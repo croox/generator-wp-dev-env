@@ -115,13 +115,7 @@ class <%= project_class %> {
 		if ( ! $this->check_dependencies() )
 			$this->deactivate();
 
-		// include template_functions and _tags
-		include_once( self::theme_dir_path() . 'inc/<%= funcPrefix %>_include_fun.php' );
-		if ( function_exists( '<%= funcPrefix %>_include_fun' ) ) <%= funcPrefix %>_include_fun();
-		include_once( self::theme_dir_path() . 'inc/<%= funcPrefix %>_include_template_functions.php' );
-		if ( function_exists( '<%= funcPrefix %>_include_template_functions' ) ) <%= funcPrefix %>_include_template_functions();
-		include_once( self::theme_dir_path() . 'inc/<%= funcPrefix %>_include_template_tags.php' );
-		if ( function_exists( '<%= funcPrefix %>_include_template_tags' ) ) <%= funcPrefix %>_include_template_tags();
+		$this->auto_include();
 
 		add_action( 'after_setup_theme', array( $this, 'load_textdomain' ) );
 		$this->register_post_types_and_taxs();
@@ -282,6 +276,26 @@ class <%= project_class %> {
 	protected function add_roles_and_capabilities() {
 		include_once( self::theme_dir_path() . 'inc/<%= funcPrefix %>_include_roles_capabilities.php' );
 		if ( function_exists( '<%= funcPrefix %>_include_roles_capabilities' ) ) <%= funcPrefix %>_include_roles_capabilities();
+	}
+
+	protected function auto_include() {
+		// init cmb2
+		if ( file_exists( self::theme_dir_path() . 'vendor/webdevstudios/cmb2/init.php' ) ) {
+			require_once self::theme_dir_path() . 'vendor/webdevstudios/cmb2/init.php';
+		}
+		// include template_functions and _tags
+		if ( file_exists( self::theme_dir_path() . 'inc/<%= funcPrefix %>_include_fun.php' ) ) {
+			include_once( self::theme_dir_path() . 'inc/<%= funcPrefix %>_include_fun.php' );
+			if ( function_exists( '<%= funcPrefix %>_include_fun' ) ) <%= funcPrefix %>_include_fun();
+		}
+		if ( file_exists( self::theme_dir_path() . 'inc/<%= funcPrefix %>_include_template_functions.php' ) ) {
+			include_once( self::theme_dir_path() . 'inc/<%= funcPrefix %>_include_template_functions.php' );
+			if ( function_exists( '<%= funcPrefix %>_include_template_functions' ) ) <%= funcPrefix %>_include_template_functions();
+		}
+		if ( file_exists( self::theme_dir_path() . 'inc/<%= funcPrefix %>_include_template_tags.php' ) ) {
+			include_once( self::theme_dir_path() . 'inc/<%= funcPrefix %>_include_template_tags.php' );
+			if ( function_exists( '<%= funcPrefix %>_include_template_tags' ) ) <%= funcPrefix %>_include_template_tags();
+		}
 	}
 
 	// check DB_VERSION and require the update class if necessary
