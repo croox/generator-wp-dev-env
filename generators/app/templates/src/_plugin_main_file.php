@@ -23,8 +23,8 @@ function <%= funcPrefix %>_<%= snakeCase( name ) %>() {
 		'version'	=> 'wde_replace_version',
 		'slug'	=> 'wde_replace_name',
 		'name'	=> 'wde_replace_displayName',
-		// 'parent'	=> 'wde_replace_template',	// ??? only childtheme
 		'prefix'	=> 'wde_replace_funcPrefix',
+		'textdomain'	=> 'wde_replace_textDomain',
 		'FILE_CONST'	=> __FILE__,
 		'db_version'	=> 0,
 	);
