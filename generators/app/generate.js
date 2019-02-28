@@ -45,11 +45,11 @@ const generate = ( self, options ) => {
 						type: 'package',
 						package: {
 							name: 'croox/wp-dev-env-frame',
-							version: '0.0.2',
+							version: '0.0.3',
 							source: {
 								url: 'https://github.com/croox/wp-dev-env-frame.git',
 								type: 'git',
-								reference: '0.0.2'
+								reference: '0.0.3'
 							},
 						},
 					},
