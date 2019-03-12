@@ -30,7 +30,7 @@ const generate = ( self, options ) => {
 			data: {
 				require: {},
 				['require-dev']: {
-					['croox/wp-dev-env-frame']: '0.0.4',
+					['croox/wp-dev-env-frame']: '0.0.5',
 					['composer/installers']: '*',
 				},
 				extra: {
