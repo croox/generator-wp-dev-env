@@ -30,30 +30,25 @@ const generate = ( self, options ) => {
 			data: {
 				require: {},
 				['require-dev']: {
-					['croox/wp-dev-env-frame']: '*',
+					['croox/wp-dev-env-frame']: '0.0.4',
 					['composer/installers']: '*',
 				},
 				extra: {
 					['installer-paths']: {
 						['vendor/{$vendor}/{$name}']: [
-							"webdevstudios/cmb2",
+							"cmb2/cmb2",
 						],
 					},
 				},
 				repositories: [
 					{
-						type: 'package',
-						package: {
-							name: 'croox/wp-dev-env-frame',
-							version: '0.0.3',
-							source: {
-								url: 'https://github.com/croox/wp-dev-env-frame.git',
-								type: 'git',
-								reference: '0.0.3'
-							},
-						},
+						type: 'vcs',
+						url: 'https://github.com/croox/wp-dev-env-frame',
 					},
 				],
+				suggest: {
+					['cmb2/cmb2']: 'CMB2 is a metabox, custom fields, and forms library for WordPress that will blow your mind.',
+				},
 			},
 		},
 		{
@@ -89,7 +84,7 @@ const generate = ( self, options ) => {
 				},
 				devDependencies: {
 					grunt: '^1.0.3',
-					['wp-dev-env-grunt']: 'git+https://github.com/croox/wp-dev-env-grunt.git#0.0.2',
+					['wp-dev-env-grunt']: 'git+https://github.com/croox/wp-dev-env-grunt.git#0.0.3',
 				},
 				['browserify-shim']: {
 					jquery: 'global:jQuery',
@@ -124,6 +119,7 @@ const generate = ( self, options ) => {
 		{ src: '_README.md',			dest: 'README.md' },
 		// src
 		{ src: 'src/_readme.txt',	dest: 'src/readme.txt' },
+		{ src: 'src/scss/_frontend.scss',	dest: 'src/scss/frontend.scss' },
 		...( 'plugin' === tplContext.projectType ? [
 			{ src: 'src/_plugin_main_file.php',	dest: 'src/' + tplContext.name + '.php' },
  		] : [] ),
