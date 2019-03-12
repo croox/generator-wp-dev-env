@@ -84,7 +84,7 @@ const generate = ( self, options ) => {
 				},
 				devDependencies: {
 					grunt: '^1.0.3',
-					['wp-dev-env-grunt']: 'git+https://github.com/croox/wp-dev-env-grunt.git#0.0.3',
+					['wp-dev-env-grunt']: 'git+https://github.com/croox/wp-dev-env-grunt.git#0.0.4',
 				},
 				['browserify-shim']: {
 					jquery: 'global:jQuery',
