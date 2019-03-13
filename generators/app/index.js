@@ -134,6 +134,7 @@ module.exports = class extends Generator {
 			...( undefined !== answers.block && { block: answers.block } ),
 			generator: {
 				version: pkg.version,
+				subModules: pkg.subModules
 			},
 			startCase: startCase,
 			upperFirst: upperFirst,
@@ -203,7 +204,6 @@ module.exports = class extends Generator {
 				this.composeWith( require.resolve('../block'), options );
 				break;
 		}
-
 	}
 
 	install() {
@@ -219,7 +219,7 @@ module.exports = class extends Generator {
 		}).then( () => {
 			if ( this.options.git !== 'false' ) {
 				[
-					'composer install',
+					'composer install --profile -v',
 					'grunt build',
 					'git init',
 					'git add .',

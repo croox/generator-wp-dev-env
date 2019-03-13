@@ -30,7 +30,7 @@ const generate = ( self, options ) => {
 			data: {
 				require: {},
 				['require-dev']: {
-					['croox/wp-dev-env-frame']: '0.0.5',
+					['croox/wp-dev-env-frame']: tplContext.generator.subModules['croox/wp-dev-env-frame'],
 					['composer/installers']: '*',
 				},
 				extra: {
@@ -84,7 +84,7 @@ const generate = ( self, options ) => {
 				},
 				devDependencies: {
 					grunt: '^1.0.3',
-					['wp-dev-env-grunt']: 'git+https://github.com/croox/wp-dev-env-grunt.git#0.0.5',
+					['wp-dev-env-grunt']: 'git+https://github.com/croox/wp-dev-env-grunt.git#' + tplContext.generator.subModules['wp-dev-env-grunt'],
 				},
 				['browserify-shim']: {
 					jquery: 'global:jQuery',

@@ -1,7 +1,11 @@
 'use strict';
 
-const startGrunt = require( 'wp-dev-env-grunt' );
+const {
+	startGrunt,
+	createHooks,
+} = require( 'wp-dev-env-grunt' );
 
 module.exports = grunt => {
+	createHooks( grunt );
 	startGrunt( grunt );
 };
