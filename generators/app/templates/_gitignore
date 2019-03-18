@@ -14,7 +14,7 @@
 !composer.json
 !composer.lock
 !CHANGELOG.md
-!.gwde_nextRelease.json
+!.wde_nextRelease.json
 !README.md
 <%= 'theme' === projectType ? '!style.css' : '!' + name + '.php' %>
 

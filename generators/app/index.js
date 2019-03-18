@@ -132,10 +132,7 @@ module.exports = class extends Generator {
 		this.tplContext = {
 			...( undefined !== answers.setup && answers.setup ),
 			...( undefined !== answers.block && { block: answers.block } ),
-			generator: {
-				version: pkg.version,
-				subModules: pkg.subModules
-			},
+			generator: { ...pkg },
 			startCase: startCase,
 			upperFirst: upperFirst,
 			snakeCase: snakeCase,

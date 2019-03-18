@@ -22,4 +22,4 @@ To install it from this Repository:
 To test the latest commit or make code changes yourself:
 - Clone, fork or [download](<%= repositoryUri %>/archive/master.zip) the repository
 
-> This <%= startCase( projectType ) %> and its development environment are based on [generator-wp-dev-env](https://www.npmjs.com/package/generator-wp-dev-env) v<%= generator.version %>.
+> This <%= startCase( projectType ) %> and its development environment are based on [<%= generator.name %>v](<%= generator.homepage %>).
