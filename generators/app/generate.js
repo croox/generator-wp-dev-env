@@ -95,7 +95,7 @@ const generate = ( self, options ) => {
 			},
 		},
 		{
-			dest: 'wp_installs-sample.json',
+			dest: 'wde_wp_installs-sample.json',
 			data: {
 				mytest: {
 					plugins: '/home/' + tplContext.author + '/absPath/to/mytest/wp-content/plugins/',

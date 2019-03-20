@@ -89,7 +89,7 @@ module.exports = class extends Generator {
 		// print header
 		console.log( '' );
 		console.log( gradient.rainbow( figlet.textSync( 'wp-dev-env', {
-			font: 'ANSI Shadow',
+			font: 'Ogre',
 			horizontalLayout: 'fitted',
 			verticalLayout: 'fitted'
 		} ) ) );
