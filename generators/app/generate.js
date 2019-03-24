@@ -97,13 +97,25 @@ const generate = ( self, options ) => {
 		{
 			dest: 'wde_wp_installs-sample.json',
 			data: {
-				mytest: {
-					plugins: '/home/' + tplContext.author + '/absPath/to/mytest/wp-content/plugins/',
-					themes: '/home/' + tplContext.author + '/absPath/to/mytest/wp-content/themes/'
+				installSlug: {
+					plugins: '/home/' + tplContext.author + '/abs_path/to/local_wp/wp-content/plugins/',
+					themes: '/home/' + tplContext.author + '/abs_path/to/local_wp/wp-content/themes/',
 				},
-				myothertest: {
-					plugins: '/home/' + tplContext.author + '/absPath/to/myothertest/wp-content/plugins/',
-					themes: '/home/' + tplContext.author + '/absPath/to/myothertest/wp-content/themes/'
+				otherInstallSlugSilent: {
+					plugins: '/home/' + tplContext.author + '/abs_path/to/other/local_wp/wp-content/plugins/',
+					themes: '/home/' + tplContext.author + '/abs_path/to/other/local_wp/wp-content/themes/',
+					args: [
+						"!--verbose",
+						"!--stats",
+					],
+				},
+				remoteInstallSlug: {
+					plugins: '/home/' + tplContext.author + '/abs_path/to/wp/wp-content/plugins/',
+					themes: '/home/' + tplContext.author + '/abs_path/to/wp/wp-content/themes/',
+					port: 1234,
+					args: [
+						"--size-only",
+					],
 				},
 			},
 		},

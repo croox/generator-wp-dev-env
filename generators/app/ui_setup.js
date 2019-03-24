@@ -4,12 +4,14 @@ const { prompt } = require('enquirer');
 const semver = require('semver')
 const {
 	startCase,
+	kebabCase,
 	get,
+	snakeCase,
 } = require('lodash');
-const slugg = require('slugg');
 const path = require('path');
 
-const ui__resolver = require('../../utils/ui__resolver');
+const ui__resolver = require( '../../utils/ui__resolver' );
+const wpFeSanitizeTitle = require( '../../utils/wpFeSanitizeTitle' );
 const validateForm = require( '../../utils/validateForm' );
 
 const ui_setup = function( self ){
@@ -31,24 +33,23 @@ const ui_setup = function( self ){
 				return startCase( ( prompt.values.name || getInitial( 'name' ) ).replace( /-/g, ' ' ) );
 
 			case 'name':
-				return slugg( path.basename( process.cwd() ) );
+				return wpFeSanitizeTitle( path.basename( process.cwd() ) );
 
 			case 'authorUri':
 				const author = get( prompt, ['values','author'], getInitial( 'author' ) );
 				return 'https://github.com/' + author;
 
-
 			case 'funcPrefix':
 				let name = prompt.values.name || getInitial( 'name' );
-
-				if ( name.length <= 3 ){
-					return name;
-				} else {
-					let nameParts = name.split('-');
-					return [...nameParts]
-						.map( part => part.substring( 0, nameParts.length > 2  ? 1  : 2 ) )
-						.slice( 0, 4 )
-						.join( '' );
+				name = kebabCase( name );
+				let nameParts = name.split('-');
+				switch( true ) {
+					case nameParts.length === 1:
+						return name.replace( /\-/, '' ).substring( 0, 4 );
+					case nameParts.length === 2:
+						return [...nameParts].map( part => part.substring( 0, 2 ) ).slice( 0, 2 ).join( '' );
+					case nameParts.length >= 3:
+						return [...nameParts].map( part => part.substring( 0, 1 ) ).slice( 0, 4 ).join( '' );
 				}
 
 			case 'textDomain':
@@ -79,11 +80,18 @@ const ui_setup = function( self ){
 			validate( value, state, field ) {
 
 				const formValidation = validateForm( value, state, {
-					shouldSlug: [
+					skipValidate: get( self.options, ['skipValidate'], '' ).split( ',' ),
+					sanitized: [
+						'funcPrefix',
+						'textDomain',
 						'name',
 						...( 'childtheme' === projectTypeExplicit ? ['template'] : [] ),
 					],
-					shouldNotEmpty: [
+					snakeCase: [
+						'funcPrefix',
+						'textDomain',
+					],
+					notEmpty: [
 						'name',
 						'displayName',
 						...( 'childtheme' === projectTypeExplicit ? ['template'] : [] ),
@@ -112,7 +120,7 @@ const ui_setup = function( self ){
 
 				{
 					name: 'name',
-					message: 'Slugified Name',
+					message: 'Sanitized Name',
 					initial: getInitial( 'name' ),
 				},
 
@@ -195,7 +203,7 @@ const ui_setup = function( self ){
 					name: 'funcPrefix',
 					message: 'Function Prefix',
 					onChoice( state, choice, i ) {
-						choice.initial = getInitial( choice.name, this );
+						choice.initial = snakeCase( getInitial( choice.name, this ) );
 					},
 				},
 

@@ -6,10 +6,10 @@ const {
 } = require('lodash');
 const figlet = require('figlet');
 const { prompt } = require('enquirer');
-const slugg = require('slugg');
 const path = require( 'path' );
 
 const ui__resolver = require('../../utils/ui__resolver');
+const wpFeSanitizeTitle = require( '../../utils/wpFeSanitizeTitle' );
 const getDestPkg = require( '../../utils/getDestPkg' );
 const validateForm = require( '../../utils/validateForm' );
 
@@ -30,7 +30,7 @@ const ui_block = function( self ){
 				return get( prompt, ['values','name'], false ) ? startCase( prompt.values.name.replace( /-/g, ' ' ) ) : '';
 
 			case 'name':
-				return get( prompt, ['values','displayName'], false ) ? slugg( prompt.values.displayName ) : '';
+				return get( prompt, ['values','displayName'], false ) ? wpFeSanitizeTitle( prompt.values.displayName ) : '';
 
 		}
 	};

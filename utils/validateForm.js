@@ -1,30 +1,42 @@
 const chalk = require('chalk');
 const {
-	// startCase,
+	snakeCase,
 	find,
 	get,
 } = require('lodash');
-const slugg = require('slugg');
+const wpFeSanitizeTitle = require('./wpFeSanitizeTitle');
 
 const validateForm = ( value, state, options ) => {
 	let returns = [];
 
-	// shouldSlug
-	if ( undefined !== options.shouldSlug ) {
-		[...options.shouldSlug].map( fieldName => {
-			if ( undefined !== value[fieldName] ) {
+	// sanitized
+	if ( undefined !== options.sanitized ) {
+		[...options.sanitized].map( fieldName => {
+			if ( undefined !== value[fieldName] && ! options.skipValidate.includes( fieldName ) ) {
 				const fieldMessage = get( find( state._choices, { name: fieldName } ), ['message'],'' );
-				if ( slugg( value[fieldName] ) !== value[fieldName] ) {
-					returns.push( fieldMessage + ' is not a slug!' );
+				if ( wpFeSanitizeTitle( value[fieldName] ) !== value[fieldName] ) {
+					returns.push( fieldMessage + ' is not sanitized!' );
 				}
 			}
 		} );
 	}
 
-	// shouldNotEmpty
-	if ( undefined !== options.shouldNotEmpty ) {
-		[...options.shouldNotEmpty].map( fieldName => {
-			if ( undefined !== value[fieldName] ) {
+	// snakeCase
+	if ( undefined !== options.snakeCase ) {
+		[...options.snakeCase].map( fieldName => {
+			if ( undefined !== value[fieldName] && ! options.skipValidate.includes( fieldName ) ) {
+				const fieldMessage = get( find( state._choices, { name: fieldName } ), ['message'],'' );
+				if ( snakeCase( value[fieldName] ) !== value[fieldName] ) {
+					returns.push( fieldMessage + ' is not snakeCase!' );
+				}
+			}
+		} );
+	}
+
+	// notEmpty
+	if ( undefined !== options.notEmpty ) {
+		[...options.notEmpty].map( fieldName => {
+			if ( undefined !== value[fieldName] && ! options.skipValidate.includes( fieldName ) ) {
 				const fieldMessage = get( find( state._choices, { name: fieldName } ), ['message'],'' );
 				if ( value[fieldName].length === 0 ) {
 					returns.push( fieldMessage + ' is empty!' );
