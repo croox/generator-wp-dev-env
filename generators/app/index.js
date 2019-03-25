@@ -10,17 +10,18 @@ const {
 	get,
 	startCase,
 	snakeCase,
+	kebabCase,
 	upperFirst,
 	isUndefined,
 } = require('lodash');
 
 const ui_chooseType = require('./ui_chooseType');
 const ui_setup = require('./ui_setup');
+const ui_themeBase = require('./ui_themeBase');
 const generate = require('./generate');
 const ui_block = require('../block/ui_block');
 const getDestPkg = require('../../utils/getDestPkg');
 const pkg = require('../../package.json');
-
 
 module.exports = class extends Generator {
 
@@ -33,6 +34,11 @@ module.exports = class extends Generator {
 					name: 'ui_chooseType',
 					func: ui_chooseType,
 					when: answers => true,
+				},
+				{
+					name: 'ui_themeBase',
+					func: ui_themeBase,
+					when: answers => 'theme' === answers.type,
 				},
 				{
 					name: 'ui_setup',
@@ -132,10 +138,12 @@ module.exports = class extends Generator {
 		this.tplContext = {
 			...( undefined !== answers.setup && answers.setup ),
 			...( undefined !== answers.block && { block: answers.block } ),
+			...( undefined !== answers.themeBase && { themeBase: answers.themeBase } ),
 			generator: { ...pkg },
 			startCase: startCase,
 			upperFirst: upperFirst,
 			snakeCase: snakeCase,
+			kebabCase: kebabCase,
 			isUndefined: isUndefined,
 		};
 
@@ -161,12 +169,38 @@ module.exports = class extends Generator {
 
 		}
 
-		this.tplContext.project_class = startCase( this.tplContext.funcPrefix ) + '_' + startCase( this.tplContext.name ).replace( / /g, '_' );
+		// namespace\project_class
+		this.tplContext.project_class = this.tplContext.funcPrefix + '\\' + startCase( kebabCase( this.tplContext.funcPrefix ) );
+
+		// parent_class, without namespace
+		if ( 'theme' === this.tplContext.projectType ) {
+			this.tplContext.parent_class = 'Theme';
+			if ( typeof this.tplContext.template !== 'undefined' ) {
+				switch( this.tplContext.template ) {
+					case 'enfold':
+						this.tplContext.parent_class = 'Childtheme_Enfold';
+						break;
+					default:
+						this.tplContext.parent_class = 'Childtheme';
+					}
+			}
+			if ( typeof this.tplContext.themeBase !== 'undefined' ) {
+				switch( this.tplContext.themeBase ) {
+					case 'twentynineteen':
+						this.tplContext.parent_class = 'Theme_Twentynineteen';
+						break;
+					}
+			}
+		}
+		if ( 'plugin' === this.tplContext.projectType ) {
+			this.tplContext.parent_class = 'Plugin';
+		}
 
 		if ( this.tplContext.projectTypeExplicit !== 'childtheme' && this.tplContext.template ) {
 			// ??? ... we should not reach here
 			this.log( chalk.red( 'debug error, we shouldnt have template if no childtheme. something went wrong' ), this.tplContext );		// ??? debug
 		}
+
 	};
 
 	writing() {
@@ -179,13 +213,6 @@ module.exports = class extends Generator {
 			tplContext: this.tplContext,
 			// answers: this.props.answers,
 		};
-
-		// console.log( '' );		// ??? debug
-		// console.log( '' );		// ??? debug
-		// console.log( 'debug options.tplContext' );		// ??? debug
-		// console.log( options.tplContext );		// ??? debug
-		// console.log( '' );		// ??? debug
-		// console.log( '' );		// ??? debug
 
 		this._callSubgenerator( options );
 
@@ -220,7 +247,7 @@ module.exports = class extends Generator {
 					'grunt build',
 					'git init',
 					'git add .',
-					'git commit -m "Hurray, just generated a new plugin!"',
+					'git commit -m "Hurray, just generated a new ' + this.props.answers.type + '!"',
 
 				].map( cmd => {
 					this.log('');
@@ -246,7 +273,7 @@ module.exports = class extends Generator {
 				'	run ' + chalk.yellow( 'grunt' ),
 				'		' + chalk.italic( 'to see available grunt tasks.' ),
 				'',
-				'	edit and rename ' + chalk.yellow( './wp_installs-sample.json' ),
+				'	edit and rename ' + chalk.yellow( './wde_wp_installs-sample.json' ),
 				'		' + chalk.italic( 'to let grunt know about some sync desitinations.' ),
 				'',
 			].map( str => this.log( str ) );

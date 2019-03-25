@@ -1,35 +1,46 @@
-const glob = require('glob');
+const glob = require('fast-glob');
 const path = require('path');
 
 
-const copyTemplatesBulk = ( self, source, destination, data, options ) => {
+const copyTemplatesBulk = ( self, source, destination, tplContext, options ) => {
 	options = {
+		globPattern: '**/*',
 		prependFunctionPrefix: true,
 		...options,
 	};
+	options.globPattern = [
+		...options.globPattern,
+		'!**/*~',
+		'!**/*#',
+	];
 
-	const { funcPrefix } = self.props;
+	const { funcPrefix } = tplContext;
 
-	const files = glob.sync( !('*~'|'*#') , { dot: true, cwd: source } );
+	const files = glob.sync( [ ...options.globPattern ] , { dot: true, cwd: source } );
 
 	[...files].map( file => {
 
-		const fileName = path.basename(file);
-		if ( 0 === fileName.indexOf('_') ){
+		let fileName = path.basename( file );
+		let fileExt = path.extname( file );
 
-			const srcPath = path.join( source, file );
-			const destPath = path.join(
-				destination,
-				path.dirname(file),
-				options.prependFunctionPrefix === true
-					? fileName.startsWith( '_class-' )
-					? fileName.replace( /^_class-/, 'class-' + funcPrefix + '_' )
-					: fileName.replace( /^_/, funcPrefix + '_' )
-					: fileName.replace( /^_/, '' )
-			);
-
-			this.fs.copyTpl( srcPath, destPath, data);
+		if ( 0 === fileName.indexOf('_') && options.prependFunctionPrefix && '.scss' !== fileExt ){
+			fileName = fileName.replace( /^_class-/, 'class-' + funcPrefix + '_' );
+			fileName = fileName.replace( /^_/, funcPrefix + '_' );
 		}
+
+		const srcPath = path.join( source, file );
+
+		const destPath = path.join(
+			destination,
+			path.dirname( file ),
+			fileName
+		);
+
+		self.fs.copyTpl(
+			srcPath,
+			destPath,
+			tplContext
+		);
 
 	} );
 }
