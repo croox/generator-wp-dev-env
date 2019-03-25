@@ -58,7 +58,7 @@ const generate = ( self, options ) => {
 				},
 				autoload: {
 					['psr-4']: {
-						[ tplContext.prefix + '\\']: 'src/classes/',
+						[ tplContext.funcPrefix + '\\']: 'src/classes/',
 					},
 				},
 			},
