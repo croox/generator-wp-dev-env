@@ -11,6 +11,15 @@ use croox\wde;
 
 class <%= startCase( kebabCase( funcPrefix ) ) %> extends wde\<%= parent_class %> {
 
+	// public function hooks(){
+    //     parent::hooks();
+	// 	add_action( 'init', array( $this, 'do_something_on_init' ), 10 );
+	// }
+
+	// public function do_something_on_init(){
+	// 	// ...
+	// }
+
 	public function enqueue_scripts_admin(){
         // parent::enqueue_scripts_admin();
 		// $handle = $this->prefix . '_script_admin';

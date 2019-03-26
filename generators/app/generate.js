@@ -175,7 +175,7 @@ const generate = ( self, options ) => {
 		tplContext
 	);
 
-	if ( 'theme' === tplContext.projectType && tplContext.themeBase ) {
+	if ( tplContext.themeBase ) {
 		switch( tplContext.themeBase ){
 			case 'twentynineteen':
 
@@ -200,17 +200,12 @@ const generate = ( self, options ) => {
 
 				break;
 		}
-	}
-
-
-	if ( 'plugin' === tplContext.projectType ) {
-
+	} else {
 		self.fs.copyTpl(
 			self.templatePath( '../templates/src/classes/Main.php' ),
 			self.destinationPath( 'src/classes/' + startCase( kebabCase( tplContext.funcPrefix ) ) + '.php' ),
 			tplContext
 		);
-
 	}
 
 };
