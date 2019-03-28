@@ -4,7 +4,7 @@ const {
 } = require('lodash');
 const { prompt } = require('enquirer');
 
-const ui__resolver = require('../../utils/ui__resolver');
+const ui__resolver = require('../../utils/ui/ui__resolver');
 const getDestPkg = require('../../utils/getDestPkg');
 
 const ui_chooseType = function( self ){
@@ -21,6 +21,10 @@ const ui_chooseType = function( self ){
 
 			choices: [
 				...( destPkg ? [
+					{
+						name: 'cpt',
+						message: 'Custom Post Type',
+					},
 					{
 						name: 'block',
 						message: 'Gutenberg Block',

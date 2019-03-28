@@ -4,10 +4,12 @@ const {
 	find,
 	get,
 } = require('lodash');
-const wpFeSanitizeTitle = require('./wpFeSanitizeTitle');
+const wpFeSanitizeTitle = require('../wpFeSanitizeTitle');
 
-const validateForm = ( value, state, options ) => {
+const formValidate = ( value, state, options ) => {
 	let returns = [];
+
+	options.skipValidate = options.skipValidate ? options.skipValidate : [];
 
 	// sanitized
 	if ( undefined !== options.sanitized ) {
@@ -49,4 +51,4 @@ const validateForm = ( value, state, options ) => {
 };
 
 
-module.exports = validateForm;
+module.exports = formValidate;

@@ -1,5 +1,5 @@
 const chalk = require('chalk');
-const ui__resolver = require('../../utils/ui__resolver');
+const ui__resolver = require('../../utils/ui/ui__resolver');
 
 const ui_themeBase = function( self ){
 

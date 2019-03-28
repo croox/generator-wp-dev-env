@@ -10,9 +10,9 @@ const {
 } = require('lodash');
 const path = require('path');
 
-const ui__resolver = require( '../../utils/ui__resolver' );
+const ui__resolver = require( '../../utils/ui/ui__resolver' );
 const wpFeSanitizeTitle = require( '../../utils/wpFeSanitizeTitle' );
-const validateForm = require( '../../utils/validateForm' );
+const formValidate = require( '../../utils/ui/formValidate' );
 
 const ui_setup = function( self ){
 
@@ -24,7 +24,6 @@ const ui_setup = function( self ){
 
 	const getInitial = ( choiceName, prompt ) => {
 		switch( choiceName ){
-
 
 			case 'author':
 				return 'example';	/// ??? get initial, remember
@@ -79,7 +78,7 @@ const ui_setup = function( self ){
 			initial: get( self.props.answers, ['setup'], null ),
 			validate( value, state, field ) {
 
-				const formValidation = validateForm( value, state, {
+				const formValidation = formValidate( value, state, {
 					skipValidate: get( self.options, ['skipValidate'], '' ).split( ',' ),
 					sanitized: [
 						'funcPrefix',

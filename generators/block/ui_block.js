@@ -8,10 +8,10 @@ const figlet = require('figlet');
 const { prompt } = require('enquirer');
 const path = require( 'path' );
 
-const ui__resolver = require('../../utils/ui__resolver');
+const ui__resolver = require('../../utils/ui/ui__resolver');
 const wpFeSanitizeTitle = require( '../../utils/wpFeSanitizeTitle' );
 const getDestPkg = require( '../../utils/getDestPkg' );
-const validateForm = require( '../../utils/validateForm' );
+const formValidate = require( '../../utils/ui/formValidate' );
 
 const ui_block = function( self ){
 
@@ -48,7 +48,7 @@ const ui_block = function( self ){
 			type: 'form',
 			initial: get( self.props.answers, ['setup'], null ),
 			validate( value, state, field ) {
-				return validateForm( value, state, {
+				return formValidate( value, state, {
 					shouldSlug: [
 						'name',
 					],

@@ -20,6 +20,7 @@ const ui_setup = require('./ui_setup');
 const ui_themeBase = require('./ui_themeBase');
 const generate = require('./generate');
 const ui_block = require('../block/ui_block');
+const ui_cpt = require('../cpt/ui_cpt');
 const getDestPkg = require('../../utils/getDestPkg');
 const pkg = require('../../package.json');
 
@@ -49,6 +50,11 @@ module.exports = class extends Generator {
 					name: 'ui_block',
 					func: ui_block,
 					when: answers => 'block' === answers.type,
+				},
+				{
+					name: 'ui_cpt',
+					func: ui_cpt,
+					when: answers => 'cpt' === answers.type,
 				},
 
 			],
@@ -139,6 +145,13 @@ module.exports = class extends Generator {
 			...( undefined !== answers.setup && answers.setup ),
 			...( undefined !== answers.block && { block: answers.block } ),
 			...( undefined !== answers.themeBase && { themeBase: answers.themeBase } ),
+			...( undefined !== answers.cptSetup && {
+				cpt: {
+					...answers.cptSetup,
+					supports: answers.cptSupports,
+					capabilityType: answers.capabilityType,
+				}
+			} ),
 			generator: { ...pkg },
 			startCase: startCase,
 			upperFirst: upperFirst,
@@ -226,6 +239,9 @@ module.exports = class extends Generator {
 		switch ( options.tplContext.type ) {
 			case 'block':
 				this.composeWith( require.resolve('../block'), options );
+				break;
+			case 'cpt':
+				this.composeWith( require.resolve('../cpt'), options );
 				break;
 		}
 	}
