@@ -143,7 +143,7 @@ const generate = ( self, options ) => {
 		{ src: '_README.md',			dest: 'README.md' },
 		// src
 		{ src: 'src/_readme.txt',	dest: 'src/readme.txt' },
-		{ src: 'src/scss/_frontend.scss',	dest: 'src/scss/frontend.scss' },
+		{ src: 'src/scss/_frontend.scss',	dest: 'src/scss/' + tplContext.funcPrefix + '_frontend.scss' },
 		...( 'plugin' === tplContext.projectType ? [
 			{ src: 'src/_plugin_main_file.php',	dest: 'src/' + tplContext.name + '.php' },
  		] : [] ),
@@ -188,6 +188,7 @@ const generate = ( self, options ) => {
 						globPattern: [
 							'**/*',
 							'!src/classes/Main.php',
+							'!src/scss/frontend.scss',
 						],
 					}
 				);
@@ -195,6 +196,12 @@ const generate = ( self, options ) => {
 				self.fs.copyTpl(
 					self.templatePath( '../template_collections/twentynineteen/src/classes/Main.php' ),
 					self.destinationPath( 'src/classes/' + startCase( kebabCase( tplContext.funcPrefix ) ) + '.php' ),
+					tplContext
+				);
+
+				self.fs.copyTpl(
+					self.templatePath( '../template_collections/twentynineteen/src/scss/frontend.scss' ),
+					self.destinationPath( 'src/scss/' + tplContext.funcPrefix + '_frontend.scss' ),
 					tplContext
 				);
 
