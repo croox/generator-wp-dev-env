@@ -29,6 +29,10 @@ const ui_chooseType = function( self ){
 						name: 'block',
 						message: 'Gutenberg Block',
 					},
+					{
+						name: 'composerPackage',
+						message: 'Composer Package',
+					},
 				] : [
 					{
 						name: 'plugin',

@@ -11,15 +11,6 @@ const generate = self => {
 
 	const { tplContext } = self.options;
 
-
-	// console.log( '' );		// ??? debug
-	// console.log( '' );		// ??? debug
-	// console.log( 'debug tplContext' );		// ??? debug
-	// console.log( tplContext );		// ??? debug
-	// console.log( '' );		// ??? debug
-	// console.log( '' );		// ??? debug
-
-
 	const copyTpls = () => [
 		{
 			src: 'src/inc/post_types_taxs/_add_cpt.php',

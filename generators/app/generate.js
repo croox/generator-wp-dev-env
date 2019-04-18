@@ -40,22 +40,12 @@ const generate = ( self, options ) => {
 					['dealerdirect/phpcodesniffer-composer-installer']: '0.5.0',
 					['wptrt/wpthemereview']: '0.1.0',
 				},
-				extra: {
-					['installer-paths']: {
-						['vendor/{$vendor}/{$name}']: [
-							"cmb2/cmb2",
-						],
-					},
-				},
 				repositories: [
 					{
 						type: 'vcs',
 						url: 'https://github.com/croox/wp-dev-env-frame',
 					},
 				],
-				suggest: {
-					['cmb2/cmb2']: 'CMB2 is a metabox, custom fields, and forms library for WordPress that will blow your mind.',
-				},
 				autoload: {
 					['psr-4']: {
 						[ tplContext.funcPrefix + '\\']: 'src/classes/',
