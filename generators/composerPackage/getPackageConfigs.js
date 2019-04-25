@@ -25,7 +25,7 @@ const getPackageConfigs = tplContext => {
 			hint: 'Plugin to relate fields in a CMB2 metabox',
 			installPath: defaultInstallPath,
 			version: 'dev-master',
-s			website: 'https://github.com/jcchavezs/cmb2-conditionals',
+			website: 'https://github.com/jcchavezs/cmb2-conditionals',
 			templates: [
 				{
 					src: 'src/inc/fun/_init_jcchavezs_cmb2_conditionals.php',
@@ -36,10 +36,6 @@ s			website: 'https://github.com/jcchavezs/cmb2-conditionals',
 					dest: 'grunt/hooked/addCmb2ConditionalsCopyTask.js',
 				},
 			],
-			repository: {
-				"type": "vcs",
-				"url": "https://github.com/jcchavezs/cmb2-conditionals"
-			},
 		},
 		{
 			key: 'johnbillion/extended-cpts',
