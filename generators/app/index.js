@@ -20,6 +20,7 @@ const ui_setup = require('./ui_setup');
 const ui_themeBase = require('./ui_themeBase');
 const generate = require('./generate');
 const ui_block = require('../block/ui_block');
+const ui_assets = require('../assets/ui_assets');
 const ui_cpt = require('../cpt/ui_cpt');
 const ui_chooseComposerPkg = require('../composerPackage/ui_chooseComposerPkg');
 const getDestPkg = require('../../utils/getDestPkg');
@@ -62,7 +63,11 @@ module.exports = class extends Generator {
 					func: ui_chooseComposerPkg,
 					when: answers => 'composerPackage' === answers.type,
 				},
-
+				{
+					name: 'ui_assets',
+					func: ui_assets,
+					when: answers => 'assets' === answers.type,
+				},
 			],
 			lastUiEl: 0,
 			answers: {},
@@ -159,6 +164,7 @@ module.exports = class extends Generator {
 				}
 			} ),
 			...( undefined !== answers.composerPkgs && { composerPkgs: answers.composerPkgs } ),
+			...( undefined !== answers.assetSetup && { assets: answers.assetSetup } ),
 			generator: { ...pkg },
 			startCase: startCase,
 			upperFirst: upperFirst,
@@ -252,6 +258,9 @@ module.exports = class extends Generator {
 				break;
 			case 'composerPackage':
 				this.composeWith( require.resolve('../composerPackage'), options );
+				break;
+			case 'assets':
+				this.composeWith( require.resolve('../assets'), options );
 				break;
 		}
 	}

@@ -22,13 +22,18 @@ const ui_chooseType = function( self ){
 			choices: [
 				...( destPkg ? [
 					{
+						name: 'assets',
+						message: 'Assets',
+					},
+					{
 						name: 'cpt',
 						message: 'Custom Post Type',
 					},
-					{
-						name: 'block',
-						message: 'Gutenberg Block',
-					},
+					// ??? repair
+					// {
+					// 	name: 'block',
+					// 	message: 'Gutenberg Block',
+					// },
 					{
 						name: 'composerPackage',
 						message: 'Composer Package',

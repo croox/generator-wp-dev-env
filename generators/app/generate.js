@@ -112,8 +112,8 @@ const generate = ( self, options ) => {
 					],
 				},
 				remoteInstallSlug: {
-					plugins: '/home/' + tplContext.author + '/abs_path/to/wp/wp-content/plugins/',
-					themes: '/home/' + tplContext.author + '/abs_path/to/wp/wp-content/themes/',
+					plugins: tplContext.author + '@example.com:/abs_path/to/wp/wp-content/plugins/',
+					themes: tplContext.author + '@example.com:/abs_path/to/wp/wp-content/themes/',
 					port: 1234,
 					args: [
 						"--size-only",

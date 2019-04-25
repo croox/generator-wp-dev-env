@@ -1,0 +1,5 @@
+/**
+ * Style <%= funcPrefix %>_style_<%= assets.name %>
+ * <% if( assets.enqueueFrontend ) { %> Enqueued in Frontend <% } %>
+ * <% if( assets.enqueueAdmin ) { %> Enqueued in Admin <% } %>
+ */

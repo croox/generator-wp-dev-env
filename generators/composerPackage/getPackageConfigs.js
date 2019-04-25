@@ -24,8 +24,8 @@ const getPackageConfigs = tplContext => {
 			key: 'jcchavezs/cmb2-conditionals',
 			hint: 'Plugin to relate fields in a CMB2 metabox',
 			installPath: defaultInstallPath,
-			version: 'dev-master#bff19c7688d308ac203501aee442fbdee200954b',
-			website: 'https://github.com/jcchavezs/cmb2-conditionals',
+			version: 'dev-master',
+s			website: 'https://github.com/jcchavezs/cmb2-conditionals',
 			templates: [
 				{
 					src: 'src/inc/fun/_init_jcchavezs_cmb2_conditionals.php',

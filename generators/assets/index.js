@@ -15,15 +15,18 @@ module.exports = class extends Generator {
 	_shouldCancel() {
 		return ! this.options.calledBy
 			|| this.options.cancel
-			|| 'cpt' !== this.options.tplContext.type;
+			|| 'assets' !== this.options.tplContext.type;
 	}
 
 	writing() {
-
 		if ( this._shouldCancel() )
 			return;
 
 		generate( this );
 	}
 
+	install() {
+		if ( this._shouldCancel() )
+			return;
+	}
 };

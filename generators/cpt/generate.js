@@ -3,10 +3,6 @@ const {
 	uniq,
 } = require('lodash');
 
-const copyDirStructure = require('../../utils/copyDirStructure');
-const copyTemplatesBulk = require('../../utils/copyTemplatesBulk');
-
-
 const generate = self => {
 
 	const { tplContext } = self.options;
