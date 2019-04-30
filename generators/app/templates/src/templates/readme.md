@@ -1,7 +1,7 @@
 
-[README](../../../../../README.md)
-└── [src](../readme.md)
-    └── templates
+[README](../../../../../README.md)\
+└── [src](../readme.md)\
+    └── templates\
 
 ## `.src/templates`
 

@@ -1,7 +1,7 @@
 
-[README](../../../../../README.md)
-└── [src](../readme.md)
-    └── languages
+[README](../../../../../README.md)\
+└── [src](../readme.md)\
+    └── languages\
 
 ## `./src/languages`
 

@@ -1,7 +1,7 @@
 
-[README](../../../../../README.md)
-└── [src](../readme.md)
-    └── fonts
+[README](../../../../../README.md)\
+└── [src](../readme.md)\
+    └── fonts\
 
 ## `.src/fonts`
 

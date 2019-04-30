@@ -76,50 +76,50 @@ A new generated plugin `testing` with prefix/textdomain `test` looks similar to 
 │   ├── readme.md\
 │   └── [...]\
 ├── src\
-│   ├── classes
-│   │   ├── readme.md
-│   │   └── Test.php
-│   ├── [fonts](./generators/app/templates/src/fonts/readme.md)
-│   │   └── readme.md
-│   ├── [images](./generators/app/templates/src/images/readme.md)
-│   │   └── readme.md
-│   ├── [inc](./generators/app/templates/src/inc/readme.md)
-│   │   ├── fun
-│   │   │   └── readme.md
-│   │   ├── post_types_taxs
-│   │   │   └── readme.md
-│   │   ├── roles_capabilities
-│   │   │   └── readme.md
-│   │   ├── template_functions
-│   │   │   └── readme.md
-│   │   ├── template_tags
-│   │   │   └── readme.md
-│   │   └── readme.md
-│   ├── [js](./generators/app/templates/src/js/readme.md)
-│   │   └── readme.md
-│   ├── [languages](./generators/app/templates/src/languages/readme.md)
-│   │   ├── readme.md
-│   │   └── test-LOCALE.pot
-│   ├── [scss](./generators/app/templates/src/scss/readme.md)
-│   │   ├── readme.md
-│   │   └── test_frontend.scss
-│   ├── [templates](./generators/app/templates/src/templates/readme.md)
-│   │   └── readme.md
-│   ├── readme.txt
-│   └── testing.php
-├── test_build
-│   └── [...]
-├── vendor
-│   └── [...]
-├── CHANGELOG.md
-├── composer.json
-├── .gitignore
-├── Gruntfile.js
-├── package.json
-├── README.md
-├── testing.php
-├── wde_wp_installs-sample.json
-└── [...]
+│   ├── classes\
+│   │   ├── readme.md\
+│   │   └── Test.php\
+│   ├── [fonts](./generators/app/templates/src/fonts/readme.md)\
+│   │   └── readme.md\
+│   ├── [images](./generators/app/templates/src/images/readme.md)\
+│   │   └── readme.md\
+│   ├── [inc](./generators/app/templates/src/inc/readme.md)\
+│   │   ├── fun\
+│   │   │   └── readme.md\
+│   │   ├── post_types_taxs\
+│   │   │   └── readme.md\
+│   │   ├── roles_capabilities\
+│   │   │   └── readme.md\
+│   │   ├── template_functions\
+│   │   │   └── readme.md\
+│   │   ├── template_tags\
+│   │   │   └── readme.md\
+│   │   └── readme.md\
+│   ├── [js](./generators/app/templates/src/js/readme.md)\
+│   │   └── readme.md\
+│   ├── [languages](./generators/app/templates/src/languages/readme.md)\
+│   │   ├── readme.md\
+│   │   └── test-LOCALE.pot\
+│   ├── [scss](./generators/app/templates/src/scss/readme.md)\
+│   │   ├── readme.md\
+│   │   └── test_frontend.scss\
+│   ├── [templates](./generators/app/templates/src/templates/readme.md)\
+│   │   └── readme.md\
+│   ├── readme.txt\
+│   └── testing.php\
+├── test_build\
+│   └── [...]\
+├── vendor\
+│   └── [...]\
+├── CHANGELOG.md\
+├── composer.json\
+├── .gitignore\
+├── Gruntfile.js\
+├── package.json\
+├── README.md\
+├── testing.php\
+├── wde_wp_installs-sample.json\
+└── [...]\
 
 > #### Readme
 >
