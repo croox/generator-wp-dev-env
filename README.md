@@ -64,18 +64,18 @@ Generated Plugins and Themes share the same structure. So code can be used in bo
 
 A new generated plugin `testing` with prefix/textdomain `test` looks similar to the following.
 
-.
-├── .git
-│   └── [...]
-├── grunt
-│   ├── readme.md
-│   └── [...]
-├── node_modules
-│   └── [...]
-├── releases
-│   ├── readme.md
-│   └── [...]
-├── src
+.\
+├── .git\
+│   └── [...]\
+├── grunt\
+│   ├── readme.md\
+│   └── [...]\
+├── node_modules\
+│   └── [...]\
+├── releases\
+│   ├── readme.md\
+│   └── [...]\
+├── src\
 │   ├── classes
 │   │   ├── readme.md
 │   │   └── Test.php
