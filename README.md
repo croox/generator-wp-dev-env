@@ -69,9 +69,9 @@ grunt
 
 Available as docset:
 
-- [generator-wp-dev-env.docset.tar](https://github.com/croox/generator-wp-dev-env/tree/master/docs/generator-wp-dev-env.docset.tar)
-- [generator-wp-dev-env.docset.tgz](https://github.com/croox/generator-wp-dev-env/tree/master/docs/generator-wp-dev-env.docset.tgz)
-- [generator-wp-dev-env.docset.zip](https://github.com/croox/generator-wp-dev-env/tree/master/docs/generator-wp-dev-env.docset.zip)
+- [generator-wp-dev-env.docset.tar](https://github.com/croox/generator-wp-dev-env/raw/master/docs/generator-wp-dev-env.docset.tar)
+- [generator-wp-dev-env.docset.tgz](https://github.com/croox/generator-wp-dev-env/raw/master/docs/generator-wp-dev-env.docset.tgz)
+- [generator-wp-dev-env.docset.zip](https://github.com/croox/generator-wp-dev-env/raw/master/docs/generator-wp-dev-env.docset.zip)
 
 Each directory of a generated project contains a `readme.md`. The documentation is partly generated from those files.
 
