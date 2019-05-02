@@ -48,6 +48,7 @@
 	"dependencies": {
 		"chalk": "^2.1.0",
 		"childprocess": "^2.0.2",
+		"compressing": "^1.4.0",
 		"docset-generator": "^0.2.2",
 		"enquirer": "^2.3.0",
 		"fast-glob": "^2.2.6",

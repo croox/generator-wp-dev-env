@@ -3,6 +3,7 @@ const chalk = require('chalk');
 const glob = require('fast-glob');
 const fs = require('fs-extra');
 const replace = require('replace-in-file');
+const compressing = require('compressing');
 const {
 	uniq,
 	dropWhile,
@@ -136,6 +137,27 @@ const replacePatterns = ( typesDir ) => {
 
 };
 
+const compressDocset = () => {
+
+	return new Promise( ( resolve, reject ) => {
+
+		const promises = [
+			'tar',
+			'tgz',
+			'zip',
+		].map( method => {
+			return new Promise( ( resolve, reject ) => {
+				compressing[method]['compressDir'](
+					path.resolve( 'docs', pkg.name + '.docset' ),
+					path.resolve( 'docs', pkg.name + '.docset.' + method ),
+				).then( res => resolve( res ) ).catch( err => console.log( err ) );
+			} ).catch( err => reject( err ) );
+		} );
+
+		Promise.all( promises ).then( res => resolve( res ) );
+	} );
+};
+
 const buildDocs = () => {
 
 	// ensure empty tmp and docset dirs
@@ -159,8 +181,20 @@ const buildDocs = () => {
 	md2html( typesDir, htmlDir );
 
 	html2docset( typesDir, htmlDir ).then( res => {
-		fs.removeSync( path.resolve( 'tmp', 'docs' ) );
-		console.log( chalk.green( 'done, see: ' ) + path.resolve( 'docs', pkg.name + '.docset' ), );		// ??? debug
+
+		compressDocset().then( res => {
+
+			fs.removeSync( path.resolve( 'tmp', 'docs' ) );
+
+			console.log( '' );
+			console.log( chalk.green( 'Created docs, see: ' ) );
+			console.log( path.resolve( 'docs', pkg.name + '.docset' ) );
+			console.log( path.resolve( 'docs', pkg.name + '.docset.tar' ) );
+			console.log( path.resolve( 'docs', pkg.name + '.docset.tgz' ) );
+			console.log( path.resolve( 'docs', pkg.name + '.docset.zip' ) );
+
+		} );
+
 	} );
 
 };

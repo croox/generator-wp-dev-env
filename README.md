@@ -3,17 +3,15 @@
 > Yeoman generator for scaffolding a Grunt based WordPress Plugin &amp; Theme dev environment
 
 - Generates a project structure, organized in `./src`, `./test_build` and `./dist` see ???.
+  - `./src` contains the source code.
   
-  -- `./src` contains the source code.
+  - `./test_build` contains the current build of the project. May be synchronized with a local or remote WordPress installation.
   
-  -- `./test_build` contains the current build of the project. May be synchronized with a local or remote WordPress installation.
-  
-  -- `./dist` contains releases and has the same structured as the WordPress plugin/theme svn repository.
+  - `./dist` contains releases and has the same structured as the WordPress plugin/theme svn repository.
 - `grunt` is used to automate processes and run repetitive tasks, see ???.
+  - It may watch file changes in `./src` and performs the required tasks to update the `./test_build` directory and optionally syncs it to a WordPress installation on a local or remote system.
   
-  -- It may watch file changes in `./src` and performs the required tasks to update the `./test_build` directory and optionally syncs it to a WordPress installation on a local or remote system.
-  
-  -- Tasks for code linting, formatting and applying [WordPress coding standards](https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards).
+  - Tasks for code linting, formatting and applying [WordPress coding standards](https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards).
 - Generates releases with readme that adheres to the [WordPress plugin readme file standard](https://wordpress.org/plugins/developers/#readme), a Changelog based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Uses `git` and creates tags and releases with description and assets automatically.
 - Generated projects are ready to be used with [github-updater](https://github.com/afragen/github-updater).
@@ -57,14 +55,29 @@ mkdir -p ~/path/to/myproject
 
 # Make it your working directory
 cd ~/path/to/myproject
-
-# Run the generator and follow the prompts
+# Run the generator and follow the prompts to create a new theme/plugin
 yo wp-dev-env
+ 
+# Run the generator again to create new custom-post-types, scripts, styles, blocks ...
+yo wp-dev-env
+
+# List available grunt tasks
+grunt
 ```
 
 ### Documentation
 
-???
+Available as docset:
+
+- [generator-wp-dev-env.docset.tar](https://github.com/croox/generator-wp-dev-env/tree/master/docs/generator-wp-dev-env.docset.tar)
+- [generator-wp-dev-env.docset.tgz](https://github.com/croox/generator-wp-dev-env/tree/master/docs/generator-wp-dev-env.docset.tgz)
+- [generator-wp-dev-env.docset.zip](https://github.com/croox/generator-wp-dev-env/tree/master/docs/generator-wp-dev-env.docset.zip)
+
+Each directory of a generated project contains a `readme.md`. The documentation is partly generated from those files.
+
+To browse the docset documentation use [Zeal](https://zealdocs.org/) for Linux and Windows or [Dash](https://kapeli.com/dash) for macOS or iOS.
+
+Alternativly browse the docset [html source on GitHub directly](https://github.com/croox/generator-wp-dev-env/tree/master/docs/generator-wp-dev-env.docset/Contents/Resources/Documents) or [preview the html source](https://htmlpreview.github.io/?https://github.com/croox/generator-wp-dev-env/blob/master/docs/generator-wp-dev-env.docset/Contents/Resources/Documents/Guide/installation_quick_start.html).
 
 ## License
 
