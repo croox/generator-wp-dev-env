@@ -7,9 +7,9 @@ Generated Plugins and Themes share the same directory structure. So code can be 
 ## Directory Documentation
 
 Each directory contains a `readme.md` file concerning dev information.
-*See [Conventions & Guidlines](./conventions_guidlines.html#readme) for different types of readme*.
+*See [Conventions & Guidelines](./conventions_guidelines.html#readme) for different types of readme*.
 
-The directory structure documentation is generated from thouse `readme.md` files.
+The directory structure documentation is generated from those `readme.md` files.
 *See ???*
 
 

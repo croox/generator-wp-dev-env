@@ -77,7 +77,7 @@ Each directory of a generated project contains a `readme.md`. The documentation 
 
 To browse the docset documentation use [Zeal](https://zealdocs.org/) for Linux and Windows or [Dash](https://kapeli.com/dash) for macOS or iOS.
 
-Alternativly browse the docset [html source on GitHub directly](https://github.com/croox/generator-wp-dev-env/tree/master/docs/generator-wp-dev-env.docset/Contents/Resources/Documents) or [preview the html source](https://htmlpreview.github.io/?https://github.com/croox/generator-wp-dev-env/blob/master/docs/generator-wp-dev-env.docset/Contents/Resources/Documents/Guide/installation_quick_start.html).
+Alternatively browse the docset [html source on GitHub directly](https://github.com/croox/generator-wp-dev-env/tree/master/docs/generator-wp-dev-env.docset/Contents/Resources/Documents) or [preview the html source](https://htmlpreview.github.io/?https://github.com/croox/generator-wp-dev-env/blob/master/docs/generator-wp-dev-env.docset/Contents/Resources/Documents/Guide/installation_quick_start.html).
 
 ## License
 
