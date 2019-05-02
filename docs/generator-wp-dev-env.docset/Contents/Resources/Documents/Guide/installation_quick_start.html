@@ -1,0 +1,54 @@
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+		<meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
+		<link media="all" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.9.0/github-markdown.min.css" type="text/css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" type="text/css" media="all" />
+    <title></title>
+</head>
+<body>
+	<div class="markdown-body">
+		<h1 id="installation--quick-start">Installation &amp; Quick Start</h1>
+<h2 id="dependencies">Dependencies</h2>
+<p>We assume you have pre-installed <a href="https://nodejs.org/">node.js</a> and <a href="http://npmjs.com/">npm.js</a></p>
+<ul>
+<li><code>yo</code> tested version <code>2.0.5</code> <a href="http://yeoman.io">Yeoman</a></li>
+<li><code>composer</code> tested version <code>1.2.2</code></li>
+<li><code>git</code> tested version <code>2.7.4</code></li>
+<li><code>grunt</code> tested version <code>1.0.4</code> and <code>grunt-cli</code></li>
+<li><code>sass</code> tested version <code>3.4.22</code></li>
+<li><code>rsync</code> tested version <code>3.1.2</code></li>
+<li><code>xgettext</code> tested version <code>0.19.7</code></li>
+</ul>
+<p>All dependencies must be accessible from cli via their respective command. To test this, run something like: <code>composer --version</code> or <code>which composer</code> …</p>
+<h2 id="installation">Installation</h2>
+<p>instalation </p>
+<p>First, install <a href="http://yeoman.io">Yeoman</a> and generator-wp-dev-env using <a href="https://www.npmjs.com/">npm</a></p>
+<pre><code class="hljs bash language-bash"><span class="hljs-comment"># First, install Yeoman globally</span>
+npm install -g yo
+
+<span class="hljs-comment"># Install `generator-wp-dev-env` globally from github repository</span>
+npm install -g https://github.com/croox/generator-wp-dev-env
+
+<span class="hljs-comment"># Generate your new plugin or theme</span>
+yo wp-dev-env</code></pre>
+<h2 id="start-a-new-project">Start a new Project</h2>
+<pre><code class="hljs bash language-bash"><span class="hljs-comment"># To generate a new plugin or theme, create a new directory</span>
+mkdir -p ~/path/to/myproject
+
+<span class="hljs-comment"># Make it your working directory</span>
+<span class="hljs-built_in">cd</span> ~/path/to/myproject
+
+<span class="hljs-comment"># Run the generator and follow the prompts</span>
+yo wp-dev-env</code></pre>
+<h2 id="project-structure">Project Structure</h2>
+<p>Generated Plugins and Themes share the same directory structure. So code can be used in both kind of projects in a similar way.</p>
+<p><a href="../Directory/root.html">root</a></br>-- <a href="../Directory/grunt.html">grunt</a></br>-- <a href="../Directory/releases.html">releases</a></br>-- <a href="../Directory/src.html">src</a></br>---- <a href="../Directory/src___classes.html">classes</a></br>---- <a href="../Directory/src___fonts.html">fonts</a></br>---- <a href="../Directory/src___images.html">images</a></br>---- <a href="../Directory/src___inc.html">inc</a></br>------ <a href="../Directory/src___inc___fun.html">fun</a></br>------ <a href="../Directory/src___inc___post_types_taxs.html">post_types_taxs</a></br>------ <a href="../Directory/src___inc___roles_capabilities.html">roles_capabilities</a></br>------ <a href="../Directory/src___inc___template_functions.html">template_functions</a></br>------ <a href="../Directory/src___inc___template_tags.html">template_tags</a></br>---- <a href="../Directory/src___js.html">js</a></br>---- <a href="../Directory/src___languages.html">languages</a></br>---- <a href="../Directory/src___scss.html">scss</a></br>---- <a href="../Directory/src___templates.html">templates</a></br>-- <a href="../Directory/test_build.html">test_build</a></br></p>
+<blockquote>
+  <p>Check the <a href="./project_structure.html">Project Structure</a> page for details</p>
+</blockquote>
+	</div>
+</body>
+</html>

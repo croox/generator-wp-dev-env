@@ -1,0 +1,36 @@
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+		<meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
+		<link media="all" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.9.0/github-markdown.min.css" type="text/css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" type="text/css" media="all" />
+    <title></title>
+</head>
+<body>
+	<div class="markdown-body">
+		<h2 id="srclanguages"><code>./src/languages</code></h2>
+<p>This directory contains <code>pot</code> and <code>po</code>.</p>
+<p><code>css</code> files will be generated for files within <code>./src/languages</code> (not recursively).<br />
+Those files can be seen as entry points that <code>@import</code> modules (~files) from subdirectories.</p>
+<h3 id="pot-files-generation">pot files generation</h3>
+<p>The last build step generates <code>pot</code> files into <code>./src/languages</code> (hooked into build in 70).</p>
+<p>A single <code>pot</code> file is generated for translatable strings within all <code>php</code> files.</p>
+<p>An individual <code>pot</code> file is generated for each file in <code>./src/js</code>. See <a href="???">./src/js/readme.md</a>.<br />
+See <a href="https://wordpress.org/gutenberg/handbook/packages/packages-i18n/">@wordpress/i18n</a> for internationalization utilities for client-side localization.</p>
+<h3 id="mo-file-generation">mo file generation</h3>
+<p>The last build step generates <code>mo</code> files from <code>pot</code> into <code>./test_build/languages</code> (hooked into build in 70).</p>
+<p>The project base class loads the <code>mo</code> file automatically.</p>
+<h3 id="json-file-generation">json file generation</h3>
+<p>The last build step generates <code>json</code> files from <code>pot</code> into <code>./test_build/languages</code> (hooked into build in 70).</p>
+<p>The <code>json</code> can be used like <code>wp_set_script_translations( $handle, 'textDomain', prefix\Prefix::get_instance()-&gt;get_dir_path() . 'languages' );</code>.</p>
+<blockquote>
+  <p>Use <code>yo wp-dev-env</code> to generate assets ready to be used with <code>@wordpress/i18n</code> utilities.</p>
+</blockquote>
+<h3 id="what-happens-on-watch">What happens on <code>watch</code></h3>
+<p>If <code>./src/languages/*.pot</code> changes, all <code>mo</code> and <code>json</code> files will be generated into <code>./test_build/languages</code>.</p>
+<p>Nothing for <code>pot</code> files. <code>pot</code> files can be generated with <code>pot</code> task and are automatically generated on <code>build</code> and <code>dist</code>.</p>
+	</div>
+</body>
+</html>

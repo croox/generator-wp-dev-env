@@ -1,8 +1,3 @@
-
-[README](../../../../../README.md)\
-└── [src](../readme.md)\
-    └── languages\
-
 ## `./src/languages`
 
 This directory contains `pot` and `po`.

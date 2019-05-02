@@ -1,0 +1,86 @@
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+		<meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
+		<link media="all" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.9.0/github-markdown.min.css" type="text/css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" type="text/css" media="all" />
+    <title></title>
+</head>
+<body>
+	<div class="markdown-body">
+		<h2 id="srcinc"><code>.src/inc</code></h2>
+<p>This directory contains subdirectories with <code>php</code> files.</p>
+<h3 id="what-happens-on-build-watch-and-dist">What happens on <code>build</code>, <code>watch</code> and <code>dist</code></h3>
+<h4 id="copy-and-search-replace">Copy and search-replace</h4>
+<p>All subdirectories and their php files are copied into the corresponding destination directory. E.g.: <code>./src/inc/fun/*.php</code> will be copied to <code>./test_build/inc/fun</code>.<br />
+Rename ???</p>
+<h4 id="creates-kind-of-autoloader-function">Creates kind of autoloader function</h4>
+<p>Kind of autoloader file will be created for each subdirectory. The file contains a function that includes all files together. For example <code>./test_build/inc/prefix_include_fun.php</code>. Each autoloader file contains a function equally named to the file base name.</p>
+<p>The project base class has a method <code>_include( $subdirectory )</code> that checks for existents of necessary files and runs the include function. It automatically includes some subdirectories. Depending on project-type:</p>
+<table>
+<thead>
+<tr>
+<th id="subdirectory">subdirectory</th>
+<th id="hooked_in_plugin">hooked in plugin</th>
+<th id="hooked_in_theme">hooked in theme</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fun</td>
+<td>plugins_loaded</td>
+<td>plugins_loaded</td>
+</tr>
+<tr>
+<td>post_types_taxs</td>
+<td>on plugin activation hook plugins_loaded</td>
+<td>directly included</td>
+</tr>
+<tr>
+<td>roles_capabilities</td>
+<td>on plugin activation hook</td>
+<td>directly included</td>
+</tr>
+<tr>
+<td>template_functions</td>
+<td>not included</td>
+<td>plugins_loaded</td>
+</tr>
+<tr>
+<td>template_tags</td>
+<td>not included</td>
+<td>plugins_loaded</td>
+</tr>
+</tbody>
+</table>
+<p>More subdirectories can be added manually. The include function must be called manually as well in that case.<br />
+You could do one of the following.</p>
+<p>Add a file <code>./src/inc/fun/prefix_include_inc_custom.php</code>:</p>
+<pre><code class="hljs php language-php"><span class="hljs-comment">// If this file is called directly, abort.</span>
+<span class="hljs-keyword">if</span> ( ! defined( <span class="hljs-string">'WPINC'</span> ) ) {
+    <span class="hljs-keyword">die</span>;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">prefix_include_inc_custom</span><span class="hljs-params">()</span> </span>{
+    prefix\Prefix::get_instance()-&gt;_include( <span class="hljs-string">'custom'</span> );
+}
+add_action( <span class="hljs-string">'plugins_loaded'</span>, <span class="hljs-string">'prefix_include_inc_custom'</span> );</code></pre>
+<p>Extend the project base class <code>auto_include</code> method:</p>
+<pre><code class="hljs php language-php"><span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">auto_include</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">parent</span>::auto_include();
+    <span class="hljs-keyword">$this</span>-&gt;_include( <span class="hljs-string">'custom'</span> );
+}</code></pre>
+<p>Add a method to the project base class and extend the <code>hooks</code> method:</p>
+<pre><code class="hljs php language-php"><span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">hooks</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-keyword">parent</span>::hooks();
+    add_action( <span class="hljs-string">'plugins_loaded'</span>, <span class="hljs-keyword">array</span>( <span class="hljs-keyword">$this</span>, <span class="hljs-string">'include_inc_custom'</span> ), <span class="hljs-number">10</span> );
+}
+
+<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">include_inc_custom</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-keyword">$this</span>-&gt;_include( <span class="hljs-string">'custom'</span> );
+}</code></pre>
+	</div>
+</body>
+</html>

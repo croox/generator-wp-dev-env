@@ -1,8 +1,3 @@
-
-[README](../../../../../README.md)\
-└── [src](../readme.md)\
-    └── inc\
-
 ## `.src/inc`
 
 This directory contains subdirectories with `php` files.

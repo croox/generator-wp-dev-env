@@ -1,0 +1,31 @@
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+		<meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
+		<link media="all" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.9.0/github-markdown.min.css" type="text/css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" type="text/css" media="all" />
+    <title></title>
+</head>
+<body>
+	<div class="markdown-body">
+		<h2 id="srcscss"><code>./src/scss</code></h2>
+<p>This directory contains <code>scss</code> files and subdirectories with <code>scss</code> files.</p>
+<p><code>css</code> files will be generated for files within <code>./src/scss</code> (not recursivly).<br />
+This files can be seen as entry points that <code>@import</code> files from subdirectories.</p>
+<h3 id="what-happens-on-build-and-dist">What happens on <code>build</code> and <code>dist</code></h3>
+<p>Creates <code>css</code> files.</p>
+<p>On <code>build</code> the style is pretty expanded and source-maps are created.<br />
+On <code>dist</code> (or if task run with <code>--compress="true"</code>) the destination files are compressed and don't contain a source-map.</p>
+<h3 id="what-happens-on-watch">What happens on <code>watch</code></h3>
+<p>Same same like <code>build</code> but not all files are processed at all.</p>
+<p>If a file changes directly within <code>./src/scss</code>, the bundle will be created only for that certain file (and of course everything that is <code>@import</code>ed).</p>
+<p>If a file changes within a subdirectory, the target file will be created for the file that is named equaly to the subdirectory.<br />
+For example, if <code>./src/scss/prefix_super_script/**/*.scss</code> changes, a css file will be created for <code>./src/scss/prefix_super_script.scss</code> only.</p>
+<h3 id="dont-name-it-style">Don't name it style</h3>
+<p>Please don't name the entry file <code>./src/scss/style.scss</code>. Because this name is reserved and used for the themes <code>style.css</code>.</p>
+<p>??? todo, how to load paths from node modules</p>
+	</div>
+</body>
+</html>

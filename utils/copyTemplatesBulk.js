@@ -4,7 +4,7 @@ const path = require('path');
 
 const copyTemplatesBulk = ( self, source, destination, tplContext, options ) => {
 	options = {
-		globPattern: '**/*',
+		globPattern: '**/*',	/// ??? test this, should be an array actually!!!
 		prependFunctionPrefix: true,
 		...options,
 	};

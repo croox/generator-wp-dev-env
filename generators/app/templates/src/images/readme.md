@@ -1,8 +1,3 @@
-
-[README](../../../../../README.md)\
-└── [src](../readme.md)\
-    └── images\
-
 ## `.src/images`
 
 This directory contains images.

@@ -1,8 +1,3 @@
-
-[README](../../../../../README.md)\
-└── [src](../readme.md)\
-    └── js\
-
 ## `./src/js`
 
 This directory contains `js` files and subdirectories with `js` files.

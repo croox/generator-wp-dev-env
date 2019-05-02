@@ -1,8 +1,3 @@
-
-[README](../../../../../README.md)\
-└── [src](../readme.md)\
-    └── fonts\
-
 ## `.src/fonts`
 
 This directory contains fonts.

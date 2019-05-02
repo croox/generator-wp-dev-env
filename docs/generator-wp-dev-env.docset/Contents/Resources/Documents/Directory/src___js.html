@@ -1,0 +1,39 @@
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+		<meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
+		<link media="all" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.9.0/github-markdown.min.css" type="text/css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" type="text/css" media="all" />
+    <title></title>
+</head>
+<body>
+	<div class="markdown-body">
+		<h2 id="srcjs"><code>./src/js</code></h2>
+<p>This directory contains <code>js</code> files and subdirectories with <code>js</code> files.</p>
+<p>Bundles will be generated for files within <code>./src/js</code> (not recursively).<br />
+This files can be seen as entry points that <code>import</code> files from subdirectories.</p>
+<blockquote>
+  <p>Ready to code in ES6 and <a href="???">React.js</a>.<br />
+  Thanks to <a href="???">browserify</a> and <a href="???">babelify</a>.</p>
+</blockquote>
+<p>Some global variables are shimed in order to be used within the script.<br />
+It means that scripts enqueued earlier by WordPress are available as a module.<br />
+For Example: If the script is enqueued by WordPress with <code>jquery</code> as dependency, access it like this:</p>
+<pre><code class="hljs js language-js"><span class="hljs-keyword">import</span> $ <span class="hljs-keyword">from</span> <span class="hljs-string">'jquery'</span>;
+<span class="hljs-built_in">console</span>.log( <span class="hljs-string">'this is jquery: '</span>, $ );</code></pre>
+<p>WordPress highly recommends to use scripts already registered by WordPress, instead of using your own version of jquery, react or what ever.<br />
+See <a href="https://developer.wordpress.org/reference/functions/wp_register_script/#core-registered-scripts">wp_register_script</a> for detailed list of registered scripts.</p>
+<h3 id="what-happens-on-build-and-dist">What happens on <code>build</code> and <code>dist</code></h3>
+<p>Linting and browserifying.<br />
+On <code>dist</code> (or if task run with <code>--compress="true"</code>) the destination files are compressed.</p>
+<p>Generating pot <code>files</code> ???</p>
+<h3 id="what-happens-on-watch">What happens on <code>watch</code></h3>
+<p>Same same like <code>build</code> but not all files are processed at all.</p>
+<p>If a file changes directly within <code>./src/js</code>, the bundle will be created only for that certain file (and of course everything that is <code>import</code>ed/<code>require</code>d).</p>
+<p>If a file changes within a subdirectory, the bundle will be created for the file that is named equally to the subdirectory.<br />
+For example, if <code>./src/js/prefix_super_script/**/*.js</code> changes, a bundle will be created for <code>./src/js/prefix_super_script.js</code> only.</p>
+	</div>
+</body>
+</html>

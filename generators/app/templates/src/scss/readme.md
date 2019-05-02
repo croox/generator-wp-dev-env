@@ -1,8 +1,3 @@
-
-[README](../../../../../README.md)\
-└── [src](../readme.md)\
-    └── scss\
-
 ## `./src/scss`
 
 This directory contains `scss` files and subdirectories with `scss` files.
