@@ -1,5 +1,9 @@
-this is still a placeholder ???
+## `./grunt`
 
-documentation and examples coming soon.
+Contains files and directories to [`customize the taskrunner`](../Guide/grunt_taskrunner.html#customization). It will not be overwritten by updates.
 
-this folder should not be empty!
+Files in [`./grunt/hooked`](./grunt___hooked.html) are loaded by default.
+
+Check the [`customization section`](../Guide/grunt_taskrunner.html#customization) for details.
+
+

@@ -1,4 +1,4 @@
-## `.src/images`
+## `./src/images`
 
 This directory contains images.
 

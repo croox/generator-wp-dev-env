@@ -10,15 +10,15 @@
 </head>
 <body>
 	<div class="markdown-body">
-		<h2 id="srcinc"><code>.src/inc</code></h2>
+		<h2 id="srcinc"><code>./src/inc</code></h2>
 <p>This directory contains subdirectories with <code>php</code> files.</p>
 <h3 id="what-happens-on-build-watch-and-dist">What happens on <code>build</code>, <code>watch</code> and <code>dist</code></h3>
-<h4 id="copy-and-search-replace">Copy and search-replace</h4>
-<p>All subdirectories and their php files are copied into the corresponding destination directory. E.g.: <code>./src/inc/fun/*.php</code> will be copied to <code>./test_build/inc/fun</code>.<br />
-Rename ???</p>
+<h4 id="copy-and-string-replace">Copy and string-replace</h4>
+<p>All subdirectories and their php files are copied into the corresponding destination directory. E.g.: <code>./src/inc/fun/*.php</code> will be copied to <code>./test_build/inc/fun</code>.</p>
+<p>For all <code>php</code> files, certain patterns will be replaced. See <a href="../Task/build.html#copy-and-string-replace"><code>build</code></a>.</p>
 <h4 id="creates-kind-of-autoloader-function">Creates kind of autoloader function</h4>
 <p>Kind of autoloader file will be created for each subdirectory. The file contains a function that includes all files together. For example <code>./test_build/inc/prefix_include_fun.php</code>. Each autoloader file contains a function equally named to the file base name.</p>
-<p>The project base class has a method <code>_include( $subdirectory )</code> that checks for existents of necessary files and runs the include function. It automatically includes some subdirectories. Depending on project-type:</p>
+<p>The project base class has a method <code>_include( $subdirectory )</code> that checks for existence of necessary files and runs the include function. It automatically includes some subdirectories. Depending on project-type:</p>
 <table>
 <thead>
 <tr>

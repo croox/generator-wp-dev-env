@@ -1,0 +1,29 @@
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+		<meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
+		<link media="all" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.9.0/github-markdown.min.css" type="text/css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" type="text/css" media="all" />
+    <title></title>
+</head>
+<body>
+	<div class="markdown-body">
+		<h1 id="build"><code>build</code></h1>
+<blockquote>
+  <p>Run all tasks to build the project into <code>./test_build</code>.</p>
+</blockquote>
+<p><strong><code>grunt build</code></strong></p>
+<p>Tasks can be added to the list by hooking a filter function into <code>tasks.build.tasks</code>. The default task list is populated in <code>wp-dev-env-grunt/grunt/hooked/addDefaultBuildTasks.js</code>. See <a href="../Guide/grunt_taskrunner.html#customization">for customization</a>.</p>
+<p>??? include the task list</p>
+<h3 id="copy-and-string-replace"><code>copy</code> and <code>string-replace</code></h3>
+<p>Instead of <code>copy</code>, the <code>string-replace</code> task is used for <code>php</code> files.</p>
+<p>Certain patterns, prefixed with <code>wde_replace_</code>, will be replaced.<br />
+Possible to use are all keys with string value inside <code>package.json</code>.</p>
+<h2 id="options">Options</h2>
+<h3 id="--compresstrue"><code>[--compress="true"]</code></h3>
+<p>JavaScript and styles will be compressed and no debug info or source maps are created.</p>
+	</div>
+</body>
+</html>

@@ -71,7 +71,7 @@ const getDirTree = () => {
 		} ).map( file => file.replace( 'readme.md', '' ) ).map( file => 'root/' + file ) ),
 	] );
 
-	let text = '';
+	let text = '\n';
 
 	const loopTree = ( tree, i, lasts ) => {
 		const loopNode = ( node ) => {
@@ -85,7 +85,7 @@ const getDirTree = () => {
 				].join( '___' )
 
 				const link = '[' + key + '](../Directory/' + fileName + '.html)';
-				text += ( i > 0 ? '--'.repeat( i ) + ' ' : '' ) + link + '</br>'
+				text += ( i > 0 ? '--'.repeat( i ) + ' ' : '' ) + link + '\n'
 
 				loopTree( value, i + 1, [...lasts, key] );
 			} );
@@ -99,7 +99,29 @@ const getDirTree = () => {
 	return text;
 }
 
+const getTaskList = () => {
+	const sourceDir = path.resolve( 'docs', 'src', 'types', 'Task' )
 
+	const files = glob.sync( [
+		'**/*.md',
+		'!**/*~',
+		'!**/*#',
+	] ,{
+		cwd: sourceDir,
+	} );
+
+	let text = '\n';
+
+	[...files].map( file => {
+		const taskName = file.replace( '.md', '' );
+		const taskDesc = fs.readFileSync( path.resolve( sourceDir, file ), { encoding: 'utf8' } ).match( /(>[\s][\s\S]*?\n)([\S][\s\S]*?\n)*/ );
+		text += '- [' + taskName + '](../Task/' + taskName + '.html)',
+		text += taskDesc ? '\n' + taskDesc[0].replace( '> ', '' ) + '\n' : '';
+		text += '\n'
+	} );
+
+	return text;
+}
 
 const replacePatterns = ( typesDir ) => {
 
@@ -121,6 +143,10 @@ const replacePatterns = ( typesDir ) => {
 		{
 			from: /@include::project_structure_tree/g,
 			to: ( match ) => getDirTree(),
+		},
+		{
+			from: /@include::task_list/g,
+			to: ( match ) => getTaskList(),
 		},
 
 	].map( repl => {

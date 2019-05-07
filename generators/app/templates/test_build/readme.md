@@ -1,5 +1,5 @@
-this is still a placeholder ???
+## `./test_build`
 
-documentation and examples coming soon.
+Contains the project in current development state.
 
-this folder should not be empty!
+The [`build`](../Task/build.html) and [`watch`](../Task/watch.html) tasks use this directory as destination.

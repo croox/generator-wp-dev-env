@@ -1,0 +1,36 @@
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+		<meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
+		<link media="all" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.9.0/github-markdown.min.css" type="text/css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" type="text/css" media="all" />
+    <title></title>
+</head>
+<body>
+	<div class="markdown-body">
+		<h1 id="grunt-sync"><code>grunt sync</code></h1>
+<blockquote>
+  <p>Syncs the plugin to a destination specified in <code>wde_wp_installs.json</code>.</p>
+</blockquote>
+<p><strong><code>grunt sync:&lt;destination&gt;[:&lt;version&gt;]</code></strong></p>
+<h2 id="description">Description</h2>
+<p>Syncs the plugin to a destination specified in <code>wde_wp_installs.json</code>.<br />
+<strong>Deletes</strong> files on destination, if not present in source!</p>
+<p>usiung rsync ???</p>
+<p>??? how to pass argument to rsync ???</p>
+<h2 id="arguments">Arguments</h2>
+<h3 id="destination"><code>:&lt;destination&gt;</code></h3>
+<p>Comma separated list of destinations specified in <code>wde_wp_installs.json</code>.</p>
+<h4 id="version"><code>[:&lt;version&gt;]</code></h4>
+<p>String to specify sync source. Defaults to <code>test_build</code>.</p>
+<ul>
+<li><p><code>test_build</code> uses <code>./test_build/</code> as source.</p></li>
+<li><p><code>trunk</code> uses <code>./dist/trunk/</code> as source.</p></li>
+<li><p><code>&lt;version&gt;</code> uses <code>./dist/tag/&lt;version&gt;/</code> as source.</p>
+<p>The <code>./dist/tag/</code> directory is not tracked by git. It is created on <code>dist</code> task. So the specific version directory will not be existing when repository is cloned. </p></li>
+</ul>
+	</div>
+</body>
+</html>

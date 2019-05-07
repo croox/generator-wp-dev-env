@@ -2,7 +2,7 @@
 
 This directory contains `scss` files and subdirectories with `scss` files.
 
-`css` files will be generated for files within `./src/scss` (not recursivly).
+`css` files will be generated for files within `./src/scss` (not recursively).
 This files can be seen as entry points that `@import` files from subdirectories.
 
 ### What happens on `build` and `dist`

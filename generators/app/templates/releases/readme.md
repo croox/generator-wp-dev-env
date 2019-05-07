@@ -1,5 +1,3 @@
-this is still a placeholder ???
+## `./releases`
 
-documentation and examples coming soon.
-
-this folder should not be empty!
+Contains compressed releases. The releases are created on [`dist`](../Task/dist.html) and automatically added as release assets (currently only supported for GitHub).

@@ -11,5 +11,3 @@ Each directory contains a `readme.md` file concerning dev information.
 
 The directory structure documentation is generated from those `readme.md` files.
 *See ???*
-
-

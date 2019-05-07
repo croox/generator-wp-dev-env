@@ -1,0 +1,46 @@
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+		<meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
+		<link media="all" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.9.0/github-markdown.min.css" type="text/css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" type="text/css" media="all" />
+    <title></title>
+</head>
+<body>
+	<div class="markdown-body">
+		<h1 id="grunt-taskrunner">Grunt Taskrunner</h1>
+<p><a href="http://gruntjs.com/">Grunt</a> is used to automate processes and perform repetitive tasks.</p>
+<p>The basic setup is handled by <code>wp-dev-env-grunt</code> package. The projects <code>Gruntfile.js</code> imports and executes a function that configures and registers the built in tasks.</p>
+<h2 id="built-in-tasks">Built in tasks</h2>
+<ul>
+<li><p><a href="../Task/addchange.html">addchange</a><br />
+To record a change. Changes are used to generate the <code>CHANGELOG.md</code> and commit/tag messages on <code>dist</code>ribution.</p></li>
+<li><p><a href="../Task/build.html">build</a><br />
+Run all tasks to build the project into <code>./test_build</code>.</p></li>
+<li><p><a href="../Task/dist.html">dist</a><br />
+Bumps the plugin version and builds into <code>./test_build</code>. … ??? and lot more stuff.</p></li>
+<li><p><a href="../Task/format.html">format</a><br />
+Run all formatting tasks.</p></li>
+<li><p><a href="../Task/phpcs.html">phpcs</a><br />
+Run <code>PHP_CodeSniffer</code> to lint or format code in <code>./src</code> using WordPress coding standards.</p></li>
+<li><p><a href="../Task/prettier.html">prettier</a><br />
+Format code using prettier <a href="https://prettier.io/">prettier.io</a>.</p></li>
+<li><p><a href="../Task/remove_token.html">remove_token</a><br />
+Removes GitHub access token</p></li>
+<li><p><a href="../Task/set_token.html">set_token</a><br />
+Add/replace GitHub access token.</p></li>
+<li><p><a href="../Task/sync.html">sync</a><br />
+Syncs the plugin to a destination specified in <code>wde_wp_installs.json</code>.</p></li>
+<li><p><a href="../Task/watch.html">watch</a><br />
+Runs necessary tasks to update <code>./test_build</code>, whenever source files change.</p></li>
+<li><p><a href="../Task/watch_sync.html">watch_sync</a><br />
+Combination of <code>watch</code> and <code>sync</code>. Runs necessary tasks to update <code>./test_build</code>, whenever source files change. And syncs to one or more specific WordPress installations.</p></li>
+</ul>
+<h2 id="customization">Customization</h2>
+<p><a href="https://www.npmjs.com/package/@wordpress/hooks">@wordpress/hooks</a> is used to create action and filter hooks.</p>
+<p>Hooked function can be added to <code>./grunt/hooked/</code> ???link. Each file should export a function named equally to the files basename, containing one or more hooked functions.</p>
+	</div>
+</body>
+</html>

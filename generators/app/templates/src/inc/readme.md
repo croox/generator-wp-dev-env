@@ -1,19 +1,20 @@
-## `.src/inc`
+## `./src/inc`
 
 This directory contains subdirectories with `php` files.
 
 ### What happens on `build`, `watch` and `dist`
 
-#### Copy and search-replace
+#### Copy and string-replace
 
 All subdirectories and their php files are copied into the corresponding destination directory. E.g.: `./src/inc/fun/*.php` will be copied to `./test_build/inc/fun`.
-Rename ???
+
+For all `php` files, certain patterns will be replaced. See [`build`](../Task/build.html#copy-and-string-replace).
 
 #### Creates kind of autoloader function
 
 Kind of autoloader file will be created for each subdirectory. The file contains a function that includes all files together. For example `./test_build/inc/prefix_include_fun.php`. Each autoloader file contains a function equally named to the file base name.
 
-The project base class has a method `_include( $subdirectory )` that checks for existents of necessary files and runs the include function. It automatically includes some subdirectories. Depending on project-type:
+The project base class has a method `_include( $subdirectory )` that checks for existence of necessary files and runs the include function. It automatically includes some subdirectories. Depending on project-type:
 
 | subdirectory       	| hooked in plugin                          	| hooked in theme   	|
 |--------------------	|-------------------------------------------	|-------------------	|

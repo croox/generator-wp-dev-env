@@ -30,11 +30,11 @@
 	"devDependencies": {
 		"docset-generator": "github:jhotadhari/docset-generator",
 		"eslint": "^5.9.0",
-		"eslint-config-prettier": "^3.3.0",
-		"eslint-config-xo": "^0.25.0",
+		"eslint-config-prettier": "^4.2.0",
+		"eslint-config-xo": "^0.26.0",
 		"eslint-plugin-prettier": "^3.0.0",
 		"fs-extra": "^7.0.1",
-		"husky": "^1.2.0",
+		"husky": "^2.2.0",
 		"jest": "^24.7.1",
 		"lint-staged": "^8.1.0",
 		"prettier": "^1.15.2",
@@ -56,7 +56,7 @@
 		"figlet": "^1.2.1",
 		"gradient-string": "^1.2.0",
 		"tar": "^4.4.8",
-		"yeoman-generator": "^2.0.1",
+		"yeoman-generator": "^3.2.0",
 		"yosay": "^2.0.1"
 	},
 	"jest": {

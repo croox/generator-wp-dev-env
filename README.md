@@ -55,9 +55,10 @@ mkdir -p ~/path/to/myproject
 
 # Make it your working directory
 cd ~/path/to/myproject
+
 # Run the generator and follow the prompts to create a new theme/plugin
 yo wp-dev-env
- 
+
 # Run the generator again to create new custom-post-types, scripts, styles, blocks ...
 yo wp-dev-env
 

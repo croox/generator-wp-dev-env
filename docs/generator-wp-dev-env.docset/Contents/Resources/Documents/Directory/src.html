@@ -10,7 +10,26 @@
 </head>
 <body>
 	<div class="markdown-body">
-		
+		<h2 id="src"><code>./src</code></h2>
+<p>Contains the source code.</p>
+<h3 id="what-happens-on-build-watch-and-dist">What happens on <code>build</code>, <code>watch</code> and <code>dist</code></h3>
+<blockquote>
+  <p>Note: Following directories are exceptions. Check their docs.</p>
+  <ul>
+  <li><code>classes</code></li>
+  <li><code>fonts</code></li>
+  <li><code>images</code></li>
+  <li><code>inc</code></li>
+  <li><code>js</code></li>
+  <li><code>languages</code></li>
+  <li><code>scss</code></li>
+  <li><code>templates</code> (only themes)</li>
+  </ul>
+  <p>The themes <code>functions.php</code> or the plugins main file are specially treated as well.</p>
+</blockquote>
+<h4 id="copy-and-string-replace">Copy and string-replace</h4>
+<p>All subdirectories and files are copied into the corresponding destination directory. E.g.: <code>./src/custom_dir_to_include/*</code> will be copied to <code>./test_build/custom_dir_to_include</code>.</p>
+<p>For all <code>php</code> files, certain patterns will be replaced. See <a href="../Task/build.html#copy-and-string-replace"><code>build</code></a>.</p>
 	</div>
 </body>
 </html>

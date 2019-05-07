@@ -1,4 +1,4 @@
-## `.src/fonts`
+## `./src/fonts`
 
 This directory contains fonts.
 
