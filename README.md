@@ -4,13 +4,13 @@
 
 - Generates a project structure, organized in `./src`, `./test_build` and `./dist` see ???.
   - `./src` contains the source code.
-  
+
   - `./test_build` contains the current build of the project. May be synchronized with a local or remote WordPress installation.
-  
+
   - `./dist` contains releases and has the same structured as the WordPress plugin/theme svn repository.
 - `grunt` is used to automate processes and run repetitive tasks, see ???.
   - It may watch file changes in `./src` and performs the required tasks to update the `./test_build` directory and optionally syncs it to a WordPress installation on a local or remote system.
-  
+
   - Tasks for code linting, formatting and applying [WordPress coding standards](https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards).
 - Generates releases with readme that adheres to the [WordPress plugin readme file standard](https://wordpress.org/plugins/developers/#readme), a Changelog based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Uses `git` and creates tags and releases with description and assets automatically.
@@ -43,8 +43,6 @@ npm install -g yo
 # Install `generator-wp-dev-env` globally from github repository
 npm install -g https://github.com/croox/generator-wp-dev-env
 
-# Generate your new plugin or theme
-yo wp-dev-env
 ```
 
 ## Usage

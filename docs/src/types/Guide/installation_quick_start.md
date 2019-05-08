@@ -43,8 +43,6 @@ npm install -g yo
 # Install `generator-wp-dev-env` globally from github repository
 npm install -g https://github.com/croox/generator-wp-dev-env
 
-# Generate your new plugin or theme
-yo wp-dev-env
 ```
 
 ## Start a new Project
@@ -53,12 +51,15 @@ yo wp-dev-env
 # To generate a new plugin or theme, create a new directory
 mkdir -p ~/path/to/myproject
 
+# Make it your working directory
+cd ~/path/to/myproject
+
 # Run the generator and follow the prompts to create a new theme/plugin
 yo wp-dev-env
 
 # Run the generator again to create new custom-post-types, scripts, styles, blocks ...
-
 yo wp-dev-env
+
 # List available grunt tasks
 grunt
 ```

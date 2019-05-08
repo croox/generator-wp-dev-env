@@ -41,6 +41,98 @@ Combination of <code>watch</code> and <code>sync</code>. Runs necessary tasks to
 <h2 id="customization">Customization</h2>
 <p><a href="https://www.npmjs.com/package/@wordpress/hooks">@wordpress/hooks</a> is used to create action and filter hooks.</p>
 <p>Hooked function can be added to <code>./grunt/hooked/</code> ???link. Each file should export a function named equally to the files basename, containing one or more hooked functions.</p>
+<h3 id="filter">Filter</h3>
+<p>Every built in grunt task configuration is filterable. As well as some options, replacements and more. Following lists all built in filter:</p>
+<ul>
+<li><p><strong>replacements.replacements</strong><br />
+<em>File:</em> wp-dev-env-grunt/grunt/replacements.js</p></li>
+<li><p><strong>startGrunt.option.pattern</strong><br />
+<em>File:</em> wp-dev-env-grunt/grunt/startGrunt.js</p></li>
+<li><p><strong>config.browserify</strong><br />
+<em>File:</em> wp-dev-env-grunt/grunt/config/browserify.js</p></li>
+<li><p><strong>config.clean</strong><br />
+<em>File:</em> wp-dev-env-grunt/grunt/config/clean.js</p></li>
+<li><p><strong>config.cleanempty</strong><br />
+<em>File:</em> wp-dev-env-grunt/grunt/config/cleanempty.js</p></li>
+<li><p><strong>config.compress</strong><br />
+<em>File:</em> wp-dev-env-grunt/grunt/config/compress.js</p></li>
+<li><p><strong>config.concat</strong><br />
+<em>File:</em> wp-dev-env-grunt/grunt/config/concat.js</p></li>
+<li><p><strong>config.copy</strong><br />
+<em>File:</em> wp-dev-env-grunt/grunt/config/copy.js</p></li>
+<li><p><strong>config.create_autoloader</strong><br />
+<em>File:</em> wp-dev-env-grunt/grunt/config/create_autoloader.js</p></li>
+<li><p><strong>config.css_purge</strong><br />
+<em>File:</em> wp-dev-env-grunt/grunt/config/css_purge.js</p></li>
+<li><p><strong>config.eslint</strong><br />
+<em>File:</em> wp-dev-env-grunt/grunt/config/eslint.js</p></li>
+<li><p><strong>config.gitadd</strong><br />
+<em>File:</em> wp-dev-env-grunt/grunt/config/git.js</p></li>
+<li><p><strong>config.gitrm</strong><br />
+<em>File:</em> wp-dev-env-grunt/grunt/config/git.js</p></li>
+<li><p><strong>config.gitcommit</strong><br />
+<em>File:</em> wp-dev-env-grunt/grunt/config/git.js</p></li>
+<li><p><strong>config.gittag</strong><br />
+<em>File:</em> wp-dev-env-grunt/grunt/config/git.js</p></li>
+<li><p><strong>config.gitpush</strong><br />
+<em>File:</em> wp-dev-env-grunt/grunt/config/git.js</p></li>
+<li><p><strong>config.notify_hooks</strong><br />
+<em>File:</em> wp-dev-env-grunt/grunt/config/notify_hooks.js</p></li>
+<li><p><strong>config.po2json</strong><br />
+<em>File:</em> wp-dev-env-grunt/grunt/config/po2json.js</p></li>
+<li><p><strong>config.pot.handles</strong><br />
+<em>File:</em> wp-dev-env-grunt/grunt/config/pot.js</p></li>
+<li><p><strong>config.pot.options</strong><br />
+<em>File:</em> wp-dev-env-grunt/grunt/config/pot.js</p></li>
+<li><p><strong>config.pot</strong><br />
+???<br />
+<em>File:</em> wp-dev-env-grunt/grunt/config/pot.js<br />
+<em>Params:</em> </p>
+<ul>
+<li><p><em>object</em>    $config    bla bla.</p></li>
+<li><p><em>array</em>    $handles   bla bla.</p></li>
+<li><p><em>object</em>    $options   bla bla.</p></li></ul></li>
+<li><p><strong>config.potomo</strong><br />
+<em>File:</em> wp-dev-env-grunt/grunt/config/potomo.js</p></li>
+<li><p><strong>config.prettier</strong><br />
+<em>File:</em> wp-dev-env-grunt/grunt/config/prettier.js</p></li>
+<li><p><strong>config.sass</strong><br />
+<em>File:</em> wp-dev-env-grunt/grunt/config/sass.js</p></li>
+<li><p><strong>config.string-replace</strong><br />
+<em>File:</em> wp-dev-env-grunt/grunt/config/string-replace.js</p></li>
+<li><p><strong>config.uglify</strong><br />
+<em>File:</em> wp-dev-env-grunt/grunt/config/uglify.js</p></li>
+<li><p><strong>config.watch</strong><br />
+<em>File:</em> wp-dev-env-grunt/grunt/config/watch.js</p></li>
+<li><p><strong>config.wp_readme_to_markdown</strong><br />
+<em>File:</em> wp-dev-env-grunt/grunt/config/wp_readme_to_markdown.js</p></li>
+<li><p><strong>tasks.build.tasks</strong><br />
+<em>File:</em> wp-dev-env-grunt/grunt/tasks/build.js</p></li>
+<li><p><strong>tasks.dist.tasks</strong><br />
+<em>File:</em> wp-dev-env-grunt/grunt/tasks/dist.js</p></li>
+<li><p><strong>tasks.sound.file</strong><br />
+<em>File:</em> wp-dev-env-grunt/grunt/tasks/sound.js</p></li>
+<li><p><strong>tasks.sound.soundsPath</strong><br />
+<em>File:</em> wp-dev-env-grunt/grunt/tasks/sound.js</p></li>
+<li><p><strong>tasks.sound.play</strong><br />
+<em>File:</em> wp-dev-env-grunt/grunt/tasks/sound.js</p></li>
+</ul>
+<h3 id="actions">Actions</h3>
+<p>Following lists all built in actions:</p>
+<ul>
+<li><strong>startGrunt.loadTasks.before</strong><br />
+<em>File:</em> wp-dev-env-grunt/grunt/startGrunt.js</li>
+<li><strong>startGrunt.loadTasks.after</strong><br />
+<em>File:</em> wp-dev-env-grunt/grunt/startGrunt.js</li>
+<li><strong>startGrunt.initOptions.before</strong><br />
+<em>File:</em> wp-dev-env-grunt/grunt/startGrunt.js</li>
+<li><strong>startGrunt.initOptions.after</strong><br />
+<em>File:</em> wp-dev-env-grunt/grunt/startGrunt.js</li>
+<li><strong>updateConfigs.before</strong><br />
+<em>File:</em> wp-dev-env-grunt/grunt/updateConfigs.js</li>
+<li><strong>updateConfigs.after</strong><br />
+<em>File:</em> wp-dev-env-grunt/grunt/updateConfigs.js</li>
+</ul>
 	</div>
 </body>
 </html>

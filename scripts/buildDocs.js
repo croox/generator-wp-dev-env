@@ -4,7 +4,9 @@ const glob = require('fast-glob');
 const fs = require('fs-extra');
 const replace = require('replace-in-file');
 const compressing = require('compressing');
+const DocBlock = require('docblock');
 const {
+	get,
 	uniq,
 	dropWhile,
 	mapValues,
@@ -84,7 +86,11 @@ const getDirTree = () => {
 					key,
 				].join( '___' )
 
-				const link = '[' + key + '](../Directory/' + fileName + '.html)';
+
+				const link = 'root' === key
+					? 'root'
+					: '[' + key + '](../Directory/' + fileName + '.html)';
+
 				text += ( i > 0 ? '--'.repeat( i ) + ' ' : '' ) + link + '\n'
 
 				loopTree( value, i + 1, [...lasts, key] );
@@ -123,6 +129,98 @@ const getTaskList = () => {
 	return text;
 }
 
+const getHookList = functionName => {
+	const sourceDir = path.resolve( '..', 'wp-dev-env-grunt', 'grunt' );
+
+	const files = glob.sync( [
+		'**/*.js',
+		'!**/*~',
+		'!**/*#',
+	] ,{
+		cwd: sourceDir,
+	} );
+
+	let text = '\n';
+
+	if ( files.length === 0 ) {
+		console.log( 'No files found!' );
+		console.log( '"wp-dev-env-grunt" needs to be in same directory like "generator-wp-dev-env"' );
+	}
+
+	[...files].map( file => {
+
+		// find hook function and optional above docblock
+		const functionRegex = new RegExp(
+			'(\\/\\*\\*[\\r\\n](.|[\\r\\n])*?\\*\\/)?[\\r\\n].*(' +
+			functionName +
+			'\\()[\\s\\S]*?' +
+			( 'applyFilters' === functionName ? ',' : '' ) +
+			( 'doAction' === functionName ? '\\)' : '' ) +
+			'',
+		'g' );
+		const matches = fs.readFileSync( path.resolve( sourceDir, file ), { encoding: 'utf8' } ).match( functionRegex );
+
+		if ( matches ) {
+			[...matches].map( match => {
+
+				// parse docblock or just store the entire match
+				let doc = null;
+				if ( match.startsWith( '/**' ) ) {
+					const docBlock = new DocBlock( {
+						skipMarkdown: true,
+					} );
+					const parsed = docBlock.parse( match, 'js' );
+					doc = parsed ? parsed[0] : null;
+				} else {
+					doc = {
+						code: match,
+					};
+				}
+
+				if ( doc ) {
+
+					let key = '';
+					switch( functionName ) {
+						case 'applyFilters':
+							key = doc['code'].match( /(applyFilters\()[\s\S]*?,/g )[0].replace( /(applyFilters\()[\s]*['"]/, '' ).replace( /['"],/, '' );
+							break;
+						case 'doAction':
+							key = doc['code'].replace( /[\s\S]*grunt\.hooks\.doAction.*?['"]/, '' ).replace( /['"][\s\S]*/, '' );
+							break;
+					}
+
+					// start
+					text += '- **' + key + '**';
+
+					// description
+					if ( get( doc, ['description'], false ) ) {
+						text += '\n' + doc['description'].replace( '\n', '' );
+					}
+
+					// filepath
+					text += '\n*File:* ' + path.join( 'wp-dev-env-grunt', 'grunt', file );
+
+					// params
+					const params = get( doc, ['tags','params'], false );
+					if ( params ) {
+						text += '\n*Params:* ' + '\n';
+						[...params].map( param => {
+							text += '\n  - *' + param.type + '*\t' + param.name + '\t' + param.description + '\n';
+						} );
+					}
+
+					// end
+					text += '\n'
+				}
+
+			} );
+		}
+
+	} );
+
+	return text;
+}
+
 const replacePatterns = ( typesDir ) => {
 
 	const files = glob.sync( [
@@ -147,6 +245,14 @@ const replacePatterns = ( typesDir ) => {
 		{
 			from: /@include::task_list/g,
 			to: ( match ) => getTaskList(),
+		},
+		{
+			from: /@include::filter_list/g,
+			to: ( match ) => getHookList( 'applyFilters' ),
+		},
+		{
+			from: /@include::action_list/g,
+			to: ( match ) => getHookList( 'doAction' ),
 		},
 
 	].map( repl => {

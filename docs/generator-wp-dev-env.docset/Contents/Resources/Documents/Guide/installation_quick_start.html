@@ -40,25 +40,25 @@
 npm install -g yo
 
 <span class="hljs-comment"># Install `generator-wp-dev-env` globally from github repository</span>
-npm install -g https://github.com/croox/generator-wp-dev-env
-
-<span class="hljs-comment"># Generate your new plugin or theme</span>
-yo wp-dev-env</code></pre>
+npm install -g https://github.com/croox/generator-wp-dev-env</code></pre>
 <h2 id="start-a-new-project">Start a new Project</h2>
 <pre><code class="hljs bash language-bash"><span class="hljs-comment"># To generate a new plugin or theme, create a new directory</span>
 mkdir -p ~/path/to/myproject
+
+<span class="hljs-comment"># Make it your working directory</span>
+<span class="hljs-built_in">cd</span> ~/path/to/myproject
 
 <span class="hljs-comment"># Run the generator and follow the prompts to create a new theme/plugin</span>
 yo wp-dev-env
 
 <span class="hljs-comment"># Run the generator again to create new custom-post-types, scripts, styles, blocks ...</span>
-
 yo wp-dev-env
+
 <span class="hljs-comment"># List available grunt tasks</span>
 grunt</code></pre>
 <h2 id="project-structure">Project Structure</h2>
 <p>Generated Plugins and Themes share the same directory structure. So code can be used in both kind of projects in a similar way.</p>
-<p><a href="../Directory/root.html">root</a><br />
+<p>root<br />
 -- <a href="../Directory/grunt.html">grunt</a><br />
 ---- <a href="../Directory/grunt___hooked.html">hooked</a><br />
 -- <a href="../Directory/releases.html">releases</a><br />

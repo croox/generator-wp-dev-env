@@ -28,6 +28,7 @@
 		"yeoman-generator"
 	],
 	"devDependencies": {
+		"docblock": "^0.4.0",
 		"docset-generator": "github:jhotadhari/docset-generator",
 		"eslint": "^5.9.0",
 		"eslint-config-prettier": "^4.2.0",
