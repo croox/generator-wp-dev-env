@@ -8,7 +8,7 @@ This directory contains subdirectories with `php` files.
 
 All subdirectories and their php files are copied into the corresponding destination directory. E.g.: `./src/inc/fun/*.php` will be copied to `./test_build/inc/fun`.
 
-For all `php` files, certain patterns will be replaced. See [`build`](../Task/build.html#copy-and-string-replace).
+For all `php` files, certain patterns will be replaced. See [`build`](../Command/build.html#copy-and-string-replace).
 
 #### Creates kind of autoloader function
 

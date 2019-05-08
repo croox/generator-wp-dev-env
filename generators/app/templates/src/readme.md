@@ -21,4 +21,4 @@ Contains the source code.
 
 All subdirectories and files are copied into the corresponding destination directory. E.g.: `./src/custom_dir_to_include/*` will be copied to `./test_build/custom_dir_to_include`.
 
-For all `php` files, certain patterns will be replaced. See [`build`](../Task/build.html#copy-and-string-replace).
+For all `php` files, certain patterns will be replaced. See [`build`](../Command/build.html#copy-and-string-replace).

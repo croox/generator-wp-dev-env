@@ -2,4 +2,4 @@
 
 Contains the project in current development state.
 
-The [`build`](../Task/build.html) and [`watch`](../Task/watch.html) tasks use this directory as destination.
+The [`build`](../Command/build.html) and [`watch`](../Command/watch.html) tasks use this directory as destination.

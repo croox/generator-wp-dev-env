@@ -34,7 +34,7 @@ const copyReadmesDirectory = () => {
 		const newFileName = file.replace(  /\/readme/g, '' ).replace( /\//g, '___' );
 		fs.copySync(
 			path.resolve( sourceDir, file ),
-			path.resolve( 'tmp', 'docs', 'types', 'Directory', newFileName )
+			path.resolve( 'tmp', 'docs', 'types', 'Section', newFileName )
 		);
 	} );
 }
@@ -89,7 +89,7 @@ const getDirTree = () => {
 
 				const link = 'root' === key
 					? 'root'
-					: '[' + key + '](../Directory/' + fileName + '.html)';
+					: '[' + key + '](../Section/' + fileName + '.html)';
 
 				text += ( i > 0 ? '--'.repeat( i ) + ' ' : '' ) + link + '\n'
 
@@ -106,7 +106,7 @@ const getDirTree = () => {
 }
 
 const getTaskList = () => {
-	const sourceDir = path.resolve( 'docs', 'src', 'types', 'Task' )
+	const sourceDir = path.resolve( 'docs', 'src', 'types', 'Command' )
 
 	const files = glob.sync( [
 		'**/*.md',
@@ -121,7 +121,7 @@ const getTaskList = () => {
 	[...files].map( file => {
 		const taskName = file.replace( '.md', '' );
 		const taskDesc = fs.readFileSync( path.resolve( sourceDir, file ), { encoding: 'utf8' } ).match( /(>[\s][\s\S]*?\n)([\S][\s\S]*?\n)*/ );
-		text += '- [' + taskName + '](../Task/' + taskName + '.html)',
+		text += '- [' + taskName + '](../Command/' + taskName + '.html)',
 		text += taskDesc ? '\n' + taskDesc[0].replace( '> ', '' ) + '\n' : '';
 		text += '\n'
 	} );
