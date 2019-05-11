@@ -29,6 +29,7 @@ The Uppercase `./README.md` in the project root describes the repository itself.
 
 The projects function prefix is set during initialization. It is stored as `funcPrefix` in `package.json`.
 
-Almost all `js` and `php` files in `./src` should be prefixed. Exceptions are the plugin-main-file???, `./src/classes/*` (because they use namespaces) and any necessary weird custom krimskrams??? link???
+Almost `php` files in `./src` should be prefixed. Exceptions are the plugin-main-file???, `./src/classes/*` (because they use namespaces) and any necessary weird custom krimskrams??? link???
+Same recommendation for all `./src/js/*.js` "entry" scripts. But `js` files in subdirectories, that get imported as module, don't need to be prefixed.
 
 Some project files use `wde_` as prefix (`wp-dev-env`). For example [wde_wp_installs.json](./wde_wp_installs.json.html)

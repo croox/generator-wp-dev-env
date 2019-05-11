@@ -1,5 +1,3 @@
-this is still a placeholder ???
+## `./src/inc/template_functions`
 
-documentation and examples coming soon.
-
-this folder should not be empty!
+???

@@ -29,7 +29,8 @@
 </ul>
 <h2 id="prefixes">Prefixes</h2>
 <p>The projects function prefix is set during initialization. It is stored as <code>funcPrefix</code> in <code>package.json</code>.</p>
-<p>Almost all <code>js</code> and <code>php</code> files in <code>./src</code> should be prefixed. Exceptions are the plugin-main-file???, <code>./src/classes/*</code> (because they use namespaces) and any necessary weird custom krimskrams??? link???</p>
+<p>Almost <code>php</code> files in <code>./src</code> should be prefixed. Exceptions are the plugin-main-file???, <code>./src/classes/*</code> (because they use namespaces) and any necessary weird custom krimskrams??? link???<br />
+Same recommendation for all <code>./src/js/*.js</code> "entry" scripts. But <code>js</code> files in subdirectories, that get imported as module, don't need to be prefixed.</p>
 <p>Some project files use <code>wde_</code> as prefix (<code>wp-dev-env</code>). For example <a href="./wde_wp_installs.json.html">wde_wp_installs.json</a></p>
 	</div>
 </body>
