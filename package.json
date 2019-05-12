@@ -16,6 +16,7 @@
 	"files": [
 		"generators",
 		"scripts",
+		"docs",
 		"utils"
 	],
 	"keywords": [

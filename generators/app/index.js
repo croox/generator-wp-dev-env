@@ -272,28 +272,57 @@ module.exports = class extends Generator {
 		if ( ! ['theme','childtheme','plugin'].includes( this.props.answers.type ) )
 			return;
 
-		this.installDependencies({
-			bower: false,
-			npm: true,
-		}).then( () => {
-			if ( this.options.git !== 'false' ) {
-				[
-					'composer install --profile -v',
-					'grunt build',
-					'git init',
-					'git add .',
-					'git commit -m "Hurray, just generated a new ' + this.props.answers.type + '!"',
+		const self = this;
 
-				].map( cmd => {
-					this.log('');
-					this.log( chalk.green( 'running ' ) + chalk.yellow( cmd ) );
-					this.log('');
-					childProcess.execSync( cmd, { stdio:'inherit' } );
+		[
+			{
+				cmd: 'npm',
+				args: ['install'],
+			},
+			{
+				cmd: 'composer',
+				args: ['install', '--profile', '-v'],
+			},
+			{
+				cmd: 'grunt',
+				args: ['build'],
+			},
+
+			{
+				cmd: 'git',
+				args: ['init'],
+			},
+			{
+				cmd: 'git',
+				args: ['add'],
+			},
+			{
+				cmd: 'git',
+				args: ['commit','-m "Hurray, just generated a new ' + this.props.answers.type + '!"'],
+			},
+
+		].reduce( ( accumulatorPromise, process ) => {
+
+			return accumulatorPromise.then( () => {
+				return new Promise( ( resolve, reject ) => {
+					self.log('');
+					self.log('');
+					self.log( chalk.green( 'Start childprocess: ' ) + chalk.yellow( process.cmd + ' ' + process.args.join( ' ' ) ) );
+					self.log('');
+
+					self.spawnCommand( process.cmd, process.args )
+					.on( 'close', code => {
+						self.log('');
+						self.log( chalk.green( 'Childprocess done with exit code ' ) + code + chalk.green( ': ' ) + chalk.yellow( process.cmd + ' ' + process.args.join( ' ' ) ) );
+						self.log('');
+						resolve( code );
+					} );
 				} );
-			}
+			} ).catch( err => console.log( err ) );
+
+		}, Promise.resolve() ).then( result => {
 
 			[
-				'',
 				'',
 				'',
 				chalk.green.bold( '✔ Everything is ready!' ),
@@ -313,7 +342,8 @@ module.exports = class extends Generator {
 				'',
 			].map( str => this.log( str ) );
 
-		});
+		} ).catch( err => console.log( err ) );
 
 	}
+
 };
