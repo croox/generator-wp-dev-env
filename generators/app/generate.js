@@ -196,6 +196,30 @@ const generate = ( self, options ) => {
 				);
 
 				break;
+			case 'empty':
+
+				copyTemplatesBulk(
+					self,
+					self.templatePath( '../template_collections/empty' ),
+					self.destinationPath(),
+					tplContext,
+					{
+						globPattern: [
+							'**/*',
+							'!src/classes/Main.php',
+							'!src/scss/frontend.scss',
+						],
+					}
+				);
+
+				self.fs.copyTpl(
+					self.templatePath( '../templates/src/classes/Main.php' ),
+					self.destinationPath( 'src/classes/' + startCase( kebabCase( tplContext.funcPrefix ) ) + '.php' ),
+					tplContext
+				);
+
+				break;
+
 		}
 	} else {
 		self.fs.copyTpl(

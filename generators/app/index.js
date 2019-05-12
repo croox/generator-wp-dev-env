@@ -215,7 +215,10 @@ module.exports = class extends Generator {
 					case 'twentynineteen':
 						this.tplContext.parent_class = 'Theme_Twentynineteen';
 						break;
-					}
+					case 'empty':
+					default:
+						this.tplContext.parent_class = 'Theme';
+				}
 			}
 		}
 		if ( 'plugin' === this.tplContext.projectType ) {
@@ -294,7 +297,7 @@ module.exports = class extends Generator {
 			},
 			{
 				cmd: 'git',
-				args: ['add'],
+				args: ['add','--all'],
 			},
 			{
 				cmd: 'git',
@@ -309,11 +312,14 @@ module.exports = class extends Generator {
 					self.log('');
 					self.log( chalk.green( 'Start childprocess: ' ) + chalk.yellow( process.cmd + ' ' + process.args.join( ' ' ) ) );
 					self.log('');
-
 					self.spawnCommand( process.cmd, process.args )
 					.on( 'close', code => {
 						self.log('');
-						self.log( chalk.green( 'Childprocess done with exit code ' ) + code + chalk.green( ': ' ) + chalk.yellow( process.cmd + ' ' + process.args.join( ' ' ) ) );
+						self.log( 0 === code
+							? chalk.green( 'Childprocess done with exit code: ' ) + code
+							: chalk.red( 'Childprocess exited with code: ' ) + code
+						);
+						self.log( 'Command was: ' + chalk.italic( process.cmd + ' ' + process.args.join( ' ' ) ) );
 						self.log('');
 						resolve( code );
 					} );

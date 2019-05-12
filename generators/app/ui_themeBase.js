@@ -11,7 +11,19 @@ const ui_themeBase = function( self ){
 			choices: [
 				{
 					name: 'twentynineteen',
-					message: 'Based on WordPress Twentynineteen Theme.\n	See https://github.com/WordPress/twentynineteen',
+					message: [
+						'Based on WordPress Twentynineteen Theme.',
+						'	See https://github.com/WordPress/twentynineteen',
+						'	Includes most of Twentynineteen\'s functionality, but may be not all.',
+					].join( '\n' ),
+				},
+				{
+					name: 'empty',
+					message: [
+						'Empty Theme',
+						'	Useful to migrate other themes to wp-dev-env or developing new theme bases for the generator.',
+						'	Contains just some placeholders for required theme files to be overwritten.',
+					].join( '\n' ),
 				},
 			],
 		},
