@@ -1,6 +1,6 @@
 {
 	"name": "generator-wp-dev-env",
-	"version": "0.5.1",
+	"version": "0.5.2",
 	"subModules": {
 		"wp-dev-env-grunt": "0.6.1",
 		"croox/wp-dev-env-frame": "0.2.5"
@@ -28,7 +28,7 @@
 		"yeoman-generator"
 	],
 	"devDependencies": {
-		"docblock": "^0.4.0",
+		"docblock": "github:jhotadhari/docblock",
 		"docset-generator": "github:jhotadhari/docset-generator",
 		"eslint": "^5.9.0",
 		"eslint-config-prettier": "^4.2.0",
