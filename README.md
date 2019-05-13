@@ -4,13 +4,13 @@
 
 - Generates a project structure, organized in `./src`, `./test_build` and `./dist` see ???.
   - `./src` contains the source code.
-  
+
   - `./test_build` contains the current build of the project. May be synchronized with a local or remote WordPress installation.
-  
+
   - `./dist` contains releases and has the same structured as the WordPress plugin/theme svn repository.
 - `grunt` is used to automate processes and run repetitive tasks, see ???.
   - It may watch file changes in `./src` and performs the required tasks to update the `./test_build` directory and optionally syncs it to a WordPress installation on a local or remote system.
-  
+
   - Tasks for code linting, formatting and applying [WordPress coding standards](https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards).
 - Generates releases with readme that adheres to the [WordPress plugin readme file standard](https://wordpress.org/plugins/developers/#readme), a Changelog based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Uses `git` and creates tags and releases with description and assets automatically.
@@ -23,15 +23,15 @@ This package is part of the `wp-dev-env` tool set to develop WordPress Plugins a
 Packages:
 
 - [`generator-wp-dev-env`](https://github.com/croox/generator-wp-dev-env)
-  
+
   Yeoman generator to initialize the project and add new components.
 
 - [`wp-dev-env-grunt`](https://github.com/croox/wp-dev-env-grunt)
-  
+
   Configures and registers the built in grunt tasks.
 
 - [`wp-dev-env-frame`](https://github.com/croox/wp-dev-env-frame)
-  
+
   The `php` frame. Contains base classes and utilities.
 
 ## Dependencies
@@ -45,6 +45,7 @@ We assume you have pre-installed [node.js](https://nodejs.org/) and [npm.js](htt
 - `sass` tested version `3.4.22`
 - `rsync` tested version `3.1.2`
 - `xgettext` tested version `0.19.7`
+- *(optional)* `convert` from ImageMagick. Tested with ImageMagick 6.8.9-9
 
 All dependencies must be accessible from cli via their respective command. To test this, run something like: `composer --version` or `which composer` ...
 

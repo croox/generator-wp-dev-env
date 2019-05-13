@@ -1,7 +1,3 @@
-
-
-const chalk = require('chalk');
-
 const {
 	startCase,
 	kebabCase,
@@ -9,7 +5,7 @@ const {
 
 const copyDirStructure = require('../../utils/copyDirStructure');
 const copyTemplatesBulk = require('../../utils/copyTemplatesBulk');
-
+const createScreenshot = require('../../utils/createScreenshot');
 
 const generate = ( self, options ) => {
 
@@ -157,6 +153,9 @@ const generate = ( self, options ) => {
 
 	// copy templates
 	copyBaseTpls();
+
+	// create screenshot
+	createScreenshot( self, tplContext.funcPrefix );
 
 	// copy all readme
 	self.fs.copyTpl(
