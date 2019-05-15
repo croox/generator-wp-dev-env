@@ -148,14 +148,14 @@ const generate = ( self, options ) => {
 		...( 'plugin' === tplContext.projectType && { exclude: ['src/templates'] } ),
 	} );
 
+	// create screenshot
+	createScreenshot( self, tplContext.funcPrefix );
+
 	// generate json
 	generateJson();
 
 	// copy templates
 	copyBaseTpls();
-
-	// create screenshot
-	createScreenshot( self, tplContext.funcPrefix );
 
 	// copy all readme
 	self.fs.copyTpl(

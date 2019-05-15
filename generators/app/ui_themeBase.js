@@ -10,11 +10,21 @@ const ui_themeBase = function( self ){
 			type: 'select',
 			choices: [
 				{
+					// https://github.com/understrap/understrap/commit/577eea7f47aeef222062b3bcea70718058acab87
+					name: 'underboots',
+					message: [
+						'Mainly based on understrap',
+						'	"Combines Automattic´s Underscores Starter Theme and Bootstrap 4"',
+						'	See https://github.com/understrap/understrap',
+						'	???TODO: Gutenberg and block support is based on Twentynineteen and incorporates Bootstrap.',
+					].join( '\n' ),
+				},
+				{
 					name: 'twentynineteen',
 					message: [
 						'Based on WordPress Twentynineteen Theme.',
 						'	See https://github.com/WordPress/twentynineteen',
-						'	Includes most of Twentynineteen\'s functionality, but may be not all.',
+						'	Includes most of Twentynineteen\'s code and functionality, but not all!',
 					].join( '\n' ),
 				},
 				{

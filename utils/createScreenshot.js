@@ -71,11 +71,11 @@ const createScreenshot = ( generator, inputText ) => {
 		} ).catch( err => console.log( err ) );
 	}, Promise.resolve() ).then( result => {
 		generator.log('');
-		generator.log( chalk.green( 'Added screenshot' ) );
+		generator.log( chalk.green( 'Successfully created screenshot' ) );
 		generator.log('');
 	} ).catch( err => {
 		generator.log('');
-		generator.log( chalk.red( 'Couldn\'t create Screenshot' ) );
+		generator.log( chalk.red( 'Couldn\'t create screenshot' ) );
 		generator.log( chalk.red( 'Is ImageMagick installed?' ) );
 		generator.log( err );
 		generator.log('');

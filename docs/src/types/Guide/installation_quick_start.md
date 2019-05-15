@@ -24,7 +24,7 @@ We assume you have pre-installed [node.js](https://nodejs.org/) and [npm.js](htt
 - `composer` tested version `1.2.2`
 - `git` tested version `2.7.4`
 - `grunt` tested version `1.0.4` and `grunt-cli`
-- `sass` tested version `3.4.22`
+- `sass` tested version `3.7.4`
 - `rsync` tested version `3.1.2`
 - `xgettext` tested version `0.19.7`
 

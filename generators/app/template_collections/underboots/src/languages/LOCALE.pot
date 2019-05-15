@@ -1,0 +1,367 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the unterhose package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: unterhose 0.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-05-15 12:19+0530\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/classes/Customizer.php:71
+msgid "Theme Layout Settings"
+msgstr ""
+
+#: src/classes/Customizer.php:73
+msgid "Container width and sidebar defaults"
+msgstr ""
+
+#: src/classes/Customizer.php:93
+msgid "Container Width"
+msgstr ""
+
+#: src/classes/Customizer.php:94
+msgid "Choose between Bootstrap's container and container-fluid"
+msgstr ""
+
+#: src/classes/Customizer.php:99
+msgid "Fixed width container"
+msgstr ""
+
+#: src/classes/Customizer.php:100
+msgid "Full width container"
+msgstr ""
+
+#: src/classes/Customizer.php:122
+msgid "Sidebar Positioning"
+msgstr ""
+
+#: src/classes/Customizer.php:124
+msgid ""
+"Set sidebar's default position. Can either be: right, left, both or none. "
+"Note: this can be overridden on individual pages."
+msgstr ""
+
+#: src/classes/Customizer.php:132
+msgid "Right sidebar"
+msgstr ""
+
+#: src/classes/Customizer.php:133
+msgid "Left sidebar"
+msgstr ""
+
+#: src/classes/Customizer.php:134
+msgid "Left & Right sidebars"
+msgstr ""
+
+#: src/classes/Customizer.php:135
+msgid "No sidebar"
+msgstr ""
+
+#: src/classes/WP_Bootstrap_Navwalker.php:370
+msgid "Add a menu"
+msgstr ""
+
+#: src/inc/fun/unte_add_theme_support.php:41
+msgid "Primary Menu"
+msgstr ""
+
+#: src/inc/fun/unte_add_theme_support.php:129
+msgid "Default Header Image"
+msgstr ""
+
+#: src/inc/fun/unte_widgets_init.php:19
+msgid "Right Sidebar"
+msgstr ""
+
+#: src/inc/fun/unte_widgets_init.php:21
+msgid "Right sidebar widget area"
+msgstr ""
+
+#: src/inc/fun/unte_widgets_init.php:31
+msgid "Left Sidebar"
+msgstr ""
+
+#: src/inc/fun/unte_widgets_init.php:33
+msgid "Left sidebar widget area"
+msgstr ""
+
+#: src/inc/fun/unte_widgets_init.php:43
+msgid "Hero Slider"
+msgstr ""
+
+#: src/inc/fun/unte_widgets_init.php:45
+msgid "Hero slider area. Place two or more widgets here and they will slide!"
+msgstr ""
+
+#: src/inc/fun/unte_widgets_init.php:55
+msgid "Hero Canvas"
+msgstr ""
+
+#: src/inc/fun/unte_widgets_init.php:57
+msgid "Full size canvas hero area for Bootstrap and other custom HTML markup"
+msgstr ""
+
+#: src/inc/fun/unte_widgets_init.php:67
+msgid "Top Full"
+msgstr ""
+
+#: src/inc/fun/unte_widgets_init.php:69
+msgid "Full top widget with dynamic grid"
+msgstr ""
+
+#: src/inc/fun/unte_widgets_init.php:79
+msgid "Footer Full"
+msgstr ""
+
+#: src/inc/fun/unte_widgets_init.php:81
+msgid "Full sized footer widget with dynamic grid"
+msgstr ""
+
+#: src/inc/template_functions/unte_bootstrap_comment_form_fields.php:27
+msgid "Name"
+msgstr ""
+
+#: src/inc/template_functions/unte_bootstrap_comment_form_fields.php:30
+msgid "Email"
+msgstr ""
+
+#: src/inc/template_functions/unte_bootstrap_comment_form_fields.php:33
+#: src/templates/author.php:48
+msgid "Website"
+msgstr ""
+
+#: src/inc/template_functions/unte_bootstrap_comment_form_fields.php:37
+msgid ""
+"Save my name, email, and website in this browser for the next time I comment"
+msgstr ""
+
+#: src/inc/template_functions/unte_bootstrap_comment_form.php:24
+msgid "Comment"
+msgstr ""
+
+#: src/inc/template_functions/unte_excerpt_get_more_link.php:21
+msgid "Read More..."
+msgstr ""
+
+#: src/inc/template_tags/unte_entry_footer.php:22
+#: src/inc/template_tags/unte_entry_footer.php:28
+msgid ", "
+msgstr ""
+
+#: src/inc/template_tags/unte_entry_footer.php:25
+#, php-format
+msgid "Posted in %s"
+msgstr ""
+
+#: src/inc/template_tags/unte_entry_footer.php:31
+#, php-format
+msgid "Tagged %s"
+msgstr ""
+
+#: src/inc/template_tags/unte_entry_footer.php:36
+msgid "Leave a comment"
+msgstr ""
+
+#: src/inc/template_tags/unte_entry_footer.php:36
+msgid "1 Comment"
+msgstr ""
+
+#: src/inc/template_tags/unte_entry_footer.php:36
+msgid "% Comments"
+msgstr ""
+
+#: src/inc/template_tags/unte_entry_footer.php:42
+#, php-format
+msgid "Edit %s"
+msgstr ""
+
+#: src/inc/template_tags/unte_pagination.php:25
+msgid "&laquo;"
+msgstr ""
+
+#: src/inc/template_tags/unte_pagination.php:26
+msgid "&raquo;"
+msgstr ""
+
+#: src/inc/template_tags/unte_pagination.php:27
+msgid "Posts navigation"
+msgstr ""
+
+#: src/inc/template_tags/unte_post_nav.php:29
+msgid "Post navigation"
+msgstr ""
+
+#: src/inc/template_tags/unte_post_nav.php:33
+msgid "<i class=\"fa fa-angle-left\"></i>&nbsp;%title"
+msgstr ""
+
+#: src/inc/template_tags/unte_post_nav.php:36
+msgid "%title&nbsp;<i class=\"fa fa-angle-right\"></i>"
+msgstr ""
+
+#: src/inc/template_tags/unte_posted_on.php:32
+msgid "Posted on"
+msgstr ""
+
+#: src/inc/template_tags/unte_posted_on.php:40
+msgid "by"
+msgstr ""
+
+#: src/inc/template_tags/unte_posted_on.php:40
+msgid "Posted by"
+msgstr ""
+
+#: src/inc/template_tags/unte_site_info.php:27
+msgid "http://wordpress.org/"
+msgstr ""
+
+#: src/inc/template_tags/unte_site_info.php:30
+#, php-format
+msgid "Proudly powered by %s"
+msgstr ""
+
+#: src/inc/template_tags/unte_site_info.php:35
+#, php-format
+msgid "Theme: %1$s"
+msgstr ""
+
+#: src/inc/template_tags/unte_site_info.php:40
+#, php-format
+msgid "Version: %1$s"
+msgstr ""
+
+#: src/template_parts/loop/content-none.php:19
+msgid "Nothing Found"
+msgstr ""
+
+#: src/template_parts/loop/content-none.php:28
+#, php-format
+msgid ""
+"Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+msgstr ""
+
+#: src/template_parts/loop/content-none.php:36
+msgid ""
+"Sorry, but nothing matched your search terms. Please try again with some "
+"different keywords."
+msgstr ""
+
+#: src/template_parts/loop/content-none.php:41
+msgid ""
+"It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps "
+"searching can help."
+msgstr ""
+
+#: src/template_parts/loop/content-page.php:30
+#: src/template_parts/loop/content-single.php:36
+#: src/template_parts/loop/content.php:43
+msgid "Pages:"
+msgstr ""
+
+#: src/template_parts/loop/content-page.php:40
+msgid "Edit"
+msgstr ""
+
+#: src/template_parts/sidebar/sidebar-hero.php:29
+msgid "Previous"
+msgstr ""
+
+#: src/template_parts/sidebar/sidebar-hero.php:37
+msgid "Next"
+msgstr ""
+
+#: src/templates/404.php:31
+msgid "Oops! That page can&rsquo;t be found."
+msgstr ""
+
+#: src/templates/404.php:37
+msgid ""
+"It looks like nothing was found at this location. Maybe try one of the links "
+"below or a search?"
+msgstr ""
+
+#: src/templates/404.php:47
+msgid "Most Used Categories"
+msgstr ""
+
+#: src/templates/404.php:70
+#, php-format
+msgid "Try looking in the monthly archives. %1$s"
+msgstr ""
+
+#: src/templates/author.php:39
+msgid "About:"
+msgstr ""
+
+#: src/templates/author.php:55
+msgid "Profile"
+msgstr ""
+
+#: src/templates/author.php:61
+msgid "Posts by"
+msgstr ""
+
+#: src/templates/author.php:75
+msgid "Permanent Link:"
+msgstr ""
+
+#: src/templates/author.php:80
+msgid "in"
+msgstr ""
+
+#: src/templates/comments.php:38
+#, php-format
+msgid "One thought on &ldquo;%s&rdquo;"
+msgstr ""
+
+#: src/templates/comments.php:45
+#, php-format
+msgid "%1$s thought on &ldquo;%2$s&rdquo;"
+msgstr ""
+
+#: src/templates/comments.php:63 src/templates/comments.php:98
+msgid "Comment navigation"
+msgstr ""
+
+#: src/templates/comments.php:67 src/templates/comments.php:102
+msgid "&larr; Older Comments"
+msgstr ""
+
+#: src/templates/comments.php:73 src/templates/comments.php:108
+msgid "Newer Comments &rarr;"
+msgstr ""
+
+#: src/templates/comments.php:123
+msgid "Comments are closed."
+msgstr ""
+
+#: src/templates/header.php:32
+msgid "Skip to content"
+msgstr ""
+
+#: src/templates/header.php:58
+msgid "Toggle navigation"
+msgstr ""
+
+#: src/templates/search.php:37
+#, php-format
+msgid "Search Results for: %s"
+msgstr ""
+
+#: src/templates/searchform.php:14 src/templates/searchform.php:20
+msgid "Search"
+msgstr ""
+
+#: src/templates/searchform.php:17
+msgid "Search &hellip;"
+msgstr ""
