@@ -36,7 +36,7 @@ class Classic_Editor_Support {
 	}
 
 	public function tiny_mce_stylesheet( $current_screen ) {
-		add_editor_style( namespace\Unte::get_instance()->get_dir_url() . '/css/<%= funcPrefix %>_classic_editor_tiny_mce.min.css' );
+		add_editor_style( namespace\<%= startCase( kebabCase( funcPrefix ) ) %>::get_instance()->dir_url . '/css/<%= funcPrefix %>_classic_editor_tiny_mce.min.css' );
 	}
 
 	// Add TinyMCE style formats.

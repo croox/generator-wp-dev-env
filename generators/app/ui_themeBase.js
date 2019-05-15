@@ -13,7 +13,7 @@ const ui_themeBase = function( self ){
 					// https://github.com/understrap/understrap/commit/577eea7f47aeef222062b3bcea70718058acab87
 					name: 'underboots',
 					message: [
-						'Mainly based on understrap',
+						'Mainly based on UnderStrap',
 						'	"Combines Automattic´s Underscores Starter Theme and Bootstrap 4"',
 						'	See https://github.com/understrap/understrap',
 						'	???TODO: Gutenberg and block support is based on Twentynineteen and incorporates Bootstrap.',

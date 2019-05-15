@@ -110,7 +110,7 @@ if ( ! function_exists ( '<%= funcPrefix %>_add_theme_support' ) ) {
 			apply_filters(
 				'<%= funcPrefix %>_custom_header_args',
 				array(
-					'default-image' => <%= project_class %>::get_instance()->get_dir_url() . '/images/header.jpg',
+					'default-image' => <%= project_class %>::get_instance()->dir_url . '/images/header.jpg',
 					'width'         => 2000,
 					'height'        => 300,
 					'flex-height'   => true,
@@ -118,7 +118,6 @@ if ( ! function_exists ( '<%= funcPrefix %>_add_theme_support' ) ) {
 			)
 		);
 
-		// ??? hej understrap, funktioniert das
 		register_default_headers(
 			array(
 				'default-image' => array(

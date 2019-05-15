@@ -25,8 +25,8 @@ class <%= startCase( kebabCase( funcPrefix ) ) %> extends wde\<%= parent_class %
 
 		$handle = $this->prefix . '_script';
 		$_src = '/js/' . $handle . '.min.js';
-		$src = $this->get_dir_url() . $_src;
-		$ver = $this->get_version() . '.' . filemtime( $this->get_dir_path() .$_src );
+		$src = $this->dir_url . $_src;
+		$ver = $this->version . '.' . filemtime( $this->dir_path .$_src );
 
 		wp_register_script(
 			$handle,
@@ -44,7 +44,7 @@ class <%= startCase( kebabCase( funcPrefix ) ) %> extends wde\<%= parent_class %
 		wp_set_script_translations(
 			$handle,
 			$this->textdomain,
-			$this->get_dir_path() . 'languages'
+			$this->dir_path . 'languages'
 		);
 
 		wp_enqueue_script( $handle );

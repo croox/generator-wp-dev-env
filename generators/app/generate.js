@@ -1,6 +1,8 @@
 const {
 	startCase,
 	kebabCase,
+	set,
+	get,
 } = require('lodash');
 
 const copyDirStructure = require('../../utils/copyDirStructure');
@@ -11,7 +13,7 @@ const generate = ( self, options ) => {
 
 	const { tplContext } = options;
 
-	const generateJson = () => [
+	let jsonFiles = [
 		{
 			dest: '.eslintrc.json',
 			data: {
@@ -117,10 +119,7 @@ const generate = ( self, options ) => {
 				},
 			},
 		},
-	].map( obj => self.fs.writeJSON(
-		obj.dest,
-		obj.data
-	) );
+	];
 
 	const copyBaseTpls = () => [
 		// root
@@ -151,9 +150,6 @@ const generate = ( self, options ) => {
 	// create screenshot
 	createScreenshot( self, tplContext.funcPrefix );
 
-	// generate json
-	generateJson();
-
 	// copy templates
 	copyBaseTpls();
 
@@ -168,7 +164,23 @@ const generate = ( self, options ) => {
 		switch( tplContext.themeBase ){
 			case 'underboots':
 
-				// copy templates, exclude all scss
+				// json files
+				const packageJsonIndex = jsonFiles.findIndex( file => 'package.json' === file.dest );
+				set( jsonFiles, [[packageJsonIndex],'data','dependencies'], {
+					...get( jsonFiles, [[packageJsonIndex],'data','dependencies'], {} ),
+					bootstrap: '^4.3.1',
+					['font-awesome']: '^4.7.0',
+					['popper.js']: '^1.15.0',
+				} );
+
+				// copy main class
+				self.fs.copyTpl(
+					self.templatePath( '../template_collections/underboots/src/classes/Main.php' ),
+					self.destinationPath( 'src/classes/' + startCase( kebabCase( tplContext.funcPrefix ) ) + '.php' ),
+					tplContext
+				);
+
+				// copy templates, exclude all scss js
 				copyTemplatesBulk(
 					self,
 					self.templatePath( '../template_collections/underboots' ),
@@ -179,41 +191,99 @@ const generate = ( self, options ) => {
 							'**/*',
 							'!src/classes/Main.php',
 							'!src/scss/**/*',
+							'!src/js/**/*',
 						],
 					}
 				);
 
-				// copy main class
-				self.fs.copyTpl(
-					self.templatePath( '../template_collections/underboots/src/classes/Main.php' ),
-					self.destinationPath( 'src/classes/' + startCase( kebabCase( tplContext.funcPrefix ) ) + '.php' ),
-					tplContext
-				);
-
-
-				// copy scss templates, exclude entry files
+				/**
+				 * scss
+				 */
+				// copy scss templates, exclude _frontend/* and entry files
 				copyTemplatesBulk(
 					self,
 					self.templatePath( '../template_collections/underboots/src/scss/' ),
-					self.destinationPath( '/src/scss/' ),
+					self.destinationPath( 'src/scss/' ),
 					tplContext,
 					{
 						globPattern: [
 							'**/*.scss',
 							'!frontend.scss',
+							'!_frontend/**/*.scss',
 							'!classic_editor_tiny_mce.scss',
+							'!_classic_editor_tiny_mce/**/*.scss',
 						],
 					}
 				);
-
+				// copy scss templates _frontend/* _classic_editor_tiny_mce/*
+				[
+					'_frontend',
+					'_classic_editor_tiny_mce',
+				].map( dir => copyTemplatesBulk(
+					self,
+					self.templatePath( '../template_collections/underboots/src/scss/' + dir + '/' ),
+					self.destinationPath( 'src/scss/' + tplContext.funcPrefix + dir ),
+					tplContext,
+					{
+						globPattern: [
+							'**/*.scss',
+						],
+					}
+				) );
 				// copy scss entry files
 				[
 					'frontend',
 					'classic_editor_tiny_mce',
 				].map( basename => {
 					self.fs.copyTpl(
-						self.templatePath( '../template_collections/twentynineteen/src/scss/' + basename + '.scss' ),
+						self.templatePath( '../template_collections/underboots/src/scss/' + basename + '.scss' ),
 						self.destinationPath( 'src/scss/' + tplContext.funcPrefix + '_' + basename + '.scss' ),
+						tplContext
+					);
+				} );
+
+				/**
+				 * js
+				 */
+				// copy js templates, exclude _script/* and entry files
+				copyTemplatesBulk(
+					self,
+					self.templatePath( '../template_collections/underboots/src/js/' ),
+					self.destinationPath( 'src/js/' ),
+					tplContext,
+					{
+						globPattern: [
+							'**/*.js',
+							'!script.js',
+							'!_script/**/*.js',
+							'!customizer.js',
+							'!_customizer/**/*.js',
+						],
+					}
+				);
+				// copy js templates _script/* _customizer/*
+				[
+					'_script',
+					'_customizer',
+				].map( dir => copyTemplatesBulk(
+					self,
+					self.templatePath( '../template_collections/underboots/src/js/' + dir + '/' ),
+					self.destinationPath( 'src/js/' + tplContext.funcPrefix + dir ),
+					tplContext,
+					{
+						globPattern: [
+							'**/*.js',
+						],
+					}
+				) );
+				// copy js entry files
+				[
+					'script',
+					'customizer',
+				].map( basename => {
+					self.fs.copyTpl(
+						self.templatePath( '../template_collections/underboots/src/js/' + basename + '.js' ),
+						self.destinationPath( 'src/js/' + tplContext.funcPrefix + '_' + basename + '.js' ),
 						tplContext
 					);
 				} );
@@ -284,6 +354,12 @@ const generate = ( self, options ) => {
 			tplContext
 		);
 	}
+
+	// generate json
+	[...jsonFiles].map( obj => self.fs.writeJSON(
+		obj.dest,
+		obj.data
+	) );
 
 };
 

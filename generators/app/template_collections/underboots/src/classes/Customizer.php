@@ -147,8 +147,8 @@ class Customizer {
 	public function preview_js() {
 		$handle = '<%= funcPrefix %>_customizer';
 		$_src = '/js/' . $handle . '.min.js';
-		$src = namespace\Unte::get_instance()->get_dir_url() . $_src;
-		$ver = namespace\Unte::get_instance()->get_version() . '.' . filemtime( namespace\Unte::get_instance()->get_dir_path() . $_src );
+		$src = namespace\<%= startCase( kebabCase( funcPrefix ) ) %>::get_instance()->dir_url . $_src;
+		$ver = namespace\<%= startCase( kebabCase( funcPrefix ) ) %>::get_instance()->version . '.' . filemtime( namespace\<%= startCase( kebabCase( funcPrefix ) ) %>::get_instance()->dir_path . $_src );
 		wp_enqueue_script(
 			$handle,
 			$src,
