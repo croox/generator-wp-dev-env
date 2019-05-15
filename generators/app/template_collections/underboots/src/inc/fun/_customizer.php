@@ -5,17 +5,17 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-if ( ! function_exists( 'unte_customizer' ) ) {
+if ( ! function_exists( '<%= funcPrefix %>_customizer' ) ) {
 	/**
 	 * Load Customizer customizations
 	 */
-	function unte_customizer() {
+	function <%= funcPrefix %>_customizer() {
 
 		// get out if not in customizer, prevents composer to autoload the class if unnecessary
 		if ( ! is_customize_preview() )
 			return;
 
-		unte\Customizer::get_instance();
+		<%= funcPrefix %>\Customizer::get_instance();
 	}
 }
-unte_customizer();
+<%= funcPrefix %>_customizer();

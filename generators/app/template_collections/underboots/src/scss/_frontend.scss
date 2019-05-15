@@ -1,20 +1,19 @@
 /**
- * Frontend styles for unterhose
+ * Frontend styles for <%= name %>
  *
- * @package WordPress
- * @subpackage unterhose
+ * @package <%= name %>
  */
 
 // Add your variables into this file. Also add variables to overwrite Bootstrap or UnderStrap variables here
-@import "unte_frontend/variables_site/variables_site";
+@import "<%= funcPrefix %>_frontend/variables_site/variables_site";
 
 // Loads Bootstrap4
 @import "vendor_custom/bootstrap_custom";
 
-@import "unte_frontend/mixins/mixins_master";
+@import "<%= funcPrefix %>_frontend/mixins/mixins_master";
 
 // Loads the UnderStrap defaults. Just a few classes to incorporate BS in WP
-@import "unte_frontend/understrap";
+@import "<%= funcPrefix %>_frontend/understrap";
 
 /**
  *   Optional files - If you dont use the corresponding scripts/fonts comment em out
@@ -24,7 +23,7 @@
 // @import "vendor_custom/font_awesome_custom";
 
 // Underscores media styles
-@import "unte_frontend/media/media";
+@import "<%= funcPrefix %>_frontend/media/media";
 
 
 /**
@@ -32,6 +31,6 @@
  */
 
 // Tweaks and Bootstrap support for certain plugins
-@import "unte_frontend/elements/elements";
-@import "unte_frontend/plugin_tweaks/plugin_tweaks";
+@import "<%= funcPrefix %>_frontend/elements/elements";
+@import "<%= funcPrefix %>_frontend/plugin_tweaks/plugin_tweaks";
 

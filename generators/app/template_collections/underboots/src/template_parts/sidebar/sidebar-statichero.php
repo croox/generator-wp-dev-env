@@ -2,14 +2,14 @@
 /**
  * Static hero sidebar setup.
  *
- * @package unterhose
+ * @package <%= name %>
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-$container = get_theme_mod( 'unte_container_type' );
+$container = get_theme_mod( '<%= funcPrefix %>_container_type' );
 ?>
 
 <?php if ( is_active_sidebar( 'statichero' ) ) : ?>

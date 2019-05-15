@@ -4,7 +4,7 @@
  *
  * Template for displaying a blank page.
  *
- * @package unterhose
+ * @package <%= name %>
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

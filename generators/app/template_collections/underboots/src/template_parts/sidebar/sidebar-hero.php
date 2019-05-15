@@ -2,7 +2,7 @@
 /**
  * Sidebar - hero setup.
  *
- * @package unterhose
+ * @package <%= name %>
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 
-			<span class="sr-only"><?php esc_html_e( 'Previous', 'unte' ); ?></span>
+			<span class="sr-only"><?php esc_html_e( 'Previous', '<%= textDomain %>' ); ?></span>
 
 		</a>
 
@@ -34,7 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 			<span class="carousel-control-next-icon" aria-hidden="true"></span>
 
-			<span class="sr-only"><?php esc_html_e( 'Next', 'unte' ); ?></span>
+			<span class="sr-only"><?php esc_html_e( 'Next', '<%= textDomain %>' ); ?></span>
 
 		</a>
 

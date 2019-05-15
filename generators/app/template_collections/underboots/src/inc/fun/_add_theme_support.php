@@ -2,7 +2,7 @@
 /**
  * Theme basic setup.
  *
- * @package unterhose
+ * @package <%= name %>
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -15,7 +15,7 @@ if ( ! isset( $content_width ) ) {
 }
 
 
-if ( ! function_exists ( 'unte_add_theme_support' ) ) {
+if ( ! function_exists ( '<%= funcPrefix %>_add_theme_support' ) ) {
 	/**
 	 * Sets up theme defaults and registers support for various WordPress features.
 	 *
@@ -23,7 +23,7 @@ if ( ! function_exists ( 'unte_add_theme_support' ) ) {
 	 * runs before the init hook. The init hook is too late for some features, such
 	 * as indicating support for post thumbnails.
 	 */
-	function unte_add_theme_support() {
+	function <%= funcPrefix %>_add_theme_support() {
 
 		// Add default posts and comments RSS feed links to head.
 		add_theme_support( 'automatic-feed-links' );
@@ -38,7 +38,7 @@ if ( ! function_exists ( 'unte_add_theme_support' ) ) {
 
 		// This theme uses wp_nav_menu() in one location.
 		register_nav_menus( array(
-			'primary' => __( 'Primary Menu', 'unte' ),
+			'primary' => __( 'Primary Menu', '<%= textDomain %>' ),
 		) );
 
 		/*
@@ -76,7 +76,7 @@ if ( ! function_exists ( 'unte_add_theme_support' ) ) {
 		) );
 
 		// Set up the WordPress core custom background feature.
-		add_theme_support( 'custom-background', apply_filters( 'unte_custom_background_args', array(
+		add_theme_support( 'custom-background', apply_filters( '<%= funcPrefix %>_custom_background_args', array(
 			'default-color' => 'ffffff',
 			'default-image' => '',
 		) ) );
@@ -88,12 +88,10 @@ if ( ! function_exists ( 'unte_add_theme_support' ) ) {
 		add_theme_support( 'responsive-embeds' );
 
 		// Check and setup theme default settings.
-		unte_setup_theme_default_settings();
+		<%= funcPrefix %>_setup_theme_default_settings();
 
 		/**
-		 * Filter unterhose custom-header support arguments.
-		 *
-		 * @since unterhose 0.5.2
+		 * Filter <%= name %> custom-header support arguments.
 		 *
 		 * @param array $args {
 		 *     An array of custom-header support arguments.
@@ -110,9 +108,9 @@ if ( ! function_exists ( 'unte_add_theme_support' ) ) {
 		add_theme_support(
 			'custom-header',
 			apply_filters(
-				'unte_custom_header_args',
+				'<%= funcPrefix %>_custom_header_args',
 				array(
-					'default-image' => unte\Unte::get_instance()->get_dir_url() . '/images/header.jpg',
+					'default-image' => <%= project_class %>::get_instance()->get_dir_url() . '/images/header.jpg',
 					'width'         => 2000,
 					'height'        => 300,
 					'flex-height'   => true,
@@ -126,28 +124,12 @@ if ( ! function_exists ( 'unte_add_theme_support' ) ) {
 				'default-image' => array(
 					'url'           => '%s/images/header.jpg',
 					'thumbnail_url' => '%s/images/header.jpg',
-					'description'   => __( 'Default Header Image', 'unte' ),
+					'description'   => __( 'Default Header Image', '<%= textDomain %>' ),
 				),
 			)
 		);
 
-		// // ??? may be
-		// // ??? may be
-		// // ??? may be
-		// // Adding support for core block visual styles.
-		// add_theme_support( 'wp-block-styles' );
-
-		// // Add support for full and wide align images.
-		// add_theme_support( 'align-wide' );
-
-		// // https://wordpress.org/gutenberg/handbook/extensibility/theme-support/#editor-styles
-		// add_theme_support( 'editor-styles' );
-
-		// // // theme support dark-editor-style would add a class 'is-dark-theme' to admin body, but not all our theme is dark.
-		// // // So the filter function 'bier_admin_editor_classes' will add the class conditionaly
-		// // // add_theme_support( 'dark-editor-style' );
-
 	}
 }
 
-add_action( 'after_setup_theme', 'unte_add_theme_support' );
+add_action( 'after_setup_theme', '<%= funcPrefix %>_add_theme_support' );

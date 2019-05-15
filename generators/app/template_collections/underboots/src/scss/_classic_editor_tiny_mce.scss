@@ -1,12 +1,11 @@
 /**
- * Classic Editor custom TinyMCE styles for unterhose
+ * Classic Editor custom TinyMCE styles for <%= name %>
  *
- * @package WordPress
- * @subpackage unterhose
+ * @package <%= name %>
  */
 
 /**
  * This stylesheet is currently NOT ENQUEUED!
- * Uncomment the corresponding line in unte\Classic_Editor_Support::add_editor_styles
+ * Uncomment the corresponding line in namspace\Classic_Editor_Support::add_editor_styles
  */
 

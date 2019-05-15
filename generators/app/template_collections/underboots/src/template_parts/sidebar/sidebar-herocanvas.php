@@ -2,7 +2,7 @@
 /**
  * Sidebar - hero canvas setup.
  *
- * @package unterhose
+ * @package <%= name %>
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

@@ -4,14 +4,14 @@
  *
  * Contains the closing of the #content div and all content after
  *
- * @package unterhose
+ * @package <%= name %>
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-$container = get_theme_mod( 'unte_container_type' );
+$container = get_theme_mod( '<%= funcPrefix %>_container_type' );
 ?>
 
 <?php get_template_part( 'template_parts/sidebar/sidebar', 'footerfull' ); ?>
@@ -28,7 +28,7 @@ $container = get_theme_mod( 'unte_container_type' );
 
 					<div class="site-info">
 
-						<?php unte_site_info(); ?>
+						<?php <%= funcPrefix %>_site_info(); ?>
 
 					</div><!-- .site-info -->
 

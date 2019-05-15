@@ -2,7 +2,7 @@
 /**
  * Search results partial template.
  *
- * @package unterhose
+ * @package <%= name %>
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 			<div class="entry-meta">
 
-				<?php unte_posted_on(); ?>
+				<?php <%= funcPrefix %>_posted_on(); ?>
 
 			</div><!-- .entry-meta -->
 
@@ -41,7 +41,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<footer class="entry-footer">
 
-		<?php unte_entry_footer(); ?>
+		<?php <%= funcPrefix %>_entry_footer(); ?>
 
 	</footer><!-- .entry-footer -->
 

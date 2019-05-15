@@ -1,14 +1,14 @@
 <?php
 /**
  *
- * @package unterhose
+ * @package <%= name %>
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-if ( ! function_exists( 'unte_excerpt_more' ) ) {
+if ( ! function_exists( '<%= funcPrefix %>_excerpt_more' ) ) {
 	/**
 	 * Removes the ... from the excerpt read more link
 	 *
@@ -16,11 +16,11 @@ if ( ! function_exists( 'unte_excerpt_more' ) ) {
 	 *
 	 * @return string
 	 */
-	function unte_excerpt_more( $more ) {
+	function <%= funcPrefix %>_excerpt_more( $more ) {
 		if ( ! is_admin() ) {
 			$more = '';
 		}
 		return $more;
 	}
 }
-add_filter( 'excerpt_more', 'unte_excerpt_more' );
+add_filter( 'excerpt_more', '<%= funcPrefix %>_excerpt_more' );

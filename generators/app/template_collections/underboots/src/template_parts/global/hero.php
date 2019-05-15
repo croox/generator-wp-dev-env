@@ -2,7 +2,7 @@
 /**
  * Hero setup.
  *
- * @package unterhose
+ * @package <%= name %>
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

@@ -2,7 +2,7 @@
 /**
  * The template for displaying all single posts.
  *
- * @package unterhose
+ * @package <%= name %>
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 get_header();
-$container = get_theme_mod( 'unte_container_type' );
+$container = get_theme_mod( '<%= funcPrefix %>_container_type' );
 ?>
 
 <div class="wrapper" id="single-wrapper">
@@ -28,7 +28,7 @@ $container = get_theme_mod( 'unte_container_type' );
 
 					<?php get_template_part( 'template_parts/loop/content', 'single' ); ?>
 
-					<?php unte_post_nav(); ?>
+					<?php <%= funcPrefix %>_post_nav(); ?>
 
 					<?php
 					// If comments are open or we have at least one comment, load up the comment template.

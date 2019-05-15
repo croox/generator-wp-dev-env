@@ -1,6 +1,6 @@
 <?php
 
-namespace unte;
+namespace <%= funcPrefix %>;
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -66,17 +66,17 @@ class Customizer {
 
 		// Theme layout settings.
 		$wp_customize->add_section(
-			'unte_theme_layout_options',
+			'<%= funcPrefix %>_theme_layout_options',
 			array(
-				'title'       => __( 'Theme Layout Settings', 'unte' ),
+				'title'       => __( 'Theme Layout Settings', '<%= textDomain %>' ),
 				'capability'  => 'edit_theme_options',
-				'description' => __( 'Container width and sidebar defaults', 'unte' ),
+				'description' => __( 'Container width and sidebar defaults', '<%= textDomain %>' ),
 				'priority'    => 160,
 			)
 		);
 
 		$wp_customize->add_setting(
-			'unte_container_type',
+			'<%= funcPrefix %>_container_type',
 			array(
 				'default'           => 'container',
 				'type'              => 'theme_mod',
@@ -88,16 +88,16 @@ class Customizer {
 		$wp_customize->add_control(
 			new \WP_Customize_Control(
 				$wp_customize,
-				'unte_container_type',
+				'<%= funcPrefix %>_container_type',
 				array(
-					'label'       => __( 'Container Width', 'unte' ),
-					'description' => __( 'Choose between Bootstrap\'s container and container-fluid', 'unte' ),
-					'section'     => 'unte_theme_layout_options',
-					'settings'    => 'unte_container_type',
+					'label'       => __( 'Container Width', '<%= textDomain %>' ),
+					'description' => __( 'Choose between Bootstrap\'s container and container-fluid', '<%= textDomain %>' ),
+					'section'     => '<%= funcPrefix %>_theme_layout_options',
+					'settings'    => '<%= funcPrefix %>_container_type',
 					'type'        => 'select',
 					'choices'     => array(
-						'container'       => __( 'Fixed width container', 'unte' ),
-						'container-fluid' => __( 'Full width container', 'unte' ),
+						'container'       => __( 'Fixed width container', '<%= textDomain %>' ),
+						'container-fluid' => __( 'Full width container', '<%= textDomain %>' ),
 					),
 					'priority'    => '10',
 				)
@@ -105,7 +105,7 @@ class Customizer {
 		);
 
 		$wp_customize->add_setting(
-			'unte_sidebar_position',
+			'<%= funcPrefix %>_sidebar_position',
 			array(
 				'default'           => 'right',
 				'type'              => 'theme_mod',
@@ -117,22 +117,22 @@ class Customizer {
 		$wp_customize->add_control(
 			new \WP_Customize_Control(
 				$wp_customize,
-				'unte_sidebar_position',
+				'<%= funcPrefix %>_sidebar_position',
 				array(
-					'label'             => __( 'Sidebar Positioning', 'unte' ),
+					'label'             => __( 'Sidebar Positioning', '<%= textDomain %>' ),
 					'description'       => __(
 						'Set sidebar\'s default position. Can either be: right, left, both or none. Note: this can be overridden on individual pages.',
-						'unte'
+						'<%= textDomain %>'
 					),
-					'section'           => 'unte_theme_layout_options',
-					'settings'          => 'unte_sidebar_position',
+					'section'           => '<%= funcPrefix %>_theme_layout_options',
+					'settings'          => '<%= funcPrefix %>_sidebar_position',
 					'type'              => 'select',
-					'sanitize_callback' => 'unte_theme_slug_sanitize_select',
+					'sanitize_callback' => '<%= funcPrefix %>_theme_slug_sanitize_select',
 					'choices'           => array(
-						'right' => __( 'Right sidebar', 'unte' ),
-						'left'  => __( 'Left sidebar', 'unte' ),
-						'both'  => __( 'Left & Right sidebars', 'unte' ),
-						'none'  => __( 'No sidebar', 'unte' ),
+						'right' => __( 'Right sidebar', '<%= textDomain %>' ),
+						'left'  => __( 'Left sidebar', '<%= textDomain %>' ),
+						'both'  => __( 'Left & Right sidebars', '<%= textDomain %>' ),
+						'none'  => __( 'No sidebar', '<%= textDomain %>' ),
 					),
 					'priority'          => '20',
 				)
@@ -145,7 +145,7 @@ class Customizer {
 	 * Setup JS integration for live previewing.
 	 */
 	public function preview_js() {
-		$handle = 'unte_customizer';
+		$handle = '<%= funcPrefix %>_customizer';
 		$_src = '/js/' . $handle . '.min.js';
 		$src = namespace\Unte::get_instance()->get_dir_url() . $_src;
 		$ver = namespace\Unte::get_instance()->get_version() . '.' . filemtime( namespace\Unte::get_instance()->get_dir_path() . $_src );

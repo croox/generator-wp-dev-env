@@ -12,11 +12,11 @@ import $ from 'jquery';
  * Internal dependencies
  */
 // import customized bootstrap, may be stripped.
-import './unte_script/bootstrapCustom';
-import './unte_script/skip_link_focus_fix';
+import './<%= funcPrefix %>_script/bootstrapCustom';
+import './<%= funcPrefix %>_script/skip_link_focus_fix';
 
 // // access localized data.
-// const localizedData = unte_script_data;
+// const localizedData = <%= funcPrefix %>_script_data;
 
 $( document ).ready( function( $ ) {
 

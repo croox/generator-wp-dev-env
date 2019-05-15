@@ -2,7 +2,7 @@
 /**
  * Right sidebar check.
  *
- * @package unterhose
+ * @package <%= name %>
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 </div><!-- #closing the primary container from /template_parts/global/left-sidebar-check.php -->
 
-<?php $sidebar_pos = get_theme_mod( 'unte_sidebar_position' ); ?>
+<?php $sidebar_pos = get_theme_mod( '<%= funcPrefix %>_sidebar_position' ); ?>
 
 <?php if ( 'right' === $sidebar_pos || 'both' === $sidebar_pos ) : ?>
 

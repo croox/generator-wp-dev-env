@@ -7,7 +7,7 @@
  * and that other 'pages' on your WordPress site will use a
  * different template.
  *
- * @package unterhose
+ * @package <%= name %>
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 get_header();
 
-$container = get_theme_mod( 'unte_container_type' );
+$container = get_theme_mod( '<%= funcPrefix %>_container_type' );
 
 ?>
 

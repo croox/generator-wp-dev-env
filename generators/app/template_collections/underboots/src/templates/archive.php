@@ -4,7 +4,7 @@
  *
  * Learn more: http://codex.wordpress.org/Template_Hierarchy
  *
- * @package unterhose
+ * @package <%= name %>
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 get_header();
 
-$container = get_theme_mod( 'unte_container_type' );
+$container = get_theme_mod( '<%= funcPrefix %>_container_type' );
 ?>
 
 <div class="wrapper" id="archive-wrapper">
@@ -60,7 +60,7 @@ $container = get_theme_mod( 'unte_container_type' );
 			</main><!-- #main -->
 
 			<!-- The pagination component -->
-			<?php unte_pagination(); ?>
+			<?php <%= funcPrefix %>_pagination(); ?>
 
 			<!-- Do the right sidebar check -->
 			<?php get_template_part( 'template_parts/global/right-sidebar-check' ); ?>

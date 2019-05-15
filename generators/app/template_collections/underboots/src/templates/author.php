@@ -4,7 +4,7 @@
  *
  * Learn more: https://codex.wordpress.org/Author_Templates
  *
- * @package unterhose
+ * @package <%= name %>
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 get_header();
-$container = get_theme_mod( 'unte_container_type' );
+$container = get_theme_mod( '<%= funcPrefix %>_container_type' );
 ?>
 
 <div class="wrapper" id="author-wrapper">
@@ -36,7 +36,7 @@ $container = get_theme_mod( 'unte_container_type' );
 					}
 					?>
 
-					<h1><?php echo esc_html__( 'About:', 'unte' ) . ' ' . esc_html( $curauth->nickname ); ?></h1>
+					<h1><?php echo esc_html__( 'About:', '<%= textDomain %>' ) . ' ' . esc_html( $curauth->nickname ); ?></h1>
 
 					<?php if ( ! empty( $curauth->ID ) ) : ?>
 						<?php echo get_avatar( $curauth->ID ); ?>
@@ -45,20 +45,20 @@ $container = get_theme_mod( 'unte_container_type' );
 					<?php if ( ! empty( $curauth->user_url ) || ! empty( $curauth->user_description ) ) : ?>
 						<dl>
 							<?php if ( ! empty( $curauth->user_url ) ) : ?>
-								<dt><?php esc_html_e( 'Website', 'unte' ); ?></dt>
+								<dt><?php esc_html_e( 'Website', '<%= textDomain %>' ); ?></dt>
 								<dd>
 									<a href="<?php echo esc_url( $curauth->user_url ); ?>"><?php echo esc_html( $curauth->user_url ); ?></a>
 								</dd>
 							<?php endif; ?>
 
 							<?php if ( ! empty( $curauth->user_description ) ) : ?>
-								<dt><?php esc_html_e( 'Profile', 'unte' ); ?></dt>
+								<dt><?php esc_html_e( 'Profile', '<%= textDomain %>' ); ?></dt>
 								<dd><?php esc_html_e( $curauth->user_description ); ?></dd>
 							<?php endif; ?>
 						</dl>
 					<?php endif; ?>
 
-					<h2><?php echo esc_html( 'Posts by', 'unte' ) . ' ' . esc_html( $curauth->nickname ); ?>:</h2>
+					<h2><?php echo esc_html( 'Posts by', '<%= textDomain %>' ) . ' ' . esc_html( $curauth->nickname ); ?>:</h2>
 
 				</header><!-- .page-header -->
 
@@ -72,12 +72,12 @@ $container = get_theme_mod( 'unte_container_type' );
 								printf(
 									'<a rel="bookmark" href="%1$s" title="%2$s %3$s">%3$s</a>',
 									esc_url( apply_filters( 'the_permalink', get_permalink( $post ), $post ) ),
-									esc_attr( __( 'Permanent Link:', 'unte' ) ),
+									esc_attr( __( 'Permanent Link:', '<%= textDomain %>' ) ),
 									the_title( '', '', false )
 								);
 								?>
-								<?php unte_posted_on(); ?>
-								<?php esc_html_e( 'in', 'unte' ); ?>
+								<?php <%= funcPrefix %>_posted_on(); ?>
+								<?php esc_html_e( 'in', '<%= textDomain %>' ); ?>
 								<?php the_category( '&' ); ?>
 							</li>
 						<?php endwhile; ?>
@@ -95,7 +95,7 @@ $container = get_theme_mod( 'unte_container_type' );
 			</main><!-- #main -->
 
 			<!-- The pagination component -->
-			<?php unte_pagination(); ?>
+			<?php <%= funcPrefix %>_pagination(); ?>
 
 			<!-- Do the right sidebar check -->
 			<?php get_template_part( 'template_parts/global/right-sidebar-check' ); ?>

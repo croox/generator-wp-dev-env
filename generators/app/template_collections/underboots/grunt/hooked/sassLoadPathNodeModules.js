@@ -9,7 +9,7 @@ const {
 const sassLoadPathNodeModules = grunt => {
 
 	// add node_modules to sass path. if using npm bootstrap, makes bootstrap available
-	grunt.hooks.addFilter( 'config.sass', 'unte.config.sass.node_modules', config => {
+	grunt.hooks.addFilter( 'config.sass', '<%= funcPrefix %>.config.sass.node_modules', config => {
 		const newConfig = { ...config, };
 		set( newConfig, ['options','loadPath'], union(
 			get( newConfig, ['options','loadPath'], [] ),

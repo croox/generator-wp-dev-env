@@ -2,16 +2,16 @@
 /**
  * Pagination layout.
  *
- * @package unterhose
+ * @package <%= name %>
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-if ( ! function_exists( 'unte_pagination' ) ) {
+if ( ! function_exists( '<%= funcPrefix %>_pagination' ) ) {
 
-	function unte_pagination( $args = array(), $class = 'pagination' ) {
+	function <%= funcPrefix %>_pagination( $args = array(), $class = 'pagination' ) {
 
 		if ( $GLOBALS['wp_query']->max_num_pages <= 1 ) {
 			return;
@@ -22,9 +22,9 @@ if ( ! function_exists( 'unte_pagination' ) ) {
 			array(
 				'mid_size'           => 2,
 				'prev_next'          => true,
-				'prev_text'          => __( '&laquo;', 'unte' ),
-				'next_text'          => __( '&raquo;', 'unte' ),
-				'screen_reader_text' => __( 'Posts navigation', 'unte' ),
+				'prev_text'          => __( '&laquo;', '<%= textDomain %>' ),
+				'next_text'          => __( '&raquo;', '<%= textDomain %>' ),
+				'screen_reader_text' => __( 'Posts navigation', '<%= textDomain %>' ),
 				'type'               => 'array',
 				'current'            => max( 1, get_query_var( 'paged' ) ),
 			)

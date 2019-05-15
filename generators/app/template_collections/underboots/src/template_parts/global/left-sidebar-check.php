@@ -2,14 +2,14 @@
 /**
  * Left sidebar check.
  *
- * @package unterhose
+ * @package <%= name %>
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-$sidebar_pos = get_theme_mod( 'unte_sidebar_position' );
+$sidebar_pos = get_theme_mod( '<%= funcPrefix %>_sidebar_position' );
 ?>
 
 <?php if ( 'left' === $sidebar_pos || 'both' === $sidebar_pos ) : ?>

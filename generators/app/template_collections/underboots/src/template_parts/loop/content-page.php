@@ -2,7 +2,7 @@
 /**
  * Partial template for content in page.php
  *
- * @package unterhose
+ * @package <%= name %>
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php
 		wp_link_pages(
 			array(
-				'before' => '<div class="page-links">' . __( 'Pages:', 'unte' ),
+				'before' => '<div class="page-links">' . __( 'Pages:', '<%= textDomain %>' ),
 				'after'  => '</div>',
 			)
 		);
@@ -37,7 +37,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<footer class="entry-footer">
 
-		<?php edit_post_link( __( 'Edit', 'unte' ), '<span class="edit-link">', '</span>' ); ?>
+		<?php edit_post_link( __( 'Edit', '<%= textDomain %>' ), '<span class="edit-link">', '</span>' ); ?>
 
 	</footer><!-- .entry-footer -->
 

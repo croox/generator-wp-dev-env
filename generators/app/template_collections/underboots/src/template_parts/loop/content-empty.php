@@ -2,7 +2,7 @@
 /**
  * Content empty partial template.
  *
- * @package unterhose
+ * @package <%= name %>
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

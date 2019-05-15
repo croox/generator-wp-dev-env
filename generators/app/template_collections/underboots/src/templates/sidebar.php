@@ -2,7 +2,7 @@
 /**
  * The sidebar containing the main widget area.
  *
- * @package unterhose
+ * @package <%= name %>
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

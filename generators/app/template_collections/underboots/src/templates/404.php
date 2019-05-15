@@ -2,7 +2,7 @@
 /**
  * The template for displaying 404 pages (not found).
  *
- * @package unterhose
+ * @package <%= name %>
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 get_header();
 
-$container = get_theme_mod( 'unte_container_type' );
+$container = get_theme_mod( '<%= funcPrefix %>_container_type' );
 ?>
 
 <div class="wrapper" id="error-404-wrapper">
@@ -28,23 +28,23 @@ $container = get_theme_mod( 'unte_container_type' );
 
 						<header class="page-header">
 
-							<h1 class="page-title"><?php esc_html_e( 'Oops! That page can&rsquo;t be found.', 'unte' ); ?></h1>
+							<h1 class="page-title"><?php esc_html_e( 'Oops! That page can&rsquo;t be found.', '<%= textDomain %>' ); ?></h1>
 
 						</header><!-- .page-header -->
 
 						<div class="page-content">
 
-							<p><?php esc_html_e( 'It looks like nothing was found at this location. Maybe try one of the links below or a search?', 'unte' ); ?></p>
+							<p><?php esc_html_e( 'It looks like nothing was found at this location. Maybe try one of the links below or a search?', '<%= textDomain %>' ); ?></p>
 
 							<?php get_search_form(); ?>
 
 							<?php the_widget( 'WP_Widget_Recent_Posts' ); ?>
 
-							<?php if ( unte_categorized_blog() ) : // Only show the widget if site has multiple categories. ?>
+							<?php if ( <%= funcPrefix %>_categorized_blog() ) : // Only show the widget if site has multiple categories. ?>
 
 								<div class="widget widget_categories">
 
-									<h2 class="widget-title"><?php esc_html_e( 'Most Used Categories', 'unte' ); ?></h2>
+									<h2 class="widget-title"><?php esc_html_e( 'Most Used Categories', '<%= textDomain %>' ); ?></h2>
 
 									<ul>
 										<?php
@@ -67,7 +67,7 @@ $container = get_theme_mod( 'unte_container_type' );
 							<?php
 
 							/* translators: %1$s: smiley */
-							$archive_content = '<p>' . sprintf( esc_html__( 'Try looking in the monthly archives. %1$s', 'unte' ), convert_smilies( ':)' ) ) . '</p>';
+							$archive_content = '<p>' . sprintf( esc_html__( 'Try looking in the monthly archives. %1$s', '<%= textDomain %>' ), convert_smilies( ':)' ) ) . '</p>';
 							the_widget( 'WP_Widget_Archives', 'dropdown=1', "after_title=</h2>$archive_content" );
 
 							the_widget( 'WP_Widget_Tag_Cloud' );

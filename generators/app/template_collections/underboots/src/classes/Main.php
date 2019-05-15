@@ -1,6 +1,6 @@
 <?php
 
-namespace unte;
+namespace <%= funcPrefix %>;
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -9,7 +9,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 use croox\wde;
 
-class Unte extends wde\Theme {
+class <%= startCase( kebabCase( funcPrefix ) ) %> extends wde\<%= parent_class %> {
 
 	// public function hooks(){
     //     parent::hooks();

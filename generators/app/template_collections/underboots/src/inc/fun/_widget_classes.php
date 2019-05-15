@@ -2,14 +2,14 @@
 /**
  * Declaring widgets
  *
- * @package unterhose
+ * @package <%= name %>
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-if ( ! function_exists( 'unte_widget_classes' ) ) {
+if ( ! function_exists( '<%= funcPrefix %>_widget_classes' ) ) {
 	/**
 	 * Count number of visible widgets in a sidebar and add classes to widgets accordingly,
 	 * so widgets can be displayed one, two, three or four per row.
@@ -39,7 +39,7 @@ if ( ! function_exists( 'unte_widget_classes' ) ) {
 	 * }
 	 * @return array $params
 	 */
-	function unte_widget_classes( $params ) {
+	function <%= funcPrefix %>_widget_classes( $params ) {
 
 		global $sidebars_widgets;
 
@@ -79,7 +79,7 @@ if ( ! function_exists( 'unte_widget_classes' ) ) {
 		return $params;
 
 	}
-} // endif function_exists( 'unte_widget_classes' ).
+} // endif function_exists( '<%= funcPrefix %>_widget_classes' ).
 
 /**
  * Add filter to the parameters passed to a widget's display callback.
@@ -87,4 +87,4 @@ if ( ! function_exists( 'unte_widget_classes' ) ) {
  *
  * @link https://developer.wordpress.org/reference/hooks/dynamic_sidebar_params/
  */
-add_filter( 'dynamic_sidebar_params', 'unte_widget_classes' );
+add_filter( 'dynamic_sidebar_params', '<%= funcPrefix %>_widget_classes' );

@@ -1,14 +1,14 @@
 <?php
 /**
  *
- * @package unterhose
+ * @package <%= name %>
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-if ( ! function_exists( 'unte_excerpt_get_more_link' ) ) {
+if ( ! function_exists( '<%= funcPrefix %>_excerpt_get_more_link' ) ) {
 	/**
 	 * Adds a custom read more link to all excerpts, manually or automatically generated
 	 *
@@ -16,12 +16,12 @@ if ( ! function_exists( 'unte_excerpt_get_more_link' ) ) {
 	 *
 	 * @return string
 	 */
-	function unte_excerpt_get_more_link( $post_excerpt ) {
+	function <%= funcPrefix %>_excerpt_get_more_link( $post_excerpt ) {
 		if ( ! is_admin() ) {
-			$post_excerpt = $post_excerpt . ' [...]<p><a class="btn btn-secondary unte-read-more-link" href="' . esc_url( get_permalink( get_the_ID() ) ) . '">' . __( 'Read More...',
-			'unte' ) . '</a></p>';
+			$post_excerpt = $post_excerpt . ' [...]<p><a class="btn btn-secondary <%= funcPrefix %>-read-more-link" href="' . esc_url( get_permalink( get_the_ID() ) ) . '">' . __( 'Read More...',
+			'<%= textDomain %>' ) . '</a></p>';
 		}
 		return $post_excerpt;
 	}
 }
-add_filter( 'wp_trim_excerpt', 'unte_excerpt_get_more_link' );
+add_filter( 'wp_trim_excerpt', '<%= funcPrefix %>_excerpt_get_more_link' );

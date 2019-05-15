@@ -1,6 +1,6 @@
 <?php
 
-namespace unte;
+namespace <%= funcPrefix %>;
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -36,7 +36,7 @@ class Classic_Editor_Support {
 	}
 
 	public function tiny_mce_stylesheet( $current_screen ) {
-		add_editor_style( namespace\Unte::get_instance()->get_dir_url() . '/css/unte_classic_editor_tiny_mce.min.css' );
+		add_editor_style( namespace\Unte::get_instance()->get_dir_url() . '/css/<%= funcPrefix %>_classic_editor_tiny_mce.min.css' );
 	}
 
 	// Add TinyMCE style formats.

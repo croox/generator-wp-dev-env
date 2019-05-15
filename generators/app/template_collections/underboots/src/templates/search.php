@@ -2,7 +2,7 @@
 /**
  * The template for displaying search results pages.
  *
- * @package unterhose
+ * @package <%= name %>
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 get_header();
 
-$container = get_theme_mod( 'unte_container_type' );
+$container = get_theme_mod( '<%= funcPrefix %>_container_type' );
 
 ?>
 
@@ -34,7 +34,7 @@ $container = get_theme_mod( 'unte_container_type' );
 								<?php
 								printf(
 									/* translators: %s: query term */
-									esc_html__( 'Search Results for: %s', 'unte' ),
+									esc_html__( 'Search Results for: %s', '<%= textDomain %>' ),
 									'<span>' . get_search_query() . '</span>'
 								);
 								?>
@@ -65,7 +65,7 @@ $container = get_theme_mod( 'unte_container_type' );
 			</main><!-- #main -->
 
 			<!-- The pagination component -->
-			<?php unte_pagination(); ?>
+			<?php <%= funcPrefix %>_pagination(); ?>
 
 			<!-- Do the right sidebar check -->
 			<?php get_template_part( 'template_parts/global/right-sidebar-check' ); ?>

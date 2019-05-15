@@ -1,9 +1,8 @@
 <?php
 /**
- * Unterhose Theme init
+ * <%= displayName %> Theme init
  *
- * @package WordPress
- * @subpackage unterhose
+ * @package <%= name %>
  */
 
 // If this file is called directly, abort.
@@ -13,7 +12,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 include_once( dirname( __FILE__ ) . '/vendor/autoload.php' );
 
-function unte_init() {
+function <%= funcPrefix %>_init() {
 
 	$init_args = array(
 		'version'	=> 'wde_replace_version',
@@ -26,8 +25,8 @@ function unte_init() {
 	);
 
 	// see ./classes/Unte.php
-	return unte\Unte::get_instance( $init_args );
+	return <%= project_class %>::get_instance( $init_args );
 }
-unte_init();
+<%= funcPrefix %>_init();
 
 ?>
