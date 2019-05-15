@@ -166,8 +166,62 @@ const generate = ( self, options ) => {
 
 	if ( tplContext.themeBase ) {
 		switch( tplContext.themeBase ){
+			case 'underboots':
+
+				// copy templates, exclude all scss
+				copyTemplatesBulk(
+					self,
+					self.templatePath( '../template_collections/underboots' ),
+					self.destinationPath(),
+					tplContext,
+					{
+						globPattern: [
+							'**/*',
+							'!src/classes/Main.php',
+							'!src/scss/**/*',
+						],
+					}
+				);
+
+				// copy main class
+				self.fs.copyTpl(
+					self.templatePath( '../template_collections/underboots/src/classes/Main.php' ),
+					self.destinationPath( 'src/classes/' + startCase( kebabCase( tplContext.funcPrefix ) ) + '.php' ),
+					tplContext
+				);
+
+
+				// copy scss templates, exclude entry files
+				copyTemplatesBulk(
+					self,
+					self.templatePath( '../template_collections/underboots/src/scss/' ),
+					self.destinationPath( '/src/scss/' ),
+					tplContext,
+					{
+						globPattern: [
+							'**/*.scss',
+							'!frontend.scss',
+							'!classic_editor_tiny_mce.scss',
+						],
+					}
+				);
+
+				// copy scss entry files
+				[
+					'frontend',
+					'classic_editor_tiny_mce',
+				].map( basename => {
+					self.fs.copyTpl(
+						self.templatePath( '../template_collections/twentynineteen/src/scss/' + basename + '.scss' ),
+						self.destinationPath( 'src/scss/' + tplContext.funcPrefix + '_' + basename + '.scss' ),
+						tplContext
+					);
+				} );
+
+				break;
 			case 'twentynineteen':
 
+				// copy templates, exclude frontend.scss
 				copyTemplatesBulk(
 					self,
 					self.templatePath( '../template_collections/twentynineteen' ),
@@ -182,12 +236,14 @@ const generate = ( self, options ) => {
 					}
 				);
 
+				// copy main class
 				self.fs.copyTpl(
 					self.templatePath( '../template_collections/twentynineteen/src/classes/Main.php' ),
 					self.destinationPath( 'src/classes/' + startCase( kebabCase( tplContext.funcPrefix ) ) + '.php' ),
 					tplContext
 				);
 
+				// copy frontend.scss
 				self.fs.copyTpl(
 					self.templatePath( '../template_collections/twentynineteen/src/scss/frontend.scss' ),
 					self.destinationPath( 'src/scss/' + tplContext.funcPrefix + '_frontend.scss' ),
@@ -197,6 +253,7 @@ const generate = ( self, options ) => {
 				break;
 			case 'empty':
 
+				// copy templates
 				copyTemplatesBulk(
 					self,
 					self.templatePath( '../template_collections/empty' ),
@@ -206,11 +263,11 @@ const generate = ( self, options ) => {
 						globPattern: [
 							'**/*',
 							'!src/classes/Main.php',
-							'!src/scss/frontend.scss',
 						],
 					}
 				);
 
+				// copy main class
 				self.fs.copyTpl(
 					self.templatePath( '../templates/src/classes/Main.php' ),
 					self.destinationPath( 'src/classes/' + startCase( kebabCase( tplContext.funcPrefix ) ) + '.php' ),
