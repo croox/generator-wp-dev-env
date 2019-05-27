@@ -27,6 +27,7 @@ We assume you have pre-installed [node.js](https://nodejs.org/) and [npm.js](htt
 - `sass` tested version `3.7.4`
 - `rsync` tested version `3.1.2`
 - `xgettext` tested version `0.19.7`
+- *(optional)* `convert` from ImageMagick. Tested with ImageMagick `6.8.9-9`
 
 All dependencies must be accessible from CLI via their respective command. To test this, run something like: `composer --version` or `which composer` ...
 

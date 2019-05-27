@@ -7,7 +7,6 @@ const {
 
 const copyDirStructure = require('../../utils/copyDirStructure');
 const copyTemplatesBulk = require('../../utils/copyTemplatesBulk');
-const createScreenshot = require('../../utils/createScreenshot');
 
 const generate = ( self, options ) => {
 
@@ -33,7 +32,7 @@ const generate = ( self, options ) => {
 			data: {
 				require: {},
 				['require-dev']: {
-					['croox/wp-dev-env-frame']: tplContext.generator.subModules['croox/wp-dev-env-frame'],
+					['croox/wp-dev-env-frame']: tplContext.generatorPkg.subModules['croox/wp-dev-env-frame'],
 					['composer/installers']: '*',
 					['dealerdirect/phpcodesniffer-composer-installer']: '0.5.0',
 					['wptrt/wpthemereview']: '0.1.0',
@@ -77,14 +76,15 @@ const generate = ( self, options ) => {
 				wpRequiresAtLeast: tplContext.wpRequiresAtLeast,
 				phpRequiresAtLeast: tplContext.phpRequiresAtLeast,
 				generator: {
-					version: tplContext.generator.version,
+					version: tplContext.generatorPkg.version,
+					...( tplContext.generator.themeBase && { themeBase: tplContext.generator.themeBase } ),
 				},
 				scripts: {
 					test: 'echo \"Error: no test specified\" && exit 1',
 				},
 				devDependencies: {
 					grunt: '^1.0.3',
-					['wp-dev-env-grunt']: 'git+https://github.com/croox/wp-dev-env-grunt.git#' + tplContext.generator.subModules['wp-dev-env-grunt'],
+					['wp-dev-env-grunt']: 'git+https://github.com/croox/wp-dev-env-grunt.git#' + tplContext.generatorPkg.subModules['wp-dev-env-grunt'],
 				},
 				['browserify-shim']: {
 					jquery: 'global:jQuery',
@@ -147,9 +147,6 @@ const generate = ( self, options ) => {
 		...( 'plugin' === tplContext.projectType && { exclude: ['src/templates'] } ),
 	} );
 
-	// create screenshot
-	createScreenshot( self, tplContext.funcPrefix );
-
 	// copy templates
 	copyBaseTpls();
 
@@ -160,8 +157,8 @@ const generate = ( self, options ) => {
 		tplContext
 	);
 
-	if ( tplContext.themeBase ) {
-		switch( tplContext.themeBase ){
+	if ( tplContext.generator.themeBase ) {
+		switch( tplContext.generator.themeBase ){
 			case 'underboots':
 
 				// json files

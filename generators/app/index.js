@@ -4,10 +4,12 @@ const chalk = require('chalk');
 const childProcess = require('child_process');
 const gradient = require('gradient-string');
 const figlet = require('figlet');
+const simpleGit = require('simple-git')();
 
 const {
 	findIndex,
 	get,
+	set,
 	startCase,
 	snakeCase,
 	kebabCase,
@@ -19,6 +21,8 @@ const ui_chooseType = require('./ui_chooseType');
 const ui_setup = require('./ui_setup');
 const ui_themeBase = require('./ui_themeBase');
 const generate = require('./generate');
+const createScreenshot = require('../../utils/createScreenshot');
+const chainCommandsAndFunctions = require('../../utils/chainCommandsAndFunctions');
 const ui_block = require('../block/ui_block');
 const ui_assets = require('../assets/ui_assets');
 const ui_cpt = require('../cpt/ui_cpt');
@@ -32,6 +36,11 @@ module.exports = class extends Generator {
 		const destPkg = getDestPkg( this );
 
 		this.props = {
+			isNewProject: destPkg === null,	// if initializing
+		};
+
+		this.props = {
+			...this.props,
 			uiElements: [
 				{
 					name: 'ui_chooseType',
@@ -46,7 +55,7 @@ module.exports = class extends Generator {
 				{
 					name: 'ui_setup',
 					func: ui_setup,
-					when: answers => destPkg === null,	// if initializing
+					when: answers => this.props.isNewProject,	// if initializing
 				},
 				{
 					name: 'ui_block',
@@ -74,7 +83,10 @@ module.exports = class extends Generator {
 			cancel: null,
 		};
 
-		this.tplContext = {};
+		this.tplContext = {
+			generatorPkg: { ...pkg },
+			generator: {},
+		};
 
 	}
 
@@ -152,20 +164,50 @@ module.exports = class extends Generator {
 
 		const { answers } = this.props;
 
+		const destPkg = getDestPkg( this );
+		if ( null === destPkg && ! this.props.isNewProject ) {
+			console.log(
+				chalk.bold.red( 'Missing ' ) +
+				chalk.bgBlack( 'package.json' )
+				);
+			this.props.cancel = true;
+			process.exit();
+		}
+
+
+		/**
+		 * destPkgPropToTplContext
+		 *
+		 * Assigns a property from destination package.json to tplContext.
+		 * If property missing, log error and exit process.
+		 *
+		 * @param string prop       '.' separated path of the property.
+		 */
+		const destPkgPropToTplContext = prop => {
+			if ( get( destPkg, prop.split('.'), false ) ) {
+				set(
+					this.tplContext, prop.split('.'),
+					get( destPkg, prop.split('.') )
+				);
+			} else {
+				console.log(
+					chalk.bold.red( 'Missing ' ) +
+					chalk.bgBlack( prop ) +
+					' in ' +
+					chalk.bgBlack( 'package.json' )
+				);
+				process.exit();
+			}
+		};
+
+
+		/**
+		 * tplContext
+		 * assign helper methods
+		 */
 		this.tplContext = {
-			...( undefined !== answers.setup && answers.setup ),
-			...( undefined !== answers.block && { block: answers.block } ),
-			...( undefined !== answers.themeBase && { themeBase: answers.themeBase } ),
-			...( undefined !== answers.cptSetup && {
-				cpt: {
-					...answers.cptSetup,
-					supports: answers.cptSupports,
-					capabilityType: answers.capabilityType,
-				}
-			} ),
-			...( undefined !== answers.composerPkgs && { composerPkgs: answers.composerPkgs } ),
-			...( undefined !== answers.assetSetup && { assets: answers.assetSetup } ),
-			generator: { ...pkg },
+			...this.tplContext,
+			// lodash string methods to tplContext
 			startCase: startCase,
 			upperFirst: upperFirst,
 			snakeCase: snakeCase,
@@ -173,61 +215,138 @@ module.exports = class extends Generator {
 			isUndefined: isUndefined,
 		};
 
-		// type 				:: type of generator
-		// projectType 			:: plugin || theme
-		// projectTypeExplicit	:: plugin || theme || childtheme
+
+		/**
+		 * tplContext
+		 * set ~ types
+		 * - `type` 				:: type of generator
+		 * - `projectType` 			:: plugin || theme
+		 * - `projectTypeExplicit`	:: plugin || theme || childtheme
+		 */
 		this.tplContext.type = answers.type;
-		if ( answers.setup ) {
-			// is generating new roject
+		if ( this.props.isNewProject ) {
 			this.tplContext.projectType = 'childtheme' === answers.type ? 'theme' : answers.type ;
 			this.tplContext.projectTypeExplicit = answers.type;
 		} else {
-			// project exists, generating sub
-			const destPkg = getDestPkg( this );
-			if ( null === destPkg ) return this.props.cancel = true;
-			[
-				'projectType',
-				'funcPrefix',
-				'name',
-				'textDomain',
-			].map( prop => this.tplContext[prop] = destPkg[prop] );
+			destPkgPropToTplContext( 'projectType' );
 			this.tplContext.projectTypeExplicit = destPkg.template ? 'childtheme' : destPkg.projectType;
-
 		}
 
-		// namespace\project_class
+
+		/**
+		 * tplContext
+		 * assign subgenerator prompt answers
+		 */
+		this.tplContext = {
+			...this.tplContext,
+
+			// subgenerator block: assign answers.block to tplContext.block
+			...( undefined !== answers.block && { block: answers.block } ),
+
+			// subgenerator cpt: assign answers from cpt prompts to tplContext.cpt
+			...( undefined !== answers.cptSetup && {
+				cpt: {
+					...answers.cptSetup,
+					supports: answers.cptSupports,
+					capabilityType: answers.capabilityType,
+				}
+			} ),
+
+			// subgenerator composerPackage: assign answers.composerPkgs to tplContext.composerPkgs
+			...( undefined !== answers.composerPkgs && { composerPkgs: answers.composerPkgs } ),
+
+			// subgenerator assets: assign answers.assetSetup to tplContext.assets
+			...( undefined !== answers.assetSetup && { assets: answers.assetSetup } ),
+		};
+
+
+		/**
+		 * tplContext
+		 * assign main generator props
+		 */
+		if ( this.props.isNewProject ) {
+			// get props from generator prompt answers and assign to tplContext
+			this.tplContext = {
+				...this.tplContext,
+				// assign answers.setup directly to tplContext
+				...( undefined !== answers.setup && answers.setup ),
+			};
+			this.tplContext.generator = {
+				...this.tplContext.generator,
+				// assign answers.themeBase to tplContext.generator.themeBase
+				...( undefined !== answers.themeBase && {
+					themeBase: answers.themeBase
+				} ),
+			};
+		} else {
+			// get props from destPkg and assign to tplContext
+			[
+				'name',
+				'displayName',
+				'description',
+				'author',
+				'authorUri',
+				'repositoryUri',
+				'uri',
+				'donateLink',
+				'tags',
+				'funcPrefix',
+				'projectType',
+				'textDomain',
+				'wpRequiresAtLeast',
+				'wpVersionTested',
+				'phpRequiresAtLeast',
+				...( 'theme' === this.tplContext.projectTypeExplicit ? [
+					'generator.themeBase',
+				] : [] ),
+				...( 'childtheme' === this.tplContext.projectTypeExplicit ? [
+					'template'
+				] : [] ),
+			].map( destPkgPropToTplContext );
+		}
+
+
+		/**
+		 * tplContext
+		 * set project_class
+		 * e.g. ~ namespace\project_class
+		 */
 		this.tplContext.project_class = this.tplContext.funcPrefix + '\\' + startCase( kebabCase( this.tplContext.funcPrefix ) );
 
-		// parent_class, without namespace
-		if ( 'theme' === this.tplContext.projectType ) {
-			this.tplContext.parent_class = 'Theme';
-			if ( typeof this.tplContext.template !== 'undefined' ) {
-				switch( this.tplContext.template ) {
-					case 'enfold':
-						this.tplContext.parent_class = 'Childtheme_Enfold';
-						break;
-					default:
-						this.tplContext.parent_class = 'Childtheme';
-					}
-			}
-			if ( typeof this.tplContext.themeBase !== 'undefined' ) {
-				switch( this.tplContext.themeBase ) {
-					case 'twentynineteen':
-						this.tplContext.parent_class = 'Theme_Twentynineteen';
-						break;
-					case 'empty':
-					default:
-						this.tplContext.parent_class = 'Theme';
-				}
-			}
-		}
-		if ( 'plugin' === this.tplContext.projectType ) {
-			this.tplContext.parent_class = 'Plugin';
-		}
 
-		if ( this.tplContext.projectTypeExplicit !== 'childtheme' && this.tplContext.template ) {
-			// ??? ... we should not reach here
-			this.log( chalk.red( 'debug error, we shouldnt have template if no childtheme. something went wrong' ), this.tplContext );		// ??? debug
+		/**
+		 * tplContext
+		 * set wde-frame parent_class, without namespace
+		 */
+		switch( this.tplContext.projectType ){
+			case 'theme':
+				this.tplContext.parent_class = 'Theme';
+
+				if ( get( this, ['tplContext','template'], false ) ) {
+					switch( this.tplContext.template ) {
+						case 'enfold':
+							this.tplContext.parent_class = 'Childtheme_Enfold';
+							break;
+						default:
+							this.tplContext.parent_class = 'Childtheme';
+					}
+				}
+
+				if ( get( this, ['tplContext','generator','themeBase'], false ) ) {
+					switch( this.tplContext.generator.themeBase ) {
+						case 'twentynineteen':
+							this.tplContext.parent_class = 'Theme_Twentynineteen';
+							break;
+						case 'empty':
+						default:
+							this.tplContext.parent_class = 'Theme';
+					}
+				}
+				break;
+
+			case 'plugin':
+				this.tplContext.parent_class = 'Plugin';
+				break;
 		}
 
 	};
@@ -240,14 +359,63 @@ module.exports = class extends Generator {
 			cancel: this.props.cancel,
 			calledBy: 'app',
 			tplContext: this.tplContext,
-			// answers: this.props.answers,
 		};
 
-		this._callSubgenerator( options );
+		switch( true ) {
 
-		if ( ['theme','childtheme','plugin'].includes( this.tplContext.type ) ) {
-			generate( this, options );
+			case this.props.isNewProject:
+				generate( this, options );
+				break;
+
+			case 'updateWde' === this.tplContext.type:
+				const checkGitStatus = () => {
+					return new Promise( ( resolve, reject ) => {
+						simpleGit.status( ( err, status ) => {
+							if ( err !== null ) {
+								console.log( chalk.bold.red( 'Error simpleGit' ) );
+								console.log( err );
+								reject();
+							}
+							if ( status === null ) {
+								console.log( chalk.bold.red( 'Error' ) );
+								console.log( 'No git repository initialized' );
+								reject();
+							}
+							if ( status.files.length > 0 ) {
+								console.log( chalk.bold.red( 'Uncommited changes' ) );
+								console.log( status.files );
+								reject();
+							}
+							resolve();
+						} );
+					} ).catch( e => {
+						console.log( 'Exit' );
+						process.exit();
+					} );
+				};
+				const switchBranch = () => {
+					return new Promise( ( resolve, reject ) => {
+						simpleGit.checkout( 'generated', ( err, res  ) => {
+							if ( err )
+								reject( err );
+							console.log( '' );
+							console.log( 'Switched to branch ' + chalk.bgBlack( 'generated' ) );
+							console.log( '' );
+							resolve( res );
+						} );
+					} ).catch( e => {
+						console.log( chalk.red.bold( e ) );
+						process.exit();
+					} );
+				};
+				checkGitStatus().then( switchBranch ).then( () => generate( this, options ) );
+				break;
+
+			default:
+				this._callSubgenerator( options );
+
 		}
+
 	}
 
 	_callSubgenerator( options ) {
@@ -272,83 +440,102 @@ module.exports = class extends Generator {
 		if ( true === this.props.cancel )
 			return;
 
-		if ( ! ['theme','childtheme','plugin'].includes( this.props.answers.type ) )
-			return;
-
 		const self = this;
 
-		[
-			{
-				cmd: 'npm',
-				args: ['install'],
-			},
-			{
-				cmd: 'composer',
-				args: ['install', '--profile', '-v'],
-			},
-			{
-				cmd: 'grunt',
-				args: ['build'],
-			},
+		switch( true ) {
 
-			{
-				cmd: 'git',
-				args: ['init'],
-			},
-			{
-				cmd: 'git',
-				args: ['add','--all'],
-			},
-			{
-				cmd: 'git',
-				args: ['commit','-m "Hurray, just generated a new ' + this.props.answers.type + '!"'],
-			},
+			case this.props.isNewProject:
+				chainCommandsAndFunctions(	[
+					{
+						func: createScreenshot,
+						args: [self,self.tplContext.funcPrefix],
+					},
+					{
+						cmd: 'npm',
+						args: ['install'],
+					},
+					{
+						cmd: 'composer',
+						args: ['install','--profile','-v'],
+					},
+					{
+						cmd: 'grunt',
+						args: ['build'],
+					},
+					{
+						cmd: 'git',
+						args: ['init'],
+					},
+					{
+						cmd: 'git',
+						args: ['add','--all'],
+					},
+					{
+						cmd: 'git',
+						args: ['commit','-m "Hurray, just generated a new ' + this.props.answers.type + '!"'],
+					},
+					{
+						cmd: 'git',
+						args: ['branch','generated'],
+					},
+				], self ).then( result => {
+					[
+						'',
+						'',
+						chalk.green.bold( '✔ Everything is ready!' ),
+						'',
+						'Currently on branch ' + chalk.bgBlack( 'master' ),
+						'The ' + chalk.bgBlack( 'generated' ) + ' branch should not be modified manually. It should contain plain generated projects only.',
+						'',
+						chalk.cyan( 'What to do next?' ),
+						'',
+						'	run ' + chalk.yellow( 'yo wp-dev-env' ),
+						'		' + chalk.italic( 'to choose a subgenerator.' ),
+						'',
+						'	run ' + chalk.yellow( 'grunt' ),
+						'		' + chalk.italic( 'to see available grunt tasks.' ),
+						'',
+						'	edit and rename ' + chalk.yellow( './wde_wp_installs-sample.json' ),
+						'		' + chalk.italic( 'to let grunt know about some sync desitinations.' ),
+						'',
+					].map( str => this.log( str ) );
+				} ).catch( err => console.log( err ) );
+				break;
 
-		].reduce( ( accumulatorPromise, process ) => {
+			case 'updateWde' === this.tplContext.type:
+				chainCommandsAndFunctions(	[
+					{
+						func: createScreenshot,
+						args: [self,self.tplContext.funcPrefix],
+					},
+					{
+						cmd: 'git',
+						args: ['add','--all'],
+					},
+					{
+						cmd: 'git',
+						args: ['commit','-m "Updated to generator-wp-dev-env#' + this.tplContext.generatorPkg.version + ' (wp-dev-env-grunt#' + this.tplContext.generatorPkg.subModules['wp-dev-env-grunt'] + ' wp-dev-env-frame#' + this.tplContext.generatorPkg.subModules['croox/wp-dev-env-frame'] + ')"'],
+					},
+				], self ).then( result => {
+					[
+						'',
+						'',
+						chalk.green.bold( '✔ Project regenerated into branch ' ) + chalk.bgBlack( 'generated' ),
+						'',
+						'Currently on branch ' + chalk.bgBlack( 'generated' ),
+						'This branch should not be modified manually. It should contain plain generated projects only.',
+						'',
+						chalk.cyan( 'What to do next?' ),
+						'',
+						'	Compare commits of ' + chalk.bgBlack( 'generated' ) + ' branch.',
+						'	Merge ' + chalk.bgBlack( 'generated' ) + ' branch into ' + chalk.bgBlack( 'master' ),
+						'	Checkout ' + chalk.bgBlack( 'master' ) + ' branch and go on coding.' ,
+						'',
+					].map( str => this.log( str ) );
+				} ).catch( err => console.log( err ) );
 
-			return accumulatorPromise.then( () => {
-				return new Promise( ( resolve, reject ) => {
-					self.log('');
-					self.log('');
-					self.log( chalk.green( 'Start childprocess: ' ) + chalk.yellow( process.cmd + ' ' + process.args.join( ' ' ) ) );
-					self.log('');
-					self.spawnCommand( process.cmd, process.args )
-					.on( 'close', code => {
-						self.log('');
-						self.log( 0 === code
-							? chalk.green( 'Childprocess done with exit code: ' ) + code
-							: chalk.red( 'Childprocess exited with code: ' ) + code
-						);
-						self.log( 'Command was: ' + chalk.italic( process.cmd + ' ' + process.args.join( ' ' ) ) );
-						self.log('');
-						resolve( code );
-					} );
-				} );
-			} ).catch( err => console.log( err ) );
-
-		}, Promise.resolve() ).then( result => {
-
-			[
-				'',
-				'',
-				chalk.green.bold( '✔ Everything is ready!' ),
-				'',
-				'',
-				'',
-				chalk.cyan( 'What to do next?' ),
-				'',
-				'	run ' + chalk.yellow( 'yo wp-dev-env' ),
-				'		' + chalk.italic( 'to choose a subgenerator.' ),
-				'',
-				'	run ' + chalk.yellow( 'grunt' ),
-				'		' + chalk.italic( 'to see available grunt tasks.' ),
-				'',
-				'	edit and rename ' + chalk.yellow( './wde_wp_installs-sample.json' ),
-				'		' + chalk.italic( 'to let grunt know about some sync desitinations.' ),
-				'',
-			].map( str => this.log( str ) );
-
-		} ).catch( err => console.log( err ) );
+				break;
+		}
 
 	}
 

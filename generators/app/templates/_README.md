@@ -22,4 +22,4 @@ To install it from this Repository:
 To test the latest commit or make code changes yourself:
 - Clone, fork or [download](<%= repositoryUri %>/archive/master.zip) the repository
 
-> This <%= startCase( projectType ) %> and its development environment are based on [<%= generator.name %>](<%= generator.homepage %>).
+> This <%= startCase( projectType ) %> and its development environment are based on [<%= generatorPkg.name %>](<%= generatorPkg.homepage %>).
