@@ -6,13 +6,13 @@ const {
 	union,
 } = require( 'lodash' );
 
-const sassLoadPathNodeModules = grunt => {
+const sassIncludePathsNodeModules = grunt => {
 
 	// add node_modules to sass path. if using npm bootstrap, makes bootstrap available
 	grunt.hooks.addFilter( 'config.sass', '<%= funcPrefix %>.config.sass.node_modules', config => {
 		const newConfig = { ...config, };
-		set( newConfig, ['options','loadPath'], union(
-			get( newConfig, ['options','loadPath'], [] ),
+		set( newConfig, ['options','includePaths'], union(
+			get( newConfig, ['options','includePaths'], [] ),
 			[path.resolve( 'node_modules' )]
 		) );
 		return newConfig;
@@ -20,4 +20,4 @@ const sassLoadPathNodeModules = grunt => {
 
 };
 
-module.exports = sassLoadPathNodeModules;
+module.exports = sassIncludePathsNodeModules;
