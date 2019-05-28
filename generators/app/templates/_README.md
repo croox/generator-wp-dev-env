@@ -2,24 +2,46 @@ WordPress <%= startCase( projectType ) %> <%= displayName %>
 
 <%= description %>
 
-> Further information: [./dist/trunk/README.md](<%= repositoryUri %>/tree/master/dist/trunk)
+> <%= startCase( projectType ) %> readme: [./dist/trunk/README.md](<%= repositoryUri %>/tree/master/dist/trunk)
 
-* Contribution welcome :)
-* For **support**, to **request new <%= projectType %>-features** or inform me about **issues and bugs** [create a new issue on Github](<%= repositoryUri %>/issues/new) ~~or [add a new topic to WP's support forum](https://wordpress.org/support/<%= projectType %>/<%= name %>)~~
-* ~~Love to get your **feedback**, [Create a new review and rate this <%= startCase( projectType ) %>](https://wordpress.org/support/<%= projectType %>/<%= name %>/reviews/#new-post),~~ write a tutorial and tell your friends.
-* [Tell me](<%= authorUri %>) your wishes, maybe get me a bowl of rice and some masala: [Donate](<%= donateLink %>)
-
-## How to install:
+# Download and install
 
 ~~**<%= displayName %>** is [available in the official WordPress <%= startCase( projectType ) %> repository](https://wordpress.org/<%= projectType %>s/<%= name %>/). You can install this <%= projectType %> the same way you'd install any other <%= projectType %>.~~
 
-To install it from this Repository:
+To install it from zip file, [download latest release](<%= repositoryUri %>/releases/latest).
 
-- download the latest release asset from [```Releases```](<%= repositoryUri %>/releases).
-- alternatively download the latest distributed version from [```./dist/trunk```](<%= repositoryUri %>/tree/master/dist/trunk) and rename ```trunk``` to ```<%= name %>```
-- upload to your <%= projectType %>s directory and activate
+# Development
 
-To test the latest commit or make code changes yourself:
-- Clone, fork or [download](<%= repositoryUri %>/archive/master.zip) the repository
+Clone the repository and make it your current working directory.
 
-> This <%= startCase( projectType ) %> and its development environment are based on [<%= generator.name %>](<%= generator.homepage %>).
+```
+# Install npm dependencies
+npm install
+
+# Install composer dependencies
+composer install --profile -v
+
+# Build into `./test_build`
+grunt build
+```
+
+> This <%= startCase( projectType ) %> is based on [generator-wp-dev-env](https://github.com/croox/generator-wp-dev-env). See `generator.version` in `package.json`.
+>
+> Read the [documentation](https://github.com/croox/generator-wp-dev-env#documentation) for further development information.
+
+#### Dev dependencies
+
+- `node` and `npm`
+- `yo` and `generator-wp-dev-env`
+- `composer`
+- `git`
+- `grunt`  and  `grunt-cli`
+- `rsync`
+- `xgettext`
+- *(optional)*  `convert` from ImageMagick
+
+# Support and feedback
+
+* [Create a new issue on Github](<%= repositoryUri %>/issues/new)
+* ~~[Add a new topic to WP's support forum](https://wordpress.org/support/<%= projectType %>/<%= name %>)~~
+* ~~[Create a new review and rate this <%= startCase( projectType ) %>](https://wordpress.org/support/<%= projectType %>/<%= name %>/reviews/#new-post)~~

@@ -344,7 +344,7 @@ module.exports = class extends Generator {
 				'		' + chalk.italic( 'to see available grunt tasks.' ),
 				'',
 				'	edit and rename ' + chalk.yellow( './wde_wp_installs-sample.json' ),
-				'		' + chalk.italic( 'to let grunt know about some sync desitinations.' ),
+				'		' + chalk.italic( 'to let grunt know about some sync destinations.' ),
 				'',
 			].map( str => this.log( str ) );
 
