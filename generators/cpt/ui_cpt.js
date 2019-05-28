@@ -74,7 +74,6 @@ const ui_cpt = function( self ){
 				if ( true !== formValidation )
 					return formValidation;
 
-
 				const reservedCpts = [
 					'post',
 					'page',
@@ -85,18 +84,12 @@ const ui_cpt = function( self ){
 					'customize_changeset',
 					'user_request',
 					'block',
-
 				];
+
 				if ( [...reservedCpts].includes( value['singularName'] ) ) {
-
-
 					const fieldMessage = get( find( state._choices, { name: 'singularName' } ), ['message'],'singularName' );
-
-
 					return fieldMessage + ' is a build in post type';
 				}
-
-
 
 				return true;
 			},
@@ -104,18 +97,17 @@ const ui_cpt = function( self ){
 
 				{
 					name: 'singularName',
-					message: 'Sanitized Name (singular)',
+					message: 'Sanitized Name (singular, not prefixed)',
 					initial: getInitial( 'singularName', this ),
 				},
 
 				{
 					name: 'displayName',
-					message: 'Display Name (singular)',
+					message: 'Display Name (singular, not prefixed)',
 					onChoice( state, choice, i ) {
 						choice.initial = getInitial( 'displayName', this );
 					},
 				},
-
 
 				{
 					name: 'hierarchical',

@@ -5,11 +5,8 @@ const {
 const { prompt } = require('enquirer');
 
 const ui__resolver = require('../../utils/ui/ui__resolver');
-const getDestPkg = require('../../utils/getDestPkg');
 
 const ui_chooseType = function( self ){
-
-	const destPkg = getDestPkg( self );
 
 	const prompts = [
 		{
@@ -20,7 +17,20 @@ const ui_chooseType = function( self ){
 
 
 			choices: [
-				...( destPkg ? [
+				...( self.props.isNewProject ? [
+					{
+						name: 'plugin',
+						message: 'Generate Plugin',
+					},
+					{
+						name: 'theme',
+						message: 'Generate Theme',
+					},
+					{
+						name: 'childtheme',
+						message: 'Generate Childtheme',
+					},
+				] : [
 					{
 						name: 'assets',
 						message: 'Assets',
@@ -38,20 +48,11 @@ const ui_chooseType = function( self ){
 						name: 'composerPackage',
 						message: 'Composer Package',
 					},
-				] : [
 					{
-						name: 'plugin',
-						message: 'Generate Plugin',
+						name: 'updateWde',
+						message: 'Regenerate project into ' + chalk.bgBlack( 'generated' ) + ' branch',
 					},
-					{
-						name: 'theme',
-						message: 'Generate Theme',
-					},
-					{
-						name: 'childtheme',
-						message: 'Generate Childtheme',
-					},
-				] ),
+				]),
 			],
 		},
 	];

@@ -37,6 +37,36 @@
 <em>See <a href="./conventions_guidelines.html#readme">Conventions & Guidelines</a> for different types of readme</em>.</p>
 <p>The directory structure documentation is generated from those <code>readme.md</code> files.<br />
 <em>See ???</em></p>
+<h2 id="git-branching-model">Git branching model</h2>
+<p>The branching model is inspired by <a href="https://nvie.com/posts/a-successful-git-branching-model/">Vincent Driessen's blog post on nvie.com</a>.</p>
+<p>The following explanation summarizes this blog post and highlights some customization.</p>
+<p>The repository, defined during initial project generation, is considered being a "central" repository and the source of "truth". Each developer pulls and pushes to this repository. We will refer to this repository as <code>origin</code>.</p>
+<h3 id="the-main-branches">The main branches</h3>
+<p>The central repository holds three main branches with an infinite lifetime:</p>
+<ul>
+<li>master</li>
+<li>dev</li>
+<li>generated</li>
+</ul>
+<h4 id="master">master</h4>
+<p>The <code>origin/master</code> branch is considered to be the main branch where the source code of <code>HEAD</code> always reflects a state ready to be released or the latest release.</p>
+<p><strong>New versions can only be released from the <code>origin/master</code> branch</strong>. The <a href="../Command/dist.html"><code>grunt dist</code></a> task will perform all necessary steps.</p>
+<h4 id="dev">dev</h4>
+<p>The <code>origin/dev</code> branch is considered to be the main branch where the source code of <code>HEAD</code> always reflects a state with the latest delivered development changes for the next release.</p>
+<p>Features and fixes are developed in individual temporary branches and integrated into the <code>origin/dev</code> branch. We will refer to those branches as "Supporting branches".</p>
+<p>When the source code in this branch reaches a stable point and is ready to be released, all of the changes should be merged back into <code>master</code>, to be ready to run the <code>grunt dist</code> task to release a new version from the <code>master</code> branch.</p>
+<h4 id="generated">generated</h4>
+<p>The source code of <code>origin/generated</code> branch should not be edited manually. It reflects the state of a fresh generated project without changes.</p>
+<p>This branch is created during initial project generation and updated when the project gets regenerated.</p>
+<p>The purpose of this branch is to prepare a base to update the project to a new generator version.</p>
+<p>On regeneration (run <code>yo</code> and choose to "Regenerate Project") the project gets generated with the same input parameter but uses the templates from the current globally installed <code>generator-wp-dev-env</code>. Once the <code>generated</code> branch is updated, the changes should be merged manually into the <code>dev</code> branch.</p>
+<h3 id="supporting-branches">Supporting branches</h3>
+<p>Next to the main branches, a variety of supporting branches are used to aid parallel development.<br />
+Each of this branches has a specific purpose like developing a certain feature or fix an issue.<br />
+These branches always have a limited life time, since they will be removed eventually.</p>
+<p>A supporting branch is bound to strict rules as to which branch it is originating from and which branch is it will be merged into.</p>
+<p>See <a href="https://nvie.com/posts/a-successful-git-branching-model/#supporting-branches">Vincent Driessen's blog post</a> for a detailed explanation about that concept and how to work with that model.</p>
+<p>It is up to the development team to determine to what extent it makes use of supporting branches. Only the main branches are mandatory.</p>
 	</div>
 </body>
 </html>
