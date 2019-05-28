@@ -478,14 +478,19 @@ module.exports = class extends Generator {
 						cmd: 'git',
 						args: ['branch','generated'],
 					},
+					{
+						cmd: 'git',
+						args: ['checkout','-b','dev'],
+					},
 				], self ).then( result => {
 					[
 						'',
 						'',
 						chalk.green.bold( '✔ Everything is ready!' ),
 						'',
-						'Currently on branch ' + chalk.bgBlack( 'master' ),
+						'Currently on branch ' + chalk.bgBlack( 'dev' ),
 						'The ' + chalk.bgBlack( 'generated' ) + ' branch should not be modified manually. It should contain plain generated projects only.',
+						'Read the documentation\'s "project_structure" section for further information about the git branching model.',
 						'',
 						chalk.cyan( 'What to do next?' ),
 						'',
