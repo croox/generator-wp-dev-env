@@ -6,6 +6,7 @@ const {
 } = require('lodash');
 
 const printUseApp = require( '../../utils/printUseApp' );
+const addChange = require( '../../utils/addChange' );
 
 const generate = require( './generate' );
 
@@ -23,6 +24,24 @@ module.exports = class extends Generator {
 			return;
 
 		generate( this );
+
+		const {
+			funcPrefix,
+			assets: {
+				script,
+				style,
+				name,
+			},
+		} = this.options.tplContext;
+
+		addChange(
+			this,
+			'added',
+			'Assets: ' + [
+				script ? funcPrefix + '_script_' + name : '',
+				style ? funcPrefix + '_style_' + name : '',
+			].join(', ')
+		);
 	}
 
 	install() {

@@ -14,6 +14,12 @@ const generate = ( self, options ) => {
 
 	let jsonFiles = [
 		{
+			dest: '.wde_nextRelease.json',
+			data: {
+				changes: [],
+			},
+		},
+		{
 			dest: '.eslintrc.json',
 			data: {
 				parser: 'babel-eslint',

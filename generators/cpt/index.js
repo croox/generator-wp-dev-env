@@ -6,7 +6,7 @@ const {
 } = require('lodash');
 
 const printUseApp = require( '../../utils/printUseApp' );
-
+const addChange = require('../../utils/addChange');
 const generate = require( './generate' );
 
 module.exports = class extends Generator {
@@ -24,6 +24,19 @@ module.exports = class extends Generator {
 			return;
 
 		generate( this );
+
+		const {
+			funcPrefix,
+			cpt: {
+				singularName,
+			},
+		} = this.options.tplContext;
+
+		addChange(
+			this,
+			'added',
+			'Custom-post-type ' + funcPrefix + '_' + singularName
+		);
 	}
 
 };
