@@ -8,7 +8,8 @@ The repository, defined during initial project generation, is considered being a
 
 ## Branches summary
 
-The repository constist of tree mandatory branches and temporary supporting branches.
+The repository constist of three mandatory branches and several temporary supporting branches.
+To release the project a `release-*` branch is mandatory.
 
 ### The main branches
 
@@ -21,6 +22,7 @@ The central repository holds three main branches with an infinite lifetime:
 #### master
 
 The `origin/master` branch is considered to be the main branch where the source code of `HEAD` always reflects the latest release.
+The source code of this branch should not be edited manually.
 
 #### develop
 
@@ -28,7 +30,7 @@ The `origin/develop` branch is considered to be the main branch where the source
 
 Features and fixes are developed in individual temporary branches and integrated into the `origin/develop` branch. We will refer to those branches as "Supporting branches".
 
-When the source code in this branch reaches a stable point and is ready to be released, all of the changes should be merged back into `master`, to be ready to run the `grunt dist` task to release a new version from the `master` branch.
+When the source code in this branch reaches a stable point and is ready to be released, all of the changes should be merged into a `release-` branch, to be ready to run the `grunt dist` task to release a new version from that `release-` branch.
 
 #### generated
 
