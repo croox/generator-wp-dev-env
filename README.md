@@ -69,6 +69,8 @@ mkdir -p ~/path/to/myproject
 # Make it your working directory
 cd ~/path/to/myproject
 
+# (recommended) Set up remote origin, so the upstream can be set during project generation.
+
 # Run the generator and follow the prompts to create a new theme/plugin
 yo wp-dev-env
 

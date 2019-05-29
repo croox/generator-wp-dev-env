@@ -54,6 +54,8 @@ mkdir -p ~/path/to/myproject
 # Make it your working directory
 cd ~/path/to/myproject
 
+# (recommended) Set up remote origin, so the upstream can be set during project generation.
+
 # Run the generator and follow the prompts to create a new theme/plugin
 yo wp-dev-env
 
@@ -64,13 +66,30 @@ yo wp-dev-env
 grunt
 ```
 
+`generator-wp-dev-env` includes several subgenerators. All of those subgenerators should not be called directly, instead they can be chosen when running the main generator `yo wp-dev-env`. This approach differs from the default CLI usage of yeoman.
+
+### Generator Options
+
+- `--verbose`
+Display a more verbose output.
+
+- `--skipValidate=<fieldName,otherFieldName,...>`
+Skip the form validation for certain fields. The Option accepts a comma separated list of fieldNames.
+Example to generate a project and allow capital letters in project-slug: `yo wp-dev-env --skip-validate="name"`.
+
+## Git branching model
+
+Projects are setup to be used with a certain branching model.
+
+> Check the [Git Branching Model](./git_branching_model.html) page for details.
+
 ## Project Structure
 
 Generated Plugins and Themes share the same directory structure. So code can be used in both kind of projects in a similar way.
 
 @include::project_structure_tree
 
-> Check the [Project Structure](./project_structure.html) page for details
+> Check the [Project Structure](./project_structure.html) page for details.
 
 ## Grunt Taskrunner
 

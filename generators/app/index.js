@@ -27,7 +27,11 @@ const ui_block = require('../block/ui_block');
 const ui_assets = require('../assets/ui_assets');
 const ui_cpt = require('../cpt/ui_cpt');
 const ui_chooseComposerPkg = require('../composerPackage/ui_chooseComposerPkg');
+const addChange = require('../../utils/addChange');
 const getDestPkg = require('../../utils/getDestPkg');
+const logAndExit = require('../../utils/logAndExit');
+const gitAddOriginUpstream = require('../../utils/gitAddOriginUpstream');
+const cleanDestination = require('../../utils/cleanDestination');
 const pkg = require('../../package.json');
 
 module.exports = class extends Generator {
@@ -388,10 +392,7 @@ module.exports = class extends Generator {
 							}
 							resolve();
 						} );
-					} ).catch( e => {
-						console.log( 'Exit' );
-						process.exit();
-					} );
+					} ).catch( e => logAndExit( this, e ) );
 				};
 				const switchBranch = () => {
 					return new Promise( ( resolve, reject ) => {
@@ -403,12 +404,12 @@ module.exports = class extends Generator {
 							console.log( '' );
 							resolve( res );
 						} );
-					} ).catch( e => {
-						console.log( chalk.red.bold( e ) );
-						process.exit();
-					} );
+					} ).catch( e => logAndExit( this, e ) );
 				};
-				checkGitStatus().then( switchBranch ).then( () => generate( this, options ) );
+				checkGitStatus()
+				.then( switchBranch )
+				.then( () => cleanDestination( this ) )
+				.then( () => generate( this, options ) );
 				break;
 
 			default:
@@ -451,16 +452,19 @@ module.exports = class extends Generator {
 						args: [self,self.tplContext.funcPrefix],
 					},
 					{
-						cmd: 'npm',
-						args: ['install'],
-					},
-					{
 						cmd: 'composer',
-						args: ['install','--profile','-v'],
+						args: [
+							'install',
+							'--profile',
+							...( this.options.verbose ? ['-vvv'] : [] ),
+						],
 					},
 					{
-						cmd: 'grunt',
-						args: ['build'],
+						cmd: 'npm',
+						args: [
+							'install',
+							...( this.options.verbose ? ['--verbose'] : [] ),
+						],
 					},
 					{
 						cmd: 'git',
@@ -472,7 +476,7 @@ module.exports = class extends Generator {
 					},
 					{
 						cmd: 'git',
-						args: ['commit','-m "Hurray, just generated a new ' + this.props.answers.type + '!"'],
+						args: ['commit','-m','Initialized Project, generator-wp-dev-env#' + this.tplContext.generatorPkg.version + ' (wp-dev-env-grunt#' + this.tplContext.generatorPkg.subModules['wp-dev-env-grunt'] + ' wp-dev-env-frame#' + this.tplContext.generatorPkg.subModules['croox/wp-dev-env-frame'] + ')'],
 					},
 					{
 						cmd: 'git',
@@ -480,7 +484,23 @@ module.exports = class extends Generator {
 					},
 					{
 						cmd: 'git',
-						args: ['checkout','-b','dev'],
+						args: ['checkout','-b','develop'],
+					},
+					{
+						cmd: 'grunt',
+						args: ['build'],	// do we want that to may be verbose as well?
+					},
+					{
+						cmd: 'git',
+						args: ['add','--all'],
+					},
+					{
+						cmd: 'git',
+						args: ['commit','-m','Build successful'],
+					},
+					{
+						func: gitAddOriginUpstream,
+						args: [self],
 					},
 				], self ).then( result => {
 					[
@@ -488,12 +508,18 @@ module.exports = class extends Generator {
 						'',
 						chalk.green.bold( '✔ Everything is ready!' ),
 						'',
-						'Currently on branch ' + chalk.bgBlack( 'dev' ),
+						'Currently on branch ' + chalk.bgBlack( 'develop' ),
+						'The ' + chalk.bgBlack( 'master' ) + ' branch should not be modified manually. ???',
+						'The ' + chalk.bgBlack( 'dev' ) + ' branch reflects a state with the latest delivered development changes for the next release.',
 						'The ' + chalk.bgBlack( 'generated' ) + ' branch should not be modified manually. It should contain plain generated projects only.',
-						'Read the documentation\'s "project_structure" section for further information about the git branching model.',
+						'Read the documentation\'s "git_branching_model" section for further information about the git branching model.',
 						'',
 						chalk.cyan( 'What to do next?' ),
 						'',
+						'	run ' + chalk.yellow( 'git checkout -b feature-something develop' ),
+						'		' + chalk.italic( 'To Create a new feature branch from the current ' + chalk.bgBlack( 'develop' ) + ' branch.' ),
+						'',
+						// ??? add origin
 						'	run ' + chalk.yellow( 'yo wp-dev-env' ),
 						'		' + chalk.italic( 'to choose a subgenerator.' ),
 						'',
@@ -508,6 +534,12 @@ module.exports = class extends Generator {
 				break;
 
 			case 'updateWde' === this.tplContext.type:
+				const msg = 'Updated to generator-wp-dev-env#' + this.tplContext.generatorPkg.version + ' (wp-dev-env-grunt#' + this.tplContext.generatorPkg.subModules['wp-dev-env-grunt'] + ' wp-dev-env-frame#' + this.tplContext.generatorPkg.subModules['croox/wp-dev-env-frame'] + ')';
+				addChange(
+					this,
+					'changed',
+					msg
+				);
 				chainCommandsAndFunctions(	[
 					{
 						func: createScreenshot,
@@ -519,7 +551,7 @@ module.exports = class extends Generator {
 					},
 					{
 						cmd: 'git',
-						args: ['commit','-m "Updated to generator-wp-dev-env#' + this.tplContext.generatorPkg.version + ' (wp-dev-env-grunt#' + this.tplContext.generatorPkg.subModules['wp-dev-env-grunt'] + ' wp-dev-env-frame#' + this.tplContext.generatorPkg.subModules['croox/wp-dev-env-frame'] + ')"'],
+						args: ['commit','-m',msg],
 					},
 				], self ).then( result => {
 					[

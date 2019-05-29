@@ -1,0 +1,98 @@
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+		<meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
+		<link media="all" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.9.0/github-markdown.min.css" type="text/css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" type="text/css" media="all" />
+    <title></title>
+</head>
+<body>
+	<div class="markdown-body">
+		<h1 id="git-branching-model">Git branching model</h1>
+<p>The branching model is inspired by <a href="https://nvie.com/posts/a-successful-git-branching-model/">Vincent Driessen's blog post on nvie.com</a>.</p>
+<p>The following explanation summarizes this blog post and highlights some customization.</p>
+<p>The repository, defined during initial project generation, is considered being a "central" repository and the source of "truth". Each developer pulls and pushes to this repository. We will refer to this repository as <code>origin</code>.</p>
+<h2 id="branches-summary">Branches summary</h2>
+<p>The repository constist of tree mandatory branches and temporary supporting branches.</p>
+<h3 id="the-main-branches">The main branches</h3>
+<p>The central repository holds three main branches with an infinite lifetime:</p>
+<ul>
+<li>master</li>
+<li>develop</li>
+<li>generated</li>
+</ul>
+<h4 id="master">master</h4>
+<p>The <code>origin/master</code> branch is considered to be the main branch where the source code of <code>HEAD</code> always reflects the latest release.</p>
+<h4 id="develop">develop</h4>
+<p>The <code>origin/develop</code> branch is considered to be the main branch where the source code of <code>HEAD</code> always reflects a state with the latest delivered development changes for the next release.</p>
+<p>Features and fixes are developed in individual temporary branches and integrated into the <code>origin/develop</code> branch. We will refer to those branches as "Supporting branches".</p>
+<p>When the source code in this branch reaches a stable point and is ready to be released, all of the changes should be merged back into <code>master</code>, to be ready to run the <code>grunt dist</code> task to release a new version from the <code>master</code> branch.</p>
+<h4 id="generated">generated</h4>
+<p>The source code of <code>origin/generated</code> branch should not be edited manually. It reflects the state of a fresh generated project without changes.</p>
+<p>This branch is created during initial project generation and updated when the project gets regenerated.</p>
+<p>The purpose of this branch is to prepare a base to update the project to a new generator version.</p>
+<p>On regeneration (run <code>yo</code> and choose to "Regenerate Project") the project gets generated with the same input parameter but uses the templates from the current globally installed <code>generator-wp-dev-env</code>. Once the <code>generated</code> branch is updated, the changes should be merged manually into the <code>develop</code> branch.</p>
+<h3 id="supporting-branches">Supporting branches</h3>
+<p>Next to the main branches, a variety of supporting branches are used to aid parallel development.<br />
+Each of this branches has a specific purpose like developing a certain feature or fix an issue.<br />
+These branches always have a limited life time, since they will be removed eventually.</p>
+<p>A supporting branch is bound to strict rules as to which branch it is originating from and which branch is it will be merged into.</p>
+<p>See <a href="https://nvie.com/posts/a-successful-git-branching-model/#supporting-branches">Vincent Driessen's blog post</a> for a detailed explanation about that concept and how to work with that model.</p>
+<p>It is up to the development team to determine to what extent it makes use of supporting branches. Only the main branches and at least on <code>release-*</code> branch are mandatory.</p>
+<h4 id="release-"><code>release-*</code></h4>
+<p>At least one <code>release-*</code> branch is mandatory. Because <strong>new versions can only be released from a <code>release-*</code> branch</strong>.<br />
+The <a href="../Command/dist.html"><code>grunt dist</code></a> task will perform all necessary steps.</p>
+<h2 id="example-workflow">Example workflow</h2>
+<h3 id="start-the-project">Start the project</h3>
+<pre><code class="hljs bash language-bash"><span class="hljs-comment"># (recommended) Set up remote origin to use it during project generation.</span>
+
+<span class="hljs-comment"># Generate a new project.</span>
+yo wp-dev-env
+
+<span class="hljs-comment"># If origin was given, upstream for `master`, `develop` and `generated` branches is set.</span>
+
+<span class="hljs-comment"># The current branch is `develop`.</span></code></pre>
+<h3 id="creating-a-feature">Creating a feature</h3>
+<pre><code class="hljs bash language-bash"><span class="hljs-comment"># Create a feature branch from the `develop` branch</span>
+git checkout -b feature-something develop
+
+<span class="hljs-comment"># Do some dev work, for example run the generator again</span>
+yo wp-dev-env
+
+<span class="hljs-comment"># Document your changes to be used in e.g. changelog later</span>
+grunt addchange
+
+<span class="hljs-comment"># Stage changes and commit</span>
+git add --all
+git commit
+
+<span class="hljs-comment"># Switch back to the `develop` branch</span>
+git checkout develop
+
+<span class="hljs-comment"># Merge the feature branch into `develop`</span>
+git merge --no-ff feature-something
+
+<span class="hljs-comment"># Optionally delete feature branch</span>
+git branch -d feature-something
+
+<span class="hljs-comment"># And now? Go on to release ...</span></code></pre>
+<h3 id="creating-a-release">Creating a release</h3>
+<pre><code class="hljs bash language-bash"><span class="hljs-comment"># Create a release branch from the `develop` branch.</span>
+git checkout -b release-something develop
+
+<span class="hljs-comment"># Do some tests and fixes.</span>
+
+<span class="hljs-comment"># Start the dist task.</span>
+<span class="hljs-comment"># If remote is set, task may push to `master` and `develop`</span>
+<span class="hljs-comment"># and create a release.</span>
+grunt dist
+
+<span class="hljs-comment"># Optionally delete release branch.</span>
+git branch -d release-something</code></pre>
+<h3 id="creating-a-hotfix">Creating a Hotfix</h3>
+<p>???</p>
+	</div>
+</body>
+</html>

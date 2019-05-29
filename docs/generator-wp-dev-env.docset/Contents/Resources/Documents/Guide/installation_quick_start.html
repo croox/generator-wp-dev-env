@@ -28,7 +28,6 @@
 <li><code>composer</code> tested version <code>1.2.2</code></li>
 <li><code>git</code> tested version <code>2.7.4</code></li>
 <li><code>grunt</code> tested version <code>1.0.4</code> and <code>grunt-cli</code></li>
-<li><code>sass</code> tested version <code>3.7.4</code></li>
 <li><code>rsync</code> tested version <code>3.1.2</code></li>
 <li><code>xgettext</code> tested version <code>0.19.7</code></li>
 <li><em>(optional)</em> <code>convert</code> from ImageMagick. Tested with ImageMagick <code>6.8.9-9</code></li>
@@ -49,6 +48,8 @@ mkdir -p ~/path/to/myproject
 <span class="hljs-comment"># Make it your working directory</span>
 <span class="hljs-built_in">cd</span> ~/path/to/myproject
 
+<span class="hljs-comment"># (recommended) Set up remote origin, so the upstream can be set during project generation.</span>
+
 <span class="hljs-comment"># Run the generator and follow the prompts to create a new theme/plugin</span>
 yo wp-dev-env
 
@@ -57,6 +58,20 @@ yo wp-dev-env
 
 <span class="hljs-comment"># List available grunt tasks</span>
 grunt</code></pre>
+<p><code>generator-wp-dev-env</code> includes several subgenerators. All of those subgenerators should not be called directly, instead they can be chosen when running the main generator <code>yo wp-dev-env</code>. This approach differs from the default CLI usage of yeoman.</p>
+<h3 id="generator-options">Generator Options</h3>
+<ul>
+<li><p><code>--verbose</code><br />
+Display a more verbose output.</p></li>
+<li><p><code>--skipValidate=&lt;fieldName,otherFieldName,...&gt;</code><br />
+Skip the form validation for certain fields. The Option accepts a comma separated list of fieldNames.<br />
+Example to generate a project and allow capital letters in project-slug: <code>yo wp-dev-env --skip-validate="name"</code>.</p></li>
+</ul>
+<h2 id="git-branching-model">Git branching model</h2>
+<p>Projects are setup to be used with a certain branching model.</p>
+<blockquote>
+  <p>Check the <a href="./git_branching_model.html">Git Branching Model</a> page for details.</p>
+</blockquote>
 <h2 id="project-structure">Project Structure</h2>
 <p>Generated Plugins and Themes share the same directory structure. So code can be used in both kind of projects in a similar way.</p>
 <p>root<br />
@@ -80,7 +95,7 @@ grunt</code></pre>
 -- <a href="../Section/test_build.html">test_build</a><br />
 -- <a href="../Section/vendor.html">vendor</a></p>
 <blockquote>
-  <p>Check the <a href="./project_structure.html">Project Structure</a> page for details</p>
+  <p>Check the <a href="./project_structure.html">Project Structure</a> page for details.</p>
 </blockquote>
 <h2 id="grunt-taskrunner">Grunt Taskrunner</h2>
 <p><a href="http://gruntjs.com/">Grunt</a> is used to automate processes and perform repetitive tasks.</p>

@@ -24,16 +24,16 @@ const chainCommandsAndFunctions = ( precesses, self ) => {
 					case undefined !== process.cmd && undefined !== process.args:
 						self.log('');
 						self.log('');
-						self.log( chalk.green( 'Start childprocess: ' ) + chalk.yellow( process.cmd + ' ' + process.args.join( ' ' ) ) );
-						self.log('');
+						self.log( chalk.green( 'Childprocess: ' ) + chalk.yellow( process.cmd + ' ' + process.args.join( ' ' ) ) );
 						self.spawnCommand( process.cmd, process.args )
 						.on( 'close', code => {
-							self.log('');
 							self.log( 0 === code
-								? chalk.green( 'Childprocess done with exit code: ' ) + code
+								? self.options.verbose ? chalk.green( 'Childprocess done with exit code: ' ) + code : ''
 								: chalk.red( 'Childprocess exited with code: ' ) + code
 								);
-							self.log( 'Command was: ' + chalk.italic( process.cmd + ' ' + process.args.join( ' ' ) ) );
+							self.options.verbose
+								? self.log( 'Command was: ' + chalk.italic( process.cmd + ' ' + process.args.join( ' ' ) ) )
+								: '';
 							self.log('');
 							resolve( code );
 						} );
