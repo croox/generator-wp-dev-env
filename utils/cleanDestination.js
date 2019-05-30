@@ -29,7 +29,7 @@ const cleanDestination = generator => {
 			return new Promise( ( resolve, reject ) => {
 				fs.unlink( file, err => {
 					if (err) reject( err );
-					generator.log( '	Deleted file: ' + file );
+					generator.log( '   Deleted file: ' + file );
 					resolve();
 				} );
 			} );

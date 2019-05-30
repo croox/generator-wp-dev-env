@@ -27,7 +27,7 @@ const ui_block = require('../block/ui_block');
 const ui_assets = require('../assets/ui_assets');
 const ui_cpt = require('../cpt/ui_cpt');
 const ui_chooseComposerPkg = require('../composerPackage/ui_chooseComposerPkg');
-const addChange = require('../../utils/addChange');
+const addChangeP = require('../../utils/addChangeP');
 const getDestPkg = require('../../utils/getDestPkg');
 const logAndExit = require('../../utils/logAndExit');
 const gitAddOriginUpstream = require('../../utils/gitAddOriginUpstream');
@@ -126,13 +126,13 @@ module.exports = class extends Generator {
 		const self = this;
 
 		// print header
-		console.log( '' );
-		console.log( gradient.rainbow( figlet.textSync( 'wp-dev-env', {
+		this.log( '' );
+		this.log( gradient.rainbow( figlet.textSync( 'wp-dev-env', {
 			font: 'Ogre',
 			horizontalLayout: 'fitted',
 			verticalLayout: 'fitted'
 		} ) ) );
-		console.log( '' );
+		this.log( '' );
 
 		self._updateProps();
 
@@ -170,7 +170,7 @@ module.exports = class extends Generator {
 
 		const destPkg = getDestPkg( this );
 		if ( null === destPkg && ! this.props.isNewProject ) {
-			console.log(
+			this.log(
 				chalk.bold.red( 'Missing ' ) +
 				chalk.bgBlack( 'package.json' )
 				);
@@ -194,7 +194,7 @@ module.exports = class extends Generator {
 					get( destPkg, prop.split('.') )
 				);
 			} else {
-				console.log(
+				this.log(
 					chalk.bold.red( 'Missing ' ) +
 					chalk.bgBlack( prop ) +
 					' in ' +
@@ -376,18 +376,18 @@ module.exports = class extends Generator {
 					return new Promise( ( resolve, reject ) => {
 						simpleGit.status( ( err, status ) => {
 							if ( err !== null ) {
-								console.log( chalk.bold.red( 'Error simpleGit' ) );
-								console.log( err );
+								this.log( chalk.bold.red( 'Error simpleGit' ) );
+								this.log( err );
 								reject();
 							}
 							if ( status === null ) {
-								console.log( chalk.bold.red( 'Error' ) );
-								console.log( 'No git repository initialized' );
+								this.log( chalk.bold.red( 'Error' ) );
+								this.log( 'No git repository initialized' );
 								reject();
 							}
 							if ( status.files.length > 0 ) {
-								console.log( chalk.bold.red( 'Uncommited changes' ) );
-								console.log( status.files );
+								this.log( chalk.bold.red( 'Uncommited changes' ) );
+								this.log( status.files );
 								reject();
 							}
 							resolve();
@@ -399,9 +399,9 @@ module.exports = class extends Generator {
 						simpleGit.checkout( 'generated', ( err, res  ) => {
 							if ( err )
 								reject( err );
-							console.log( '' );
-							console.log( 'Switched to branch ' + chalk.bgBlack( 'generated' ) );
-							console.log( '' );
+							this.log( '' );
+							this.log( 'Switched to branch ' + chalk.bgBlack( 'generated' ) );
+							this.log( '' );
 							resolve( res );
 						} );
 					} ).catch( e => logAndExit( this, e ) );
@@ -463,7 +463,7 @@ module.exports = class extends Generator {
 						cmd: 'npm',
 						args: [
 							'install',
-							...( this.options.verbose ? ['--verbose'] : [] ),
+							...( self.options.verbose ? ['--verbose'] : [] ),
 						],
 					},
 					{
@@ -476,7 +476,7 @@ module.exports = class extends Generator {
 					},
 					{
 						cmd: 'git',
-						args: ['commit','-m','Initialized Project, generator-wp-dev-env#' + this.tplContext.generatorPkg.version + ' (wp-dev-env-grunt#' + this.tplContext.generatorPkg.subModules['wp-dev-env-grunt'] + ' wp-dev-env-frame#' + this.tplContext.generatorPkg.subModules['croox/wp-dev-env-frame'] + ')'],
+						args: ['commit','-m','Initialized Project, generator-wp-dev-env#' + self.tplContext.generatorPkg.version + ' (wp-dev-env-grunt#' + self.tplContext.generatorPkg.subModules['wp-dev-env-grunt'] + ' wp-dev-env-frame#' + self.tplContext.generatorPkg.subModules['croox/wp-dev-env-frame'] + ')'],
 					},
 					{
 						cmd: 'git',
@@ -519,7 +519,6 @@ module.exports = class extends Generator {
 						'	run ' + chalk.yellow( 'git checkout -b feature-something develop' ),
 						'		' + chalk.italic( 'To Create a new feature branch from the current ' + chalk.bgBlack( 'develop' ) + ' branch.' ),
 						'',
-						// ??? add origin
 						'	run ' + chalk.yellow( 'yo wp-dev-env' ),
 						'		' + chalk.italic( 'to choose a subgenerator.' ),
 						'',
@@ -529,21 +528,30 @@ module.exports = class extends Generator {
 						'	edit and rename ' + chalk.yellow( './wde_wp_installs-sample.json' ),
 						'		' + chalk.italic( 'to let grunt know about some sync desitinations.' ),
 						'',
-					].map( str => this.log( str ) );
-				} ).catch( err => console.log( err ) );
+					].map( str => self.log( str ) );
+				} ).catch( err => self.log( err ) );
 				break;
 
-			case 'updateWde' === this.tplContext.type:
-				const msg = 'Updated to generator-wp-dev-env#' + this.tplContext.generatorPkg.version + ' (wp-dev-env-grunt#' + this.tplContext.generatorPkg.subModules['wp-dev-env-grunt'] + ' wp-dev-env-frame#' + this.tplContext.generatorPkg.subModules['croox/wp-dev-env-frame'] + ')';
-				addChange(
-					this,
-					'changed',
-					msg
-				);
+			case 'updateWde' === self.tplContext.type:
+				const msg = [
+					'Updated to generator-wp-dev-env#' + self.tplContext.generatorPkg.version,
+					'(',
+					'wp-dev-env-grunt#' + self.tplContext.generatorPkg.subModules['wp-dev-env-grunt'],
+					'wp-dev-env-frame#' + self.tplContext.generatorPkg.subModules['croox/wp-dev-env-frame'],
+					')',
+				].join(' ');
 				chainCommandsAndFunctions(	[
 					{
 						func: createScreenshot,
 						args: [self,self.tplContext.funcPrefix],
+					},
+					{
+						func: addChangeP,
+						args: [
+							self,
+							'changed',
+							msg,
+						],
 					},
 					{
 						cmd: 'git',
@@ -560,16 +568,15 @@ module.exports = class extends Generator {
 						chalk.green.bold( '✔ Project regenerated into branch ' ) + chalk.bgBlack( 'generated' ),
 						'',
 						'Currently on branch ' + chalk.bgBlack( 'generated' ),
-						'This branch should not be modified manually. It should contain plain generated projects only.',
+						'Self branch should not be modified manually. It should contain plain generated projects only.',
 						'',
 						chalk.cyan( 'What to do next?' ),
 						'',
 						'	Compare commits of ' + chalk.bgBlack( 'generated' ) + ' branch.',
-						'	Merge ' + chalk.bgBlack( 'generated' ) + ' branch into ' + chalk.bgBlack( 'master' ),
-						'	Checkout ' + chalk.bgBlack( 'master' ) + ' branch and go on coding.' ,
+						'	Merge ' + chalk.bgBlack( 'generated' ) + ' branch into ' + chalk.bgBlack( 'develop' ) + ' and go on coding.' ,
 						'',
-					].map( str => this.log( str ) );
-				} ).catch( err => console.log( err ) );
+					].map( str => self.log( str ) );
+				} ).catch( err => self.log( err ) );
 
 				break;
 		}

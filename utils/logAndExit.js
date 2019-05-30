@@ -3,7 +3,7 @@ const path = require('path');
 const chalk = require('chalk');
 
 const logAndExit = ( generator, str ) => {
-	generator.log( chalk.red.bold( str ) );
+	generator.log( str ? chalk.red.bold( str ) : '' );
 	process.exit();
 };
 
