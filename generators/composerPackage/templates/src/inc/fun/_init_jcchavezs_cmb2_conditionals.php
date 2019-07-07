@@ -6,13 +6,13 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 if ( ! class_exists( 'CMB2_Conditionals' ) ) {
-	if ( file_exists( <%= project_class %>::get_instance()->get_dir_path() . 'vendor/jcchavezs/cmb2-conditionals/cmb2-conditionals.php' ) ) {
-		require_once <%= project_class %>::get_instance()->get_dir_path() . 'vendor/jcchavezs/cmb2-conditionals/cmb2-conditionals.php';
+	if ( file_exists( <%= project_class %>::get_instance()->dir_path . 'vendor/jcchavezs/cmb2-conditionals/cmb2-conditionals.php' ) ) {
+		require_once <%= project_class %>::get_instance()->dir_path . 'vendor/jcchavezs/cmb2-conditionals/cmb2-conditionals.php';
 	};
 }
 
 function <%= funcPrefix %>_cmb2_conditionals_enqueue_script_src( $src ){
-	return <%= project_class %>::get_instance()->get_dir_url() . '/vendor/jcchavezs/cmb2-conditionals/cmb2-conditionals.js';
+	return <%= project_class %>::get_instance()->dir_url . '/vendor/jcchavezs/cmb2-conditionals/cmb2-conditionals.js';
 }
 add_filter( 'cmb2_conditionals_enqueue_script_src', '<%= funcPrefix %>_cmb2_conditionals_enqueue_script_src' );
 

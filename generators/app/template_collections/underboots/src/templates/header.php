@@ -80,15 +80,17 @@ $container = get_theme_mod( '<%= funcPrefix %>_container_type' );
 
 	</div><!-- #wrapper-navbar end -->
 
-	<div class="row">
-		<div id="wrapper-header-image" class="col-md">
-			<img
-				class="header-image"
-				src="<?php header_image(); ?>"
-				height="<?php echo get_custom_header()->height; ?>"
-				width="<?php echo get_custom_header()->width; ?>"
-				alt=""
-				style="height: <?php echo get_custom_header()->height; ?>px"
-			/>
-		</div><!-- #wrapper-header-image end -->
-	</div><!-- .row end -->
+	<?php if ( has_custom_header() ) : ?>
+		<div class="row">
+			<div id="wrapper-header-image" class="col-md">
+				<img
+					class="header-image"
+					src="<?php header_image(); ?>"
+					height="<?php echo get_custom_header()->height; ?>"
+					width="<?php echo get_custom_header()->width; ?>"
+					alt=""
+					style="height: <?php echo get_custom_header()->height; ?>px"
+				/>
+			</div><!-- #wrapper-header-image end -->
+		</div><!-- .row end -->
+	<?php endif; ?>

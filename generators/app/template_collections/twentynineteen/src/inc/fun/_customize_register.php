@@ -124,7 +124,7 @@ function <%= funcPrefix %>_customize_partial_blogdescription() {
  * Bind JS handlers to instantly live-preview changes.
  */
 function <%= funcPrefix %>_customize_preview_js() {
-	wp_enqueue_script( '<%= funcPrefix %>-customize-preview', <%= project_class %>::get_instance()->get_dir_url() . '/js/customize_preview.min.js', array( 'customize-preview' ), false, true );
+	wp_enqueue_script( '<%= funcPrefix %>-customize-preview', <%= project_class %>::get_instance()->dir_url . '/js/customize_preview.min.js', array( 'customize-preview' ), false, true );
 }
 add_action( 'customize_preview_init', '<%= funcPrefix %>_customize_preview_js' );
 
@@ -132,7 +132,7 @@ add_action( 'customize_preview_init', '<%= funcPrefix %>_customize_preview_js' )
  * Load dynamic logic for the customizer controls area.
  */
 function <%= funcPrefix %>_panels_js() {
-	wp_enqueue_script( '<%= funcPrefix %>-customize-controls', <%= project_class %>::get_instance()->get_dir_url() . '/js/customize_controls.min.js', array(), false, true );
+	wp_enqueue_script( '<%= funcPrefix %>-customize-controls', <%= project_class %>::get_instance()->dir_url . '/js/customize_controls.min.js', array(), false, true );
 }
 add_action( 'customize_controls_enqueue_scripts', '<%= funcPrefix %>_panels_js' );
 

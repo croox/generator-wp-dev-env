@@ -26,13 +26,21 @@ We assume you have pre-installed [node.js](https://nodejs.org/) and [npm.js](htt
 - `grunt` tested version `1.0.4` and `grunt-cli`
 - `rsync` tested version `3.1.2`
 - `xgettext` tested version `0.19.7`
-- *(optional)* `convert` from ImageMagick. Tested with ImageMagick `6.8.9-9`
+- `convert` from ImageMagick. Tested with ImageMagick `6.8.9-9`
 
 All dependencies must be accessible from CLI via their respective command. To test this, run something like: `composer --version` or `which composer` ...
 
-## Installation
+### Repository hosting
 
-instalation
+Currently it is recommended to use [GitHub](https://github.com/) to host the repository. Because by now only the GitHub API is supported to create releases.
+
+It is **important** to connect to the repository host via SSH. *[How to connect to GitHub via SSH](https://help.github.com/en/articles/connecting-to-github-with-ssh)*.
+
+An `ssh-agent` can be used to avoid typing the passphrase several times. *[zsh](https://ohmyz.sh/) users may use the [ssh-agent plugin](https://github.com/robbyrussell/oh-my-zsh/tree/master/plugins/ssh-agent)*.
+
+To set the upstream during project generation, the remote origin has to be [created](https://github.com/new) before generating a new project. It is **important** that the remote repository is empty and doesn't contain any files (no `README.md`, `.gitignore`, ...) during project generation.
+
+## Installation
 
 First, install [Yeoman](http://yeoman.io) and `generator-wp-dev-env` using [npm](https://www.npmjs.com/)
 

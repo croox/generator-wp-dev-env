@@ -15,10 +15,11 @@ const gitAddOriginUpstream = ( generator ) => {
 
 		generator.log( '' );
 		generator.log(
-			'(recommended)'
-			+ ' ' + chalk.yellow.bold( 'Add a remote origin and set upstream for main branches' )
+			chalk.yellow.bold( 'Add a remote origin and set upstream for main branches' )
 		);
-		generator.log( 'Keep in mind, that the remote has to be created before you proceed!' );
+		generator.log( 'It\'s recommended, but keep in mind, that the remote has to be created before you proceed!' );
+		generator.log( 'To skip this, type: ' + chalk.bgBlack( 'skip' ) );
+		generator.log( '' );
 
 		prompt( [ {
 			type: 'input',
@@ -29,7 +30,7 @@ const gitAddOriginUpstream = ( generator ) => {
 
 			const origin = answers.origin.trim();
 
-			if ( origin.length > 0 ) {
+			if ( origin.length > 0 && 'skip' !== origin ) {
 				simpleGit.addRemote( 'origin', origin )
 				.checkout( 'master' ).push( ['-u', 'origin', 'master'] )
 				.checkout( 'generated' ).push( ['-u', 'origin', 'generated'] )

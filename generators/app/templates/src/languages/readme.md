@@ -24,7 +24,7 @@ The project base class loads the `mo` file automatically.
 
 The last build step generates `json` files from `pot` into `./test_build/languages` (hooked into build in 70).
 
-The `json` can be used like `wp_set_script_translations( $handle, 'textDomain', prefix\Prefix::get_instance()->get_dir_path() . 'languages' );`.
+The `json` can be used like `wp_set_script_translations( $handle, 'textDomain', prefix\Prefix::get_instance()->dir_path . 'languages' );`.
 
 > Use `yo wp-dev-env` to generate assets ready to be used with `@wordpress/i18n` utilities.
 

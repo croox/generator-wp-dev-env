@@ -11,33 +11,39 @@ use croox\wde;
 
 class <%= startCase( kebabCase( funcPrefix ) ) %> extends wde\<%= parent_class %> {
 
-	// public function hooks(){
-    //     parent::hooks();
-	// 	add_action( 'init', array( $this, 'do_something_on_init' ), 10 );
-	// }
+	public function hooks(){
+        parent::hooks();
+
+        // // Fix WPML global active language variable for REST Requests.
+        // if ( class_exists( 'SitePress' ) ) {
+        // 	add_action( 'after_setup_theme', array( 'croox\wde\utils\Wpml', 'rest_setup_switch_lang' ) );
+        // }
+
+		// add_action( 'init', array( $this, 'do_something_on_init' ), 10 );
+	}
 
 	// public function do_something_on_init(){
 	// 	// ...
 	// }
 
-	public function enqueue_scripts_admin(){
-        // parent::enqueue_scripts_admin();
-		// $handle = $this->prefix . '_script_admin';
+	// public function enqueue_scripts_admin(){
+    //     parent::enqueue_scripts_admin();
 
-		// wp_register_script(
-		// 	$handle,
-		// 	$this->get_dir_url() . '/js/' . $handle  . '.min.js',
-		// 	array(
-		// 		'wp-hooks',
-		// 		'wp-api',
-		// 		'wp-data',
-		// 		'wp-i18n',
-		// 	)
-		// );
+    //     $handle = $this->prefix . '_script_admin';
 
-		// wp_localize_script( $handle, $this->prefix . '_data', array() );
-		// wp_set_script_translations( $handle, $this->prefix . '', $this->get_dir_path() . 'languages' );
-		// wp_enqueue_script( $handle );
-	}
+    //     $this->register_script( array(
+	// 		'handle'	=> $handle,
+	// 		'deps'		=> array(
+	// 			'jquery',
+	// 			// 'wp-hooks',
+	// 			// 'wp-api',
+	// 			// 'wp-data',
+	// 			// 'wp-i18n',
+	// 		),
+	// 		'in_footer'	=> true,	// default false
+	// 		'enqueue'	=> true,
+	// 	) );
+
+	// }
 
 }

@@ -76,23 +76,23 @@ class <%= block.class_name %> {
 
 		// wp_register_script(
 		// 	$handle,
-		// 	<%= project_class %>::get_instance()->get_dir_url() . '/js/' . $handle . '.min.js',
+		// 	<%= project_class %>::get_instance()->dir_url . '/js/' . $handle . '.min.js',
 		// 	array(
 		// 		// 'wp-blocks',
 		// 		// 'wp-i18n',
 		// 		// 'wp-element',
 		// 	),
-		// 	filemtime( <%= project_class %>::get_instance()->get_dir_path() . 'js/' . $handle . '.min.js' )
+		// 	filemtime( <%= project_class %>::get_instance()->dir_path . 'js/' . $handle . '.min.js' )
 		// );
 		// wp_localize_script( $handle, '<%= block.handle %>_data', $this->get_localize_data() );
-		// wp_set_script_translations( $handle, 'wde_replace_textDomain', <%= project_class %>::get_instance()->get_dir_path() . 'languages' );
+		// wp_set_script_translations( $handle, 'wde_replace_textDomain', <%= project_class %>::get_instance()->dir_path . 'languages' );
 		// wp_enqueue_script( $handle );
 
 		// wp_enqueue_style(
 		// 	$handle,
-		// 	<%= project_class %>::get_instance()->get_dir_url() . '/css/' . $handle . '.min.css',
+		// 	<%= project_class %>::get_instance()->dir_url . '/css/' . $handle . '.min.css',
 		// 	array(),
-		// 	filemtime( <%= project_class %>::get_instance()->get_dir_path() . 'css/' . $handle . '.min.css' )
+		// 	filemtime( <%= project_class %>::get_instance()->dir_path . 'css/' . $handle . '.min.css' )
 		// );
 
 	}
@@ -113,7 +113,7 @@ class <%= block.class_name %> {
 		// 	filemtime( Mate_Maha_Test::plugin_dir_path() . 'js/' . $handle . '.min.js' )
 		// );
 		// wp_localize_script( $handle, '<%= block.handle %>_data', $this->get_localize_data() );
-		// wp_set_script_translations( $handle, 'wde_replace_textDomain', <%= project_class %>::get_instance()->get_dir_path() . 'languages' );
+		// wp_set_script_translations( $handle, 'wde_replace_textDomain', <%= project_class %>::get_instance()->dir_path . 'languages' );
 		// wp_enqueue_script( $handle );
 
 		// wp_enqueue_style(

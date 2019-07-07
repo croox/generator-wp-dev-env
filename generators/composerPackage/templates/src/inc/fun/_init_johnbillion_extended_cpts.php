@@ -10,7 +10,7 @@ if ( ! defined( 'WPINC' ) ) {
  *
  */
 function <%= funcPrefix %>_init_johnbillion_extended_cpts() {
-	$path = <%= project_class %>::get_instance()->get_dir_path() . 'vendor/johnbillion/extended-cpts/extended-cpts.php';
+	$path = <%= project_class %>::get_instance()->dir_path . 'vendor/johnbillion/extended-cpts/extended-cpts.php';
 	if ( file_exists( $path ) ) {
 		require_once $path;
 	}

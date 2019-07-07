@@ -24,7 +24,7 @@ See <a href="https://wordpress.org/gutenberg/handbook/packages/packages-i18n/">@
 <p>The project base class loads the <code>mo</code> file automatically.</p>
 <h3 id="json-file-generation">json file generation</h3>
 <p>The last build step generates <code>json</code> files from <code>pot</code> into <code>./test_build/languages</code> (hooked into build in 70).</p>
-<p>The <code>json</code> can be used like <code>wp_set_script_translations( $handle, 'textDomain', prefix\Prefix::get_instance()-&gt;get_dir_path() . 'languages' );</code>.</p>
+<p>The <code>json</code> can be used like <code>wp_set_script_translations( $handle, 'textDomain', prefix\Prefix::get_instance()-&gt;dir_path . 'languages' );</code>.</p>
 <blockquote>
   <p>Use <code>yo wp-dev-env</code> to generate assets ready to be used with <code>@wordpress/i18n</code> utilities.</p>
 </blockquote>

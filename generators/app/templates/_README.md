@@ -38,7 +38,7 @@ grunt build
 - `grunt`  and  `grunt-cli`
 - `rsync`
 - `xgettext`
-- *(optional)*  `convert` from ImageMagick
+- `convert` from ImageMagick. Tested with ImageMagick `6.8.9-9`
 
 # Support and feedback
 

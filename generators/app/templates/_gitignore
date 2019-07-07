@@ -35,6 +35,8 @@
 !dist/assets/**/*
 
 # ignore certain file patterns
+.DS_Store
+*/**/.DS_Store
 *.marks
 */**/*.marks
 *~

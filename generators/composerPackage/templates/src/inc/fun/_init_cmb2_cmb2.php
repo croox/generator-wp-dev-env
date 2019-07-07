@@ -10,7 +10,7 @@ if ( ! defined( 'WPINC' ) ) {
  *
  */
 function <%= funcPrefix %>_init_cmb2_cmb2() {
-	$path = <%= project_class %>::get_instance()->get_dir_path() . 'vendor/cmb2/cmb2/init.php';
+	$path = <%= project_class %>::get_instance()->dir_path . 'vendor/cmb2/cmb2/init.php';
 	if ( file_exists( $path ) ) {
 		require_once $path;
 	}
