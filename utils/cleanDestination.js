@@ -14,6 +14,8 @@ const cleanDestination = generator => {
 		const files = glob.sync( [
 			'grunt/**/*',
 			'src/**/*',
+			'dist/**/*',
+			'test_build/**/*',
 			'Gruntfile.js',
 			'README.md',
 			'.wde_nextRelease.json',

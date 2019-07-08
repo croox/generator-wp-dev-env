@@ -11,26 +11,6 @@ const generate = self => {
 
 	const { tplContext } = self.options;
 
-
-	// console.log( '' );		// ??? debug
-	// console.log( '' );		// ??? debug
-	// console.log( 'debug tplContext' );		// ??? debug
-	// console.log( tplContext );		// ??? debug
-	// console.log( '' );		// ??? debug
-	// console.log( '' );		// ??? debug
-
-	// tplContext.assets
-	// {
-	// 	assets: {
-	// 		name: 'test',
-	// 		script: true,
-	// 		style: true,
-	// 		enqueueFrontend: true,
-	// 		enqueueAdmin: true
-	// 	},
-	// },
-
-
 	const copyTpls = () => [
 
 		...( tplContext.assets.script ? [
@@ -55,13 +35,21 @@ const generate = self => {
 			},
 		] : [] ),
 
-	].map( tpl => self.fs.copyTpl(
-		self.templatePath( tpl.src ),
-		self.destinationPath( tpl.dest ),
-		tplContext
-	) );
+	].map( tpl => {
+		self.fs.copyTpl(
+			self.templatePath( tpl.src ),
+			self.destinationPath( tpl.dest ),
+			tplContext
+		);
+	} );
 
 	copyTpls();
+
+	// Return a promise.
+	// But can't find a way to wait for mem-fs-editor to be done.
+	// So the promise resolves directly. And whatever calls this function
+	// has to handle it somehow and wait that all is done.
+	return new Promise( resolve => resolve() );
 };
 
 module.exports = generate;

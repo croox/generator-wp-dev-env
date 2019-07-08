@@ -4,9 +4,10 @@ const {
 	startCase,
 	snakeCase,
 } = require('lodash');
-
+const chalk = require('chalk');
 const printUseApp = require( '../../utils/printUseApp' );
-const addChange = require('../../utils/addChange');
+const addChangeP = require('../../utils/addChangeP');
+const chainCommandsAndFunctions = require('../../utils/chainCommandsAndFunctions');
 const generate = require( './generate' );
 
 module.exports = class extends Generator {
@@ -23,7 +24,16 @@ module.exports = class extends Generator {
 		if ( this._shouldCancel() )
 			return;
 
-		generate( this );
+		const done = this.async();
+
+		generate( this ).then( () => done() );
+	}
+
+	install() {
+		if ( this._shouldCancel() )
+			return;
+
+		const self = this;
 
 		const {
 			funcPrefix,
@@ -32,11 +42,22 @@ module.exports = class extends Generator {
 			},
 		} = this.options.tplContext;
 
-		addChange(
-			this,
-			'added',
-			'Custom-post-type ' + funcPrefix + '_' + singularName
-		);
+		chainCommandsAndFunctions( [
+			{
+				func: addChangeP,
+				args: [
+					self,
+					'added',
+					'Custom-post-type ' + funcPrefix + '_' + singularName,
+				],
+			},
+		], self ).then( result => {
+			[
+				'',
+				chalk.green.bold( '✔ done' ),
+			].map( str => self.log( str ) );
+		} ).catch( err => self.log( err ) );
+
 	}
 
 };

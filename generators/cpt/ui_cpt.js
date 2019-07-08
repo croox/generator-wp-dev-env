@@ -191,6 +191,7 @@ const ui_cpt = function( self ){
 
 		{
 			type: 'multiselect',
+			hint: 'Use space to select',
 			name: 'cptSupports',
 			message: 'Core feature(s) the post type supports',
 			initial: [

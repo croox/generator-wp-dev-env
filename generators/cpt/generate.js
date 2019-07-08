@@ -19,6 +19,12 @@ const generate = self => {
 	) );
 
 	copyTpls();
+
+	// Return a promise.
+	// But can't find a way to wait for mem-fs-editor to be done.
+	// So the promise resolves directly. And whatever calls this function
+	// has to handle it somehow and wait that all is done.
+	return new Promise( resolve => resolve() );
 };
 
 module.exports = generate;

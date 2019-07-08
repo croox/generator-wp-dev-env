@@ -27,13 +27,12 @@ const chainCommandsAndFunctions = ( precesses, self ) => {
 						self.log( chalk.green( 'Childprocess: ' ) + chalk.yellow( process.cmd + ' ' + process.args.join( ' ' ) ) );
 						self.spawnCommand( process.cmd, process.args )
 						.on( 'close', code => {
-							self.log( 0 === code
-								? self.options.verbose ? chalk.green( 'Childprocess done with exit code: ' ) + code : ''
-								: chalk.red( 'Childprocess exited with code: ' ) + code
-								);
-							self.options.verbose
-								? self.log( 'Command was: ' + chalk.italic( process.cmd + ' ' + process.args.join( ' ' ) ) )
-								: '';
+							if ( 0 !== code )
+								self.log( chalk.red( 'Childprocess exited with code: ' ) + code );
+
+							if ( self.options.verbose || 0 !== code )
+								self.log( 'Command was: ' + chalk.italic( process.cmd + ' ' + process.args.join( ' ' ) ) );
+
 							self.log('');
 							resolve( code );
 						} );

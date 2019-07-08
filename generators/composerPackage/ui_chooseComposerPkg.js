@@ -35,6 +35,7 @@ const ui_chooseComposerPkg = function( self ){
 
 	const prompt = {
 		type: 'multiselect',
+		hint: 'Use space to select',
 		name: 'composerPkgs',
 		message: 'Choose Packages',
 		choices: [],

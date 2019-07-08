@@ -365,13 +365,17 @@ module.exports = class extends Generator {
 			tplContext: this.tplContext,
 		};
 
+		let done = null;
+
 		switch( true ) {
 
 			case this.props.isNewProject:
-				generate( this, options );
+				done = this.async();
+				generate( this, options ).then( () => done() );
 				break;
 
 			case 'updateWde' === this.tplContext.type:
+				done = this.async();
 				const checkGitStatus = () => {
 					return new Promise( ( resolve, reject ) => {
 						simpleGit.status( ( err, status ) => {
@@ -409,7 +413,8 @@ module.exports = class extends Generator {
 				checkGitStatus()
 				.then( switchBranch )
 				.then( () => cleanDestination( this ) )
-				.then( () => generate( this, options ) );
+				.then( () => generate( this, options ) )
+				.then( () => done() );
 				break;
 
 			default:
@@ -540,7 +545,7 @@ module.exports = class extends Generator {
 					'wp-dev-env-frame#' + self.tplContext.generatorPkg.subModules['croox/wp-dev-env-frame'],
 					')',
 				].join(' ');
-				chainCommandsAndFunctions(	[
+				chainCommandsAndFunctions( [
 					{
 						func: createScreenshot,
 						args: [self,self.tplContext.funcPrefix],
@@ -568,9 +573,12 @@ module.exports = class extends Generator {
 						chalk.green.bold( '✔ Project regenerated into branch ' ) + chalk.bgBlack( 'generated' ),
 						'',
 						'Currently on branch ' + chalk.bgBlack( 'generated' ),
-						'Self branch should not be modified manually. It should contain plain generated projects only.',
+						'This branch should not be modified manually. It should contain plain generated projects only.',
 						'',
 						chalk.cyan( 'What to do next?' ),
+						'',
+						'	It might be helpful to reinstall the dependencies with ' + chalk.bgBlack( 'npm install; composer update -vvv' ),
+						'	And build the project with ' + chalk.bgBlack( 'grunt build' ),
 						'',
 						'	Compare commits of ' + chalk.bgBlack( 'generated' ) + ' branch.',
 						'	Merge ' + chalk.bgBlack( 'generated' ) + ' branch into ' + chalk.bgBlack( 'develop' ) + ' and go on coding.' ,

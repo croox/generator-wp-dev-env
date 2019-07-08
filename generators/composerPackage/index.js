@@ -8,7 +8,8 @@ const chalk = require('chalk');
 const childProcess = require('child_process');
 
 const printUseApp = require( '../../utils/printUseApp' );
-const addChange = require('../../utils/addChange');
+const addChangeP = require('../../utils/addChangeP');
+const chainCommandsAndFunctions = require('../../utils/chainCommandsAndFunctions');
 const getPackageConfigs = require('./getPackageConfigs');
 const generate = require( './generate' );
 
@@ -26,13 +27,16 @@ module.exports = class extends Generator {
 		if ( this._shouldCancel() )
 			return;
 
-		generate( this );
+		const done = this.async();
+
+		generate( this ).then( () => done() );
 	}
 
 	install() {
 		if ( this._shouldCancel() )
 			return;
 
+		const self = this;
 
 		const {
 			composerPkgs,
@@ -43,29 +47,36 @@ module.exports = class extends Generator {
 
 		const packageConfigs = getPackageConfigs( this.options.tplContext );
 
-		let cmd = [
-			'composer require',
-			...[...composerPkgs].map( composerPkg => {
-				const packageConfig = find( packageConfigs, { 'key': composerPkg } );
-				return composerPkg + ( get( packageConfig, ['version'] ) ? ':' + packageConfig.version : '' );
-			} ),
-			'--dev',
-		].join( ' ' );
-
-		this.log('');
-		this.log( chalk.green( 'running ' ) + chalk.yellow( cmd ) );
-		this.log('');
-		childProcess.execSync( cmd, { stdio:'inherit' } );
-
-		addChange(
-			this,
-			'added',
-			'Composer package'
-				+ composerPkgs.length > 1 ? 's: ' : ': '
-				+ [...composerPkgs].join(', ')
-		);
+		chainCommandsAndFunctions( [
+			{
+				cmd: 'composer',
+				args: [
+					'require',
+					...[...composerPkgs].map( composerPkg => {
+						const packageConfig = find( packageConfigs, { 'key': composerPkg } );
+						return composerPkg + ( get( packageConfig, ['version'] ) ? ':' + packageConfig.version : '' );
+					} ),
+					'--dev',
+					...( this.options.verbose ? ['-vvv'] : [] ),
+				],
+			},
+			{
+				func: addChangeP,
+				args: [
+					self,
+					'added',
+					'Composer package'
+						+ composerPkgs.length > 1 ? 's: ' : ': '
+						+ [...composerPkgs].join(', ')
+				],
+			},
+		], self ).then( result => {
+			[
+				'',
+				chalk.green.bold( '✔ done' ),
+			].map( str => self.log( str ) );
+		} ).catch( err => self.log( err ) );
 
 	}
-
 
 };
