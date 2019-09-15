@@ -23,6 +23,11 @@ function <%= funcPrefix %>_init() {
 		'textdomain'	=> 'wde_replace_textDomain',
 		'FILE_CONST'	=> __FILE__,
 		'db_version'	=> 0,
+		'wde'			=> array(
+			'generator-wp-dev-env'	=> 'wde_replace_generator-wp-dev-env',
+			'wp-dev-env-grunt'		=> 'wde_replace_wp-dev-env-grunt',
+			'wp-dev-env-frame'		=> 'wde_replace_wp-dev-env-frame',
+		),
 		'deps'			=> array(
 			'php_version'	=> 'wde_replace_phpRequiresAtLeast',		// required php version
 			'wp_version'	=> 'wde_replace_wpRequiresAtLeast',			// required wp version
