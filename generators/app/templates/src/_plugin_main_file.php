@@ -21,6 +21,7 @@ function <%= funcPrefix %>_init() {
 		'name'			=> 'wde_replace_displayName',
 		'prefix'		=> 'wde_replace_funcPrefix',
 		'textdomain'	=> 'wde_replace_textDomain',
+		'project_kind'	=> 'wde_replace_projectType',
 		'FILE_CONST'	=> __FILE__,
 		'db_version'	=> 0,
 		'wde'			=> array(
