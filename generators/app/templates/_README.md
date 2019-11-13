@@ -15,6 +15,10 @@ To install it from zip file, [download latest release](<%= repositoryUri %>/rele
 Clone the repository and make it your current working directory.
 
 ```
+# Checkout the `generated` and `develop` branches
+git checkout generated
+git checkout develop
+
 # Install npm dependencies
 npm install
 
@@ -28,6 +32,10 @@ grunt build
 > This <%= startCase( projectType ) %> is based on [generator-wp-dev-env](https://github.com/croox/generator-wp-dev-env). See `generator.version` in `package.json`.
 >
 > Read the [documentation](https://github.com/croox/generator-wp-dev-env#documentation) for further development information.
+> -- [Installation & Quick Start](https://htmlpreview.github.io/?https://github.com/croox/generator-wp-dev-env/blob/master/docs/generator-wp-dev-env.docset/Contents/Resources/Documents/Guide/installation_quick_start.html)
+> -- [Git branching model](https://htmlpreview.github.io/?https://raw.githubusercontent.com/croox/generator-wp-dev-env/master/docs/generator-wp-dev-env.docset/Contents/Resources/Documents/Guide/git_branching_model.html)
+> -- [Project Structure](https://htmlpreview.github.io/?https://raw.githubusercontent.com/croox/generator-wp-dev-env/master/docs/generator-wp-dev-env.docset/Contents/Resources/Documents/Guide/project_structure.html)
+> -- [Grunt Taskrunner](https://htmlpreview.github.io/?https://raw.githubusercontent.com/croox/generator-wp-dev-env/master/docs/generator-wp-dev-env.docset/Contents/Resources/Documents/Guide/grunt_taskrunner.html)
 
 #### Dev dependencies
 
