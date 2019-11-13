@@ -66,7 +66,7 @@ module.exports = class extends Generator {
 					self,
 					'added',
 					'Composer package'
-						+ composerPkgs.length > 1 ? 's: ' : ': '
+						+ ( composerPkgs.length > 1 ? 's: ' : ': ' )
 						+ [...composerPkgs].join(', ')
 				],
 			},
