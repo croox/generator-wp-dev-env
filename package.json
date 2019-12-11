@@ -1,6 +1,6 @@
 {
 	"name": "generator-wp-dev-env",
-	"version": "0.11.0",
+	"version": "0.11.1",
 	"subModules": {
 		"wp-dev-env-grunt": "0.9.0",
 		"croox/wp-dev-env-frame": "0.7.6"
@@ -30,7 +30,7 @@
 	],
 	"devDependencies": {
 		"docblock": "andifeind/docblock",
-		"docset-generator": "github:jhotadhari/docset-generator",
+		"docset-generator": "^0.3.0",
 		"eslint": "^5.9.0",
 		"eslint-config-prettier": "^4.2.0",
 		"eslint-config-xo": "^0.26.0",
