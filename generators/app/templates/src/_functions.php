@@ -2,8 +2,7 @@
 /**
  * <%= startCase( displayName + ' ' + projectTypeExplicit ) %> init
  *
- * @package WordPress
- * @subpackage <%= name %>
+ * @package <%= name %>
  */
 
 // If this file is called directly, abort.
