@@ -23,7 +23,7 @@
 // @import "vendor_custom/font_awesome_custom";
 
 // Underscores media styles
-@import "<%= funcPrefix %>_frontend/media/media";
+@import "<%= funcPrefix %>_frontend/media/**/*";
 
 
 /**
@@ -31,6 +31,6 @@
  */
 
 // Tweaks and Bootstrap support for certain plugins
-@import "<%= funcPrefix %>_frontend/elements/elements";
-@import "<%= funcPrefix %>_frontend/plugin_tweaks/plugin_tweaks";
+@import "<%= funcPrefix %>_frontend/elements/**/*";
+@import "<%= funcPrefix %>_frontend/plugin_tweaks/**/*";
 
