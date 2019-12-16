@@ -1,4 +1,3 @@
-const glob = require('fast-glob');
 const path = require('path');
 const chalk = require('chalk');
 
