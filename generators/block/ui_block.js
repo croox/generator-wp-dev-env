@@ -35,12 +35,6 @@ const ui_block = function( self ){
 		}
 	};
 
-
-
-	const projectTypeExplicit = get( self.props.answers, ['type'], '' );
-	const projectTypeExplicitSC = startCase( projectTypeExplicit );
-
-
 	const prompts = [
 		{
 			name: 'block',
@@ -49,10 +43,10 @@ const ui_block = function( self ){
 			initial: get( self.props.answers, ['setup'], null ),
 			validate( value, state, field ) {
 				return formValidate( value, state, {
-					shouldSlug: [
+					sanitized: [
 						'name',
 					],
-					shouldNotEmpty: [
+					notEmpty: [
 						'name',
 						'displayName',
 					],
@@ -79,25 +73,25 @@ const ui_block = function( self ){
 				},
 
 
-				{
-					name: 'isAcfBlock',
-					message: 'Is ACF Block',
-					format(input, choice) {
-						choice.input = '';
-						choice.cursor = 0;
-						let { success } = this.styles;
-						let check = () => choice.enabled ? chalk.bold(success('✔')) : chalk.red.bold('x');
-						if (input !== ' ') {
-							this.alert();
-							return check();
-						}
-						choice.enabled = !choice.enabled;
-						return check();
-					},
-					result(value, choice) {
-						return choice.enabled;
-					}
-				},
+				// {
+				// 	name: 'isAcfBlock',
+				// 	message: 'Is ACF Block (Experimental, not tested)',
+				// 	format(input, choice) {
+				// 		choice.input = '';
+				// 		choice.cursor = 0;
+				// 		let { success } = this.styles;
+				// 		let check = () => choice.enabled ? chalk.bold(success('✔')) : chalk.red.bold('x');
+				// 		if (input !== ' ') {
+				// 			this.alert();
+				// 			return check();
+				// 		}
+				// 		choice.enabled = !choice.enabled;
+				// 		return check();
+				// 	},
+				// 	result(value, choice) {
+				// 		return choice.enabled;
+				// 	}
+				// },
 
 			],
 
@@ -105,7 +99,6 @@ const ui_block = function( self ){
 	];
 
 	return ui__resolver( this.name, prompts );
-
 };
 
 

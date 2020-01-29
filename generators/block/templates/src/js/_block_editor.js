@@ -28,13 +28,10 @@ const {
  */
 // no internal dependencies yet
 
-// // access localized data
-// const localizedData = <%= block.handle %>_data;
-
 // https://wordpress.org/gutenberg/handbook/block-api/#register-block-type
 registerBlockType( '<%= funcPrefix %>/<%= block.name %>', {
 
-	title: __( '<%= block.displayName %>', 'wde_replace_textDomain' ),
+	title: __( '<%= block.displayName %>', '<%= textDomain %>' ),
 
 	// https://wordpress.org/gutenberg/handbook/block-api/#icon-optional
 	icon: 'universal-access-alt',
@@ -68,25 +65,27 @@ registerBlockType( '<%= funcPrefix %>/<%= block.name %>', {
 
 		const onChangeAlignment = newAlignment => setAttributes( { alignment: newAlignment } );
 
-		return <>
-			<div className={ classnames( [attributes.classname, 'align-' + alignment, className] ) }>
-
-				<BlockControls>
-					<AlignmentToolbar
-						value={ alignment }
-						onChange={ onChangeAlignment }
-					/>
-				</BlockControls>
-
-				<RichText
-					style={ { textAlign: alignment } }
-					tagName={ 'p' }
-					onChange={ onChangeContent }
-					value={ content }
+		return <div
+			className={ classnames( [
+				attributes.classname,	// additional css classes
+				'align-' + alignment,
+				className
+			] ) }
+		>
+			<BlockControls>
+				<AlignmentToolbar
+					value={ alignment }
+					onChange={ onChangeAlignment }
 				/>
+			</BlockControls>
 
-			</div>
-		</>;
+			<RichText
+				style={ { textAlign: alignment } }
+				tagName={ 'p' }
+				onChange={ onChangeContent }
+				value={ content }
+			/>
+		</div>;
 	},
 
     // The save function defines the way in which the different attributes should be combined into the final markup,
@@ -98,16 +97,25 @@ registerBlockType( '<%= funcPrefix %>/<%= block.name %>', {
 			alignment,
 		} = attributes;
 
-		const className = 'wp-block-<%= funcPrefix %>-<%= block.name %>';
+		// wordpress like block css class name.
+		const className = 'wp-block-ruem-krims-krams';
 
-		return <>
-			<div className={ classnames( [attributes.classname, 'align-' + alignment, className] ) }>
-				<RichText.Content
-					tagName={ 'p' }
-					value={ content }
-				/>
-			</div>
-		</>;
+		return <RichText.Content
+			className={ classnames( [
+				attributes.classname,	// additional css classes
+				'align-' + alignment,
+				className
+			] ) }
+			tagName={ 'p' }
+			value={ content }
+		/>;
 	},
 
+	// Save function for server side rendered block has to return null.
+	// Use <%= block.class_name %>::render( $attributes, $name ) to render the block php server side.
+	/*
+	save( { attributes } ) {
+		return null;
+	},
+	*/
 } );

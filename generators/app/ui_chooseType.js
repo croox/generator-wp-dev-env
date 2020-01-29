@@ -39,11 +39,10 @@ const ui_chooseType = function( self ){
 						name: 'cpt',
 						message: 'Custom Post Type',
 					},
-					// ??? repair
-					// {
-					// 	name: 'block',
-					// 	message: 'Gutenberg Block',
-					// },
+					{
+						name: 'block',
+						message: 'Gutenberg Block',
+					},
 					{
 						name: 'composerPackage',
 						message: 'Composer Package',

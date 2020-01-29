@@ -24,8 +24,12 @@ const generate = self => {
 		...( tplContext.block.isAcfBlock ? [
 			// php
 			{
-				src: 'src/inc/fun/_class-acf_block.php',
-				dest: 'src/inc/fun/class-' + tplContext.block.handle + '.php',
+				src: 'src/inc/fun/_block.php',
+				dest: 'src/inc/fun/' + tplContext.block.handle + '.php',
+			},
+			{
+				src: 'src/classes/_acf_block.php',
+				dest: 'src/classes/' + tplContext.block.class_name + '.php',
 			},
 			{
 				src: 'src/template_parts/block/_content-acf-block.php',
@@ -34,13 +38,17 @@ const generate = self => {
 		] : [
 			// php
 			{
-				src: 'src/inc/fun/_class-block.php',
-				dest: 'src/inc/fun/class-' + tplContext.block.handle + '.php',
+				src: 'src/inc/fun/_block.php',
+				dest: 'src/inc/fun/' + tplContext.block.handle + '.php',
+			},
+			{
+				src: 'src/classes/_block.php',
+				dest: 'src/classes/' + tplContext.block.class_name + '.php',
 			},
 			// js
 			{
 				src: 'src/js/_block_editor.js',
-				dest: 'src/js/' + tplContext.block.handle + '_editor.js',
+				dest: 'src/js/' + tplContext.block.handle + '_admin.js',
 			},
 			{
 				src: 'src/js/_block_frontend.js',
@@ -49,7 +57,7 @@ const generate = self => {
 			// scss
 			{
 				src: 'src/scss/_block_editor.scss',
-				dest: 'src/scss/' + tplContext.block.handle + '_editor.scss',
+				dest: 'src/scss/' + tplContext.block.handle + '_admin.scss',
 			},
 			{
 				src: 'src/scss/_block_frontend.scss',
@@ -63,6 +71,12 @@ const generate = self => {
 	) );
 
 	copyTpls();
+
+	// Return a promise.
+	// But can't find a way to wait for mem-fs-editor to be done.
+	// So the promise resolves directly. And whatever calls this function
+	// has to handle it somehow and wait that all is done.
+	return new Promise( resolve => resolve() );
 };
 
 module.exports = generate;
