@@ -58,7 +58,7 @@ const ui_setup = function( self ){
 				return '5.0.0';
 
 			case 'wpVersionTested':
-				return '5.2.0';
+				return '5.3.2';
 
 			case 'phpRequiresAtLeast':
 				return '5.6.0';

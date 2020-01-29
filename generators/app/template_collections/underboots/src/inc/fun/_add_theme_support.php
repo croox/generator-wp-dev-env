@@ -87,6 +87,123 @@ if ( ! function_exists ( '<%= funcPrefix %>_add_theme_support' ) ) {
 		// Add support for responsive embedded content.
 		add_theme_support( 'responsive-embeds' );
 
+		// Customize Block Color Palettes
+		// hard coded copy of scss variables
+		// https://developer.wordpress.org/block-editor/developers/themes/theme-support/#block-color-palettes
+		add_theme_support( 'editor-color-palette', array(
+
+			// bootstrap theme-colors
+			array(
+				'name' => __( 'Blue', '<%= funcPrefix %>' ),
+				'slug' => 'blue',
+				'color' => '#007bff',
+			),
+			array(
+				'name' => __( 'indigo', '<%= funcPrefix %>' ),
+				'slug' => 'indigo',
+				'color' => '#6610f2',
+			),
+			array(
+				'name' => __( 'purple', '<%= funcPrefix %>' ),
+				'slug' => 'purple',
+				'color' => '#6f42c1',
+			),
+			array(
+				'name' => __( 'pink', '<%= funcPrefix %>' ),
+				'slug' => 'pink',
+				'color' => '#e83e8c',
+			),
+			array(
+				'name' => __( 'red', '<%= funcPrefix %>' ),
+				'slug' => 'red',
+				'color' => '#dc3545',
+			),
+			array(
+				'name' => __( 'orange', '<%= funcPrefix %>' ),
+				'slug' => 'orange',
+				'color' => '#fd7e14',
+			),
+			array(
+				'name' => __( 'yellow', '<%= funcPrefix %>' ),
+				'slug' => 'yellow',
+				'color' => '#ffc107',
+			),
+			array(
+				'name' => __( 'green', '<%= funcPrefix %>' ),
+				'slug' => 'green',
+				'color' => '#28a745',
+			),
+			array(
+				'name' => __( 'teal', '<%= funcPrefix %>' ),
+				'slug' => 'teal',
+				'color' => '#20c997',
+			),
+			array(
+				'name' => __( 'cyan', '<%= funcPrefix %>' ),
+				'slug' => 'cyan',
+				'color' => '#17a2b8',
+			),
+
+
+			// bootstrap grays
+			array(
+				'name' => __( 'White', '<%= funcPrefix %>' ),
+				'slug' => 'white',
+				'color' => '#ffffff',
+			),
+			array(
+				'name' => __( 'Gray 100', '<%= funcPrefix %>' ),
+				'slug' => 'gray-100',
+				'color' => '#f8f9fa',
+			),
+			array(
+				'name' => __( 'Gray 200', '<%= funcPrefix %>' ),
+				'slug' => 'gray-200',
+				'color' => '#e9ecef',
+			),
+			array(
+				'name' => __( 'Gray 300', '<%= funcPrefix %>' ),
+				'slug' => 'gray-300',
+				'color' => '#dee2e6',
+			),
+			array(
+				'name' => __( 'Gray 400', '<%= funcPrefix %>' ),
+				'slug' => 'gray-400',
+				'color' => '#ced4da',
+			),
+			array(
+				'name' => __( 'Gray 500', '<%= funcPrefix %>' ),
+				'slug' => 'gray-500',
+				'color' => '#adb5bd',
+			),
+			array(
+				'name' => __( 'Gray 600', '<%= funcPrefix %>' ),
+				'slug' => 'gray-600',
+				'color' => '#6c757d',
+			),
+			array(
+				'name' => __( 'Gray 700', '<%= funcPrefix %>' ),
+				'slug' => 'gray-700',
+				'color' => '#495057',
+			),
+			array(
+				'name' => __( 'Gray 800', '<%= funcPrefix %>' ),
+				'slug' => 'gray-800',
+				'color' => '#343a40',
+			),
+			array(
+				'name' => __( 'Gray 900', '<%= funcPrefix %>' ),
+				'slug' => 'gray-900',
+				'color' => '#212529',
+			),
+			array(
+				'name' => __( 'Black', '<%= funcPrefix %>' ),
+				'slug' => 'black',
+				'color' => '#000000',
+			),
+
+		) );
+
 		// Check and setup theme default settings.
 		<%= funcPrefix %>_setup_theme_default_settings();
 

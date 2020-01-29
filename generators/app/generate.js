@@ -90,7 +90,7 @@ const generate = ( self, options ) => {
 				},
 				devDependencies: {
 					grunt: '^1.0.4',
-					['wp-dev-env-grunt']: 'git+https://github.com/croox/wp-dev-env-grunt.git#' + tplContext.generatorPkg.subModules['wp-dev-env-grunt'],
+					['wp-dev-env-grunt']: 'git+ssh://git@github.com/croox/wp-dev-env-grunt.git#' + tplContext.generatorPkg.subModules['wp-dev-env-grunt'],
 				},
 				['browserify-shim']: {
 					jquery: 'global:jQuery',
@@ -202,26 +202,10 @@ const generate = ( self, options ) => {
 				/**
 				 * scss
 				 */
-				// copy scss templates, exclude _frontend/* and entry files
-				copyTemplatesBulk(
-					self,
-					self.templatePath( '../template_collections/underboots/src/scss/' ),
-					self.destinationPath( 'src/scss/' ),
-					tplContext,
-					{
-						globPattern: [
-							'**/*.scss',
-							'!frontend.scss',
-							'!_frontend/**/*.scss',
-							'!classic_editor_tiny_mce.scss',
-							'!_classic_editor_tiny_mce/**/*.scss',
-						],
-					}
-				);
-				// copy scss templates _frontend/* _classic_editor_tiny_mce/*
+				// copy scss subdir files
 				[
 					'_frontend',
-					'_classic_editor_tiny_mce',
+					'_editor',
 				].map( dir => copyTemplatesBulk(
 					self,
 					self.templatePath( '../template_collections/underboots/src/scss/' + dir + '/' ),
@@ -235,12 +219,13 @@ const generate = ( self, options ) => {
 				) );
 				// copy scss entry files
 				[
-					'frontend',
-					'classic_editor_tiny_mce',
+					'_frontend',
+					'_editor',
+					'_classic_editor_tiny_mce',
 				].map( basename => {
 					self.fs.copyTpl(
 						self.templatePath( '../template_collections/underboots/src/scss/' + basename + '.scss' ),
-						self.destinationPath( 'src/scss/' + tplContext.funcPrefix + '_' + basename + '.scss' ),
+						self.destinationPath( 'src/scss/' + tplContext.funcPrefix + basename + '.scss' ),
 						tplContext
 					);
 				} );
@@ -290,38 +275,6 @@ const generate = ( self, options ) => {
 						tplContext
 					);
 				} );
-
-				break;
-			case 'twentynineteen':
-
-				// copy templates, exclude frontend.scss
-				copyTemplatesBulk(
-					self,
-					self.templatePath( '../template_collections/twentynineteen' ),
-					self.destinationPath(),
-					tplContext,
-					{
-						globPattern: [
-							'**/*',
-							'!src/classes/Main.php',
-							'!src/scss/frontend.scss',
-						],
-					}
-				);
-
-				// copy main class
-				self.fs.copyTpl(
-					self.templatePath( '../template_collections/twentynineteen/src/classes/Main.php' ),
-					self.destinationPath( 'src/classes/' + startCase( kebabCase( tplContext.funcPrefix ) ) + '.php' ),
-					tplContext
-				);
-
-				// copy frontend.scss
-				self.fs.copyTpl(
-					self.templatePath( '../template_collections/twentynineteen/src/scss/frontend.scss' ),
-					self.destinationPath( 'src/scss/' + tplContext.funcPrefix + '_frontend.scss' ),
-					tplContext
-				);
 
 				break;
 			case 'empty':

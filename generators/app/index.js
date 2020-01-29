@@ -338,9 +338,6 @@ module.exports = class extends Generator {
 
 				if ( get( this, ['tplContext','generator','themeBase'], false ) ) {
 					switch( this.tplContext.generator.themeBase ) {
-						case 'twentynineteen':
-							this.tplContext.parent_class = 'Theme_Twentynineteen';
-							break;
 						case 'empty':
 						default:
 							this.tplContext.parent_class = 'Theme';

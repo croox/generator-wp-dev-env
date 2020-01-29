@@ -56,7 +56,7 @@ First, install [Yeoman](http://yeoman.io) and generator-wp-dev-env using [npm](h
 npm install -g yo
 
 # Install `generator-wp-dev-env` globally from github repository
-npm install -g https://github.com/croox/generator-wp-dev-env
+npm install -g git+ssh://git@github.com/croox/generator-wp-dev-env
 ```
 
 ## Usage

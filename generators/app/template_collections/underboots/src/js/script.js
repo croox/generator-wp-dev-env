@@ -20,7 +20,7 @@ import './<%= funcPrefix %>_script/skip_link_focus_fix';
 
 $( document ).ready( function( $ ) {
 
-	// log bootstrap carousel
-	console.log( '$.fn.carousel', $.fn.carousel );
+	// // log bootstrap carousel
+	// console.log( '$.fn.carousel', $.fn.carousel );
 
 } );

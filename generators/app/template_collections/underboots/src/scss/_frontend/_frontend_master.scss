@@ -1,0 +1,50 @@
+/**
+ * Frontend styles for <%= name %>
+ *
+ * This file continues the setup and imports all styles.
+ * - It will be loaded by WPs `prefix_frontend.scss`,
+ * - and in wp-admin into `prefix_editor/_editor-styles-wrapper` as well.
+ *
+ * This file should not contain or import certain css at-rules (@font-face, @page, ...),
+ * Because this rules can't be nested and the editor styles will break (node-sass excepts it, but css-purge breaks).
+ *
+ * @package <%= name %>
+ */
+
+@import "~bootstrap/scss/type";
+@import "~bootstrap/scss/images";
+@import "~bootstrap/scss/grid";
+@import "~bootstrap/scss/tables";
+@import "~bootstrap/scss/forms";
+@import "~bootstrap/scss/buttons";
+@import "~bootstrap/scss/transitions";
+@import "~bootstrap/scss/dropdown";
+@import "~bootstrap/scss/button-group";
+@import "~bootstrap/scss/input-group";
+@import "~bootstrap/scss/custom-forms";
+@import "~bootstrap/scss/nav";
+@import "~bootstrap/scss/navbar";
+@import "~bootstrap/scss/card";
+@import "~bootstrap/scss/breadcrumb";
+@import "~bootstrap/scss/pagination";
+@import "~bootstrap/scss/badge";
+@import "~bootstrap/scss/jumbotron";
+@import "~bootstrap/scss/alert";
+@import "~bootstrap/scss/progress";
+@import "~bootstrap/scss/media";
+@import "~bootstrap/scss/list-group";
+@import "~bootstrap/scss/close";
+@import "~bootstrap/scss/toasts";
+@import "~bootstrap/scss/modal";
+@import "~bootstrap/scss/tooltip";
+@import "~bootstrap/scss/popover";
+@import "~bootstrap/scss/carousel";
+@import "~bootstrap/scss/spinners";
+@import "~bootstrap/scss/utilities";
+
+
+@import "./mixins/**/*.scss";
+@import './generic.scss';
+@import './understrap.scss';
+@import './site.scss';
+@import "./components/**/*.scss";

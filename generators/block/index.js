@@ -73,6 +73,7 @@ module.exports = class extends Generator {
 						'install',
 						'classnames',
 						'--save-dev',
+						...( self.options.verbose ? ['--verbose'] : [] ),
 					],
 				},
 			] ),

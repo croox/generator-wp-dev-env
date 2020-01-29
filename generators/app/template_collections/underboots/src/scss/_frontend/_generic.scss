@@ -1,0 +1,29 @@
+.object-fit-cover {
+  object-fit: cover !important;
+}
+
+.object-fit-contain {
+  object-fit: contain !important;
+}
+
+
+// util-classes for each gray
+@each $key, $gray in $grays {
+  .text-gray-#{$key} {
+    color: $gray !important;
+  }
+}
+
+.img-full-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.abs-full-size {
+  @include abs-full-size();
+}
+
+.rel-full-size {
+  @include rel-full-size();
+}

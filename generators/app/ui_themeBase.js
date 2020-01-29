@@ -20,14 +20,6 @@ const ui_themeBase = function( self ){
 					].join( '\n' ),
 				},
 				{
-					name: 'twentynineteen',
-					message: [
-						'Based on WordPress Twentynineteen Theme.',
-						'	See https://github.com/WordPress/twentynineteen',
-						'	Includes most of Twentynineteen\'s code and functionality, but not all!',
-					].join( '\n' ),
-				},
-				{
 					name: 'empty',
 					message: [
 						'Empty Theme',

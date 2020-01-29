@@ -1,0 +1,22 @@
+/**
+ * Editor Metaboxes styles <%= name %>
+ *
+ * @package  <%= name %>
+ */
+
+.edit-post-layout__metaboxes {
+
+    /**
+    * Example bootstrap for all metaboxes
+    *
+    * Load some Bootstrap into .edit-post-layout__metaboxes class
+    * @import "~bootstrap/scss/grid";
+    * @import "~bootstrap/scss/utilities";
+    */
+
+    .edit-post-layout__metaboxes:not(:empty) {
+        .edit-post-meta-boxes-area {
+            margin: auto;
+        }
+    }
+}
