@@ -1,0 +1,48 @@
+#wrapper-header-image {
+    position: relative;
+
+    .header-image {
+        width: 100%;
+        object-fit: cover;
+    }
+}
+
+.wpseo-breadcrumbs {
+
+    position: absolute;
+    z-index: 99999;
+    bottom: 0;
+
+    div {
+        display: inline-block;
+        padding: map-get( $spacers, 2 ) map-get( $spacers, 3 );
+        &:not(:last-child){
+            padding-left: 0;
+        }
+        &:first-child {
+            padding-left: map-get( $spacers, 3 );
+        }
+
+        background-color: $white;
+        &, a {
+            color: $body-color;
+        }
+
+        &:last-child {
+            background-color: $primary;
+            &, a {
+                color: $white;
+            }
+        }
+
+        // // Append font awesome icon
+        // &:not(:last-child):after {
+        //     // @extend .fa;
+        //     // content: $fa-var-chevron-right;
+        //     content: '>';
+        //     margin-left: map-get( $spacers, 2 );
+        // }
+
+    }
+
+}

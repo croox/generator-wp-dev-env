@@ -1,0 +1,64 @@
+/**
+ * Editor Content Wrapper styles <%= name %>
+ *
+ * Load
+ * - some Bootstrap into .editor-styles-wrapper class
+ * - frontend_master
+ * - add block align classes
+ * - add block align classes
+ * - customize the editor title
+ *
+ * @package  <%= name %>
+ */
+
+.edit-post-visual-editor.editor-styles-wrapper {
+
+    // Bootstrap reboot
+    @import "~bootstrap/scss/reboot";
+    // ~bootstrap/scss/reboot -  body
+    font-family: $font-family-base;
+    @include font-size($font-size-base);
+    font-weight: $font-weight-base;
+    line-height: $line-height-base;
+    color: $body-color;
+    text-align: left; // 3
+    background-color: $body-bg; // 2
+
+    // Import frontend styles.
+    // Can't contain certain css at-rules (@font-face, @page, ...).
+    // This rules can't be nested (node-sass excepts it, but css-purge breaks).
+    @import "../<%= funcPrefix %>_frontend/frontend_master";
+
+    button, input {
+        overflow: hidden;
+    }
+
+    .wp-block {
+
+        // add block align classes
+        &:not(.col) {
+            // max-width: 720px;
+            max-width: 90%;
+            &[data-align="wide"] {
+                // max-width: 1080px;
+                max-width: 95%;
+            }
+            &[data-align="full"] {
+                max-width: none;
+            }
+        }
+
+        // customize the editor title
+        &.editor-post-title__block {
+            margin-bottom: $headings-margin-bottom;
+            .editor-post-title__input {
+                font-family: $headings-font-family;
+                font-weight: $headings-font-weight;
+                line-height: $headings-line-height;
+                color: $headings-color;
+                @include font-size($h1-font-size);
+            }
+        }
+    }
+
+}

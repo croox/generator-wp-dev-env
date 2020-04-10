@@ -1,0 +1,59 @@
+.object-fit-cover {
+  object-fit: cover !important;
+}
+
+.object-fit-contain {
+  object-fit: contain !important;
+}
+
+
+// util-classes for each gray
+@each $key, $gray in $grays {
+  .text-gray-#{$key} {
+    color: $gray !important;
+  }
+  .bg-gray-#{$key} {
+    background-color: $gray !important;
+  }
+}
+
+.img-full-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.abs-full-size {
+  @include abs-full-size();
+}
+
+.rel-full-size {
+  @include rel-full-size();
+}
+
+// Add background and text color classes for theme-color-palette
+// See: /src/inc/fun/<%= funcPrefix %>_add_theme_support.php
+@each $k, $c in $grays {
+    .has-background.has-gray-#{$k}-background-color {
+        background-color: $c !important,
+    }
+    .has-text-color.has-gray-#{$k}-color {
+        color: $c !important,
+    }
+}
+@each $k, $c in map-merge(
+    $colors,
+    (
+        "primary":    $primary,
+        "secondary":  $secondary,
+        "white": $white,
+        "black": $black,
+    )
+) {
+    .has-background.has-#{$k}-background-color {
+        background-color: $c !important,
+    }
+    .has-text-color.has-#{$k}-color {
+        color: $c !important,
+    }
+}

@@ -1,0 +1,39 @@
+
+
+.wp-block-button {
+
+    .wp-block-button__link {
+        @extend .btn;
+        border-radius: 5px;
+        text-transform: uppercase;
+
+        // Example hover
+        // &:hover {
+        //     filter: brightness(110%);
+        // }
+
+        // Example append Icon
+        // &:after {
+        //     @extend .fa;
+        //     content: $fa-var-chevron-right;
+        //     margin-left: map-get( $spacers, 3 );
+        // }
+    }
+
+
+    &.is-style-outline {
+        .wp-block-button__link {
+            border: 2px solid;
+            border-color: currentcolor;
+        }
+    }
+
+    &.is-style-fill {
+        .wp-block-button__link {
+            &:not(.has-background) {
+                background-color: $primary;
+            }
+        }
+    }
+
+}

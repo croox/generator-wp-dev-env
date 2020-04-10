@@ -1,0 +1,43 @@
+/**
+ * Frontend styles for <%= name %>
+ *
+ * This file will start the setup, imports
+ *      - font-faces,
+ *      - variables,
+ *      - bootstrap base, not the entire bootstrap setup,
+ * and then imports `frontend_master, which contains rest of the setup.
+ *
+ * Half of the setup moved into `_frontend_master.scss`.
+ * This way we can import `_frontend_master.scss` in admin into '.editor-styles-wrapper'.
+ * To make this work, several css at-rules (@font-face, @page, ...) have to be imported on root level.
+ * This rules can't be nested (node-sass excepts it, but css-purge breaks).
+ *
+ * @package <%= name %>
+ */
+
+// Load font_faces
+@import "<%= funcPrefix %>_frontend/fonts/fonts_master";
+
+// Load and overwrite Bootstrap variables
+@import "<%= funcPrefix %>_frontend/variables_site/variables_bootstrap";
+
+// Loads Bootstrap4 base
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/root";
+@import "~bootstrap/scss/reboot";
+@import "~bootstrap/scss/print";
+@import "~bootstrap/scss/code";
+
+// html and body styling
+// Lets do it here, because its only needed in frontend
+html, body {
+    overflow-x: hidden;
+}
+body {
+    font-display: swap;
+    position: relative;
+}
+
+@import "<%= funcPrefix %>_frontend/frontend_master";

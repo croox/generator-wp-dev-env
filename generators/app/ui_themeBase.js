@@ -10,13 +10,21 @@ const ui_themeBase = function( self ){
 			type: 'select',
 			choices: [
 				{
+					name: 'underboots_simple_no_sidebar',
+					message: [
+						'Simplified based on UnderStrap',
+						'	Mainly based on UnderStrap, but simplified layout without sidebars and widgets',
+						'	"Combines Automattic´s Underscores Starter Theme and Bootstrap 4"',
+						'	See https://github.com/understrap/understrap',
+					].join( '\n' ),
+				},
+				{
 					// https://github.com/understrap/understrap/commit/577eea7f47aeef222062b3bcea70718058acab87
 					name: 'underboots',
 					message: [
 						'Mainly based on UnderStrap',
 						'	"Combines Automattic´s Underscores Starter Theme and Bootstrap 4"',
 						'	See https://github.com/understrap/understrap',
-						'	???TODO: Gutenberg and block support is based on Twentynineteen and incorporates Bootstrap.',
 					].join( '\n' ),
 				},
 				{

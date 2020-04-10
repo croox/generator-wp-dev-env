@@ -1,0 +1,21 @@
+/// Dimensions mixins
+//
+
+@mixin force-height-to-width( $ratio: 1 ) {
+    overflow: hidden;
+    height: 0;
+    padding-bottom: calc( 100% / #{ $ratio } );
+}
+
+// Usefull to give an height to an element that doesnt have one
+@mixin abs-full-size() {
+    position: absolute !important;
+    height: 100%;
+    width: 100%;
+}
+@mixin rel-full-size() {
+    position: relative !important;
+    height: 100%;
+    width: 100%;
+    display: block;
+}

@@ -1,0 +1,21 @@
+/**
+ * Editor sidebar styles <%= name %>
+ *
+ * @package  <%= name %>
+ */
+
+/**
+* Example bootstrap for custom block inspectors
+*
+* Load some Bootstrap into .<%= funcPrefix %>-post-setting-row class
+.edit-post-sidebar {
+
+    .<%= funcPrefix %>-post-setting-row {
+
+        @import "~bootstrap/scss/grid";
+        @import "~bootstrap/scss/utilities";
+
+        // ...
+    }
+}
+*/

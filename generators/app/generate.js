@@ -166,6 +166,7 @@ const generate = ( self, options ) => {
 	if ( tplContext.generator.themeBase ) {
 		switch( tplContext.generator.themeBase ){
 			case 'underboots':
+			case 'underboots_simple_no_sidebar':
 
 				// json files
 				const packageJsonIndex = jsonFiles.findIndex( file => 'package.json' === file.dest );
@@ -178,7 +179,7 @@ const generate = ( self, options ) => {
 
 				// copy main class
 				self.fs.copyTpl(
-					self.templatePath( '../template_collections/underboots/src/classes/Main.php' ),
+					self.templatePath( '../template_collections/' + tplContext.generator.themeBase + '/src/classes/Main.php' ),
 					self.destinationPath( 'src/classes/' + startCase( kebabCase( tplContext.funcPrefix ) ) + '.php' ),
 					tplContext
 				);
@@ -186,7 +187,7 @@ const generate = ( self, options ) => {
 				// copy templates, exclude all scss js
 				copyTemplatesBulk(
 					self,
-					self.templatePath( '../template_collections/underboots' ),
+					self.templatePath( '../template_collections/' + tplContext.generator.themeBase ),
 					self.destinationPath(),
 					tplContext,
 					{
@@ -208,7 +209,7 @@ const generate = ( self, options ) => {
 					'_editor',
 				].map( dir => copyTemplatesBulk(
 					self,
-					self.templatePath( '../template_collections/underboots/src/scss/' + dir + '/' ),
+					self.templatePath( '../template_collections/' + tplContext.generator.themeBase + '/src/scss/' + dir + '/' ),
 					self.destinationPath( 'src/scss/' + tplContext.funcPrefix + dir ),
 					tplContext,
 					{
@@ -224,7 +225,7 @@ const generate = ( self, options ) => {
 					'_classic_editor_tiny_mce',
 				].map( basename => {
 					self.fs.copyTpl(
-						self.templatePath( '../template_collections/underboots/src/scss/' + basename + '.scss' ),
+						self.templatePath( '../template_collections/' + tplContext.generator.themeBase + '/src/scss/' + basename + '.scss' ),
 						self.destinationPath( 'src/scss/' + tplContext.funcPrefix + basename + '.scss' ),
 						tplContext
 					);
@@ -236,7 +237,7 @@ const generate = ( self, options ) => {
 				// copy js templates, exclude _script/* and entry files
 				copyTemplatesBulk(
 					self,
-					self.templatePath( '../template_collections/underboots/src/js/' ),
+					self.templatePath( '../template_collections/' + tplContext.generator.themeBase + '/src/js/' ),
 					self.destinationPath( 'src/js/' ),
 					tplContext,
 					{
@@ -255,7 +256,7 @@ const generate = ( self, options ) => {
 					'_customizer',
 				].map( dir => copyTemplatesBulk(
 					self,
-					self.templatePath( '../template_collections/underboots/src/js/' + dir + '/' ),
+					self.templatePath( '../template_collections/' + tplContext.generator.themeBase + '/src/js/' + dir + '/' ),
 					self.destinationPath( 'src/js/' + tplContext.funcPrefix + dir ),
 					tplContext,
 					{
@@ -270,7 +271,7 @@ const generate = ( self, options ) => {
 					'customizer',
 				].map( basename => {
 					self.fs.copyTpl(
-						self.templatePath( '../template_collections/underboots/src/js/' + basename + '.js' ),
+						self.templatePath( '../template_collections/' + tplContext.generator.themeBase + '/src/js/' + basename + '.js' ),
 						self.destinationPath( 'src/js/' + tplContext.funcPrefix + '_' + basename + '.js' ),
 						tplContext
 					);
