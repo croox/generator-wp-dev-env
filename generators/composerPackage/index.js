@@ -57,7 +57,7 @@ module.exports = class extends Generator {
 						return composerPkg + ( get( packageConfig, ['version'] ) ? ':' + packageConfig.version : '' );
 					} ),
 					'--dev',
-					...( this.options.verbose ? ['-vvv'] : [] ),
+					...( self.options.verbose ? ['-vvv'] : [] ),
 				],
 			},
 			{
