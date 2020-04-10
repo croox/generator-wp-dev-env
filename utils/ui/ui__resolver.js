@@ -2,6 +2,8 @@
 
 const { prompt } = require('enquirer');
 
+
+let lastUiElementName = '';
 const ui__resolver = ( uiElementName, prompts ) => {
 	return new Promise( ( resolve, reject ) => {
 		resolve( prompt( prompts ) );
@@ -11,6 +13,12 @@ const ui__resolver = ( uiElementName, prompts ) => {
 			answers: answers,
 		};
 	} ).catch( e => {
+
+		if ( lastUiElementName === uiElementName ) {
+			process.exit();
+		}
+		lastUiElementName = uiElementName;
+
 		return {
 			uiElementName,
 		};
