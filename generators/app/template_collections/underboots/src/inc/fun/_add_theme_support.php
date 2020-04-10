@@ -201,8 +201,13 @@ if ( ! function_exists ( '<%= funcPrefix %>_add_theme_support' ) ) {
 				'slug' => 'black',
 				'color' => '#000000',
 			),
+		);
+		add_theme_support( 'editor-color-palette', $editor_color_palette );
 
-		) );
+		// Add Support For Block Editor Alignments
+		// https://developer.wordpress.org/block-editor/developers/themes/theme-support/#wide-alignment
+		add_theme_support( 'align-wide' );
+		add_theme_support( 'align-full' );
 
 		// Check and setup theme default settings.
 		<%= funcPrefix %>_setup_theme_default_settings();

@@ -14,6 +14,7 @@ import $ from 'jquery';
 // import customized bootstrap, may be stripped.
 import './<%= funcPrefix %>_script/bootstrapCustom';
 import './<%= funcPrefix %>_script/skip_link_focus_fix';
+import './<%= funcPrefix %>_script/theme_support_align_full';
 
 // // access localized data.
 // const localizedData = <%= funcPrefix %>_script_data;
