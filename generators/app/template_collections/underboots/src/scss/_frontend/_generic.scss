@@ -12,6 +12,9 @@
   .text-gray-#{$key} {
     color: $gray !important;
   }
+  .bg-gray-#{$key} {
+    background-color: $gray !important;
+  }
 }
 
 .img-full-cover {
@@ -26,4 +29,31 @@
 
 .rel-full-size {
   @include rel-full-size();
+}
+
+// Add background and text color classes for theme-color-palette
+// See: /src/inc/fun/<%= funcPrefix %>_add_theme_support.php
+@each $k, $c in $grays {
+    .has-background.has-gray-#{$k}-background-color {
+        background-color: $c !important,
+    }
+    .has-text-color.has-gray-#{$k}-color {
+        color: $c !important,
+    }
+}
+@each $k, $c in map-merge(
+    $colors,
+    (
+        "primary":    $primary,
+        "secondary":  $secondary,
+        "white": $white,
+        "black": $black,
+    )
+) {
+    .has-background.has-#{$k}-background-color {
+        background-color: $c !important,
+    }
+    .has-text-color.has-#{$k}-color {
+        color: $c !important,
+    }
 }

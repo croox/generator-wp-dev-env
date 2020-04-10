@@ -90,61 +90,69 @@ if ( ! function_exists ( '<%= funcPrefix %>_add_theme_support' ) ) {
 		// Customize Block Color Palettes
 		// hard coded copy of scss variables
 		// https://developer.wordpress.org/block-editor/developers/themes/theme-support/#block-color-palettes
-		add_theme_support( 'editor-color-palette', array(
-
+		$editor_color_palette = array(
 			// bootstrap theme-colors
+			array(
+				'name' => __( 'Primary', '<%= funcPrefix %>' ),
+				'slug' => 'primary',
+				'color' => '#007bff',
+			),
+			array(
+				'name' => __( 'Secondary', '<%= funcPrefix %>' ),
+				'slug' => 'secondary',
+				'color' => '#6c757d',
+			),
+
 			array(
 				'name' => __( 'Blue', '<%= funcPrefix %>' ),
 				'slug' => 'blue',
 				'color' => '#007bff',
 			),
 			array(
-				'name' => __( 'indigo', '<%= funcPrefix %>' ),
+				'name' => __( 'Indigo', '<%= funcPrefix %>' ),
 				'slug' => 'indigo',
 				'color' => '#6610f2',
 			),
 			array(
-				'name' => __( 'purple', '<%= funcPrefix %>' ),
+				'name' => __( 'Purple', '<%= funcPrefix %>' ),
 				'slug' => 'purple',
 				'color' => '#6f42c1',
 			),
 			array(
-				'name' => __( 'pink', '<%= funcPrefix %>' ),
+				'name' => __( 'Pink', '<%= funcPrefix %>' ),
 				'slug' => 'pink',
 				'color' => '#e83e8c',
 			),
 			array(
-				'name' => __( 'red', '<%= funcPrefix %>' ),
+				'name' => __( 'Red', '<%= funcPrefix %>' ),
 				'slug' => 'red',
 				'color' => '#dc3545',
 			),
 			array(
-				'name' => __( 'orange', '<%= funcPrefix %>' ),
+				'name' => __( 'Orange', '<%= funcPrefix %>' ),
 				'slug' => 'orange',
 				'color' => '#fd7e14',
 			),
 			array(
-				'name' => __( 'yellow', '<%= funcPrefix %>' ),
+				'name' => __( 'Yellow', '<%= funcPrefix %>' ),
 				'slug' => 'yellow',
 				'color' => '#ffc107',
 			),
 			array(
-				'name' => __( 'green', '<%= funcPrefix %>' ),
+				'name' => __( 'Green', '<%= funcPrefix %>' ),
 				'slug' => 'green',
 				'color' => '#28a745',
 			),
 			array(
-				'name' => __( 'teal', '<%= funcPrefix %>' ),
+				'name' => __( 'Teal', '<%= funcPrefix %>' ),
 				'slug' => 'teal',
 				'color' => '#20c997',
 			),
 			array(
-				'name' => __( 'cyan', '<%= funcPrefix %>' ),
+				'name' => __( 'Cyan', '<%= funcPrefix %>' ),
 				'slug' => 'cyan',
 				'color' => '#17a2b8',
 			),
-
-
 			// bootstrap grays
 			array(
 				'name' => __( 'White', '<%= funcPrefix %>' ),
