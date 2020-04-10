@@ -98,7 +98,7 @@ registerBlockType( '<%= funcPrefix %>/<%= block.name %>', {
 		} = attributes;
 
 		// wordpress like block css class name.
-		const className = 'wp-block-ruem-krims-krams';
+		const className = 'wp-block-<%= funcPrefix %>-<%= kebabCase( block.name ) %>';
 
 		return <RichText.Content
 			className={ classnames( [
