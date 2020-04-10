@@ -50,11 +50,13 @@
 
         // customize the editor title
         &.editor-post-title__block {
+            margin-bottom: $headings-margin-bottom;
             .editor-post-title__input {
-                color: $primary !important;
-                font-size: 2rem !important;
-                font-weight: 500;
-                line-height: 1.2;
+                font-family: $headings-font-family;
+                font-weight: $headings-font-weight;
+                line-height: $headings-line-height;
+                color: $headings-color;
+                @include font-size($h1-font-size);
             }
         }
     }

@@ -18,12 +18,26 @@ class <%= startCase( kebabCase( funcPrefix ) ) %> extends wde\<%= parent_class %
         // if ( class_exists( 'SitePress' ) ) {
         // 	add_action( 'after_setup_theme', array( 'croox\wde\utils\Wpml', 'rest_setup_switch_lang' ) );
         // }
+
 		// add_action( 'init', array( $this, 'do_something_on_init' ), 10 );
+
+		add_action( 'current_screen', array( $this, 'enqueue_style_editor' ), 10 );
 	}
 
 	// public function do_something_on_init(){
 	// 	// ...
 	// }
+
+	public function enqueue_style_editor( $screen ){
+		if ( ! is_admin() || 'post' !== $screen->base ) {
+			return;
+		}
+		$handle = $this->prefix . '_editor';
+		$this->register_style( array(
+			'handle'	=> $handle,
+			'enqueue'	=> true,
+		) );
+	}
 
 	public function enqueue_scripts(){
         parent::enqueue_scripts();
