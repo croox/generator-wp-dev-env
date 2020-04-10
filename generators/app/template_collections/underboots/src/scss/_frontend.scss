@@ -30,4 +30,14 @@
 @import "~bootstrap/scss/print";
 @import "~bootstrap/scss/code";
 
+// html and body styling
+// Lets do it here, because its only needed in frontend
+html, body {
+    overflow-x: hidden;
+}
+body {
+    font-display: swap;
+    position: relative;
+}
+
 @import "<%= funcPrefix %>_frontend/frontend_master";
