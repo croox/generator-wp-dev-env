@@ -1,0 +1,8 @@
+
+
+.components-panel__row.<%= funcPrefix %>-post-setting-row {
+    display: block;
+    & > * {
+        margin-top: 1em;
+    }
+}

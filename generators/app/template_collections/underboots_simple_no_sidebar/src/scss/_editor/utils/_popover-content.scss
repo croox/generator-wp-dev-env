@@ -1,0 +1,17 @@
+
+
+.<%= funcPrefix %>-popover-content {
+    .components-popover__header {
+        &-title {
+            font-weight: bold;
+        }
+    }
+
+    &-inner {
+        padding: 1em;
+        .<%= funcPrefix %>-button {
+            margin-left: 5px;
+        }
+    }
+
+}

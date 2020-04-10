@@ -16,7 +16,7 @@ $container = get_theme_mod( '<%= funcPrefix %>_container_type' );
 ?>
 
 <main class="site-main my-3" id="main">
-	<div class="p4 <?php echo esc_attr( $container ); ?>" id="content" tabindex="-1">
+	<div class="<?php echo esc_attr( $container ); ?>" id="content" tabindex="-1">
 
 		<header class="page-header author-header">
 

@@ -1,0 +1,17 @@
+
+.<%= funcPrefix %>-flex-row,
+.<%= funcPrefix %>-flex-row-field .components-base-control__field {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.<%= funcPrefix %>-flex-row {
+    margin: 0.5em 0;
+}
+
+.<%= funcPrefix %>-flex-row-field {
+    .components-base-control__label {
+        margin-bottom: 0;
+    }
+}

@@ -30,6 +30,8 @@
 // no bootstrap print
 // no bootstrap code
 
+@import "<%= funcPrefix %>_editor/utils/**/*";
+
 // Editor elements
 @import "<%= funcPrefix %>_editor/editor_styles_wrapper";
 @import "<%= funcPrefix %>_editor/sidebar";

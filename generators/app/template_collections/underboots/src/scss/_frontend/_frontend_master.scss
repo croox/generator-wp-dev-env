@@ -2,8 +2,8 @@
  * Frontend styles for <%= name %>
  *
  * This file continues the setup and imports all styles.
- * - It will be loaded by WPs `prefix_frontend.scss`,
- * - and in wp-admin into `prefix_editor/_editor-styles-wrapper` as well.
+ * - It will be loaded by WPs `<%= funcPrefix %>_frontend.scss`,
+ * - and in wp-admin into `<%= funcPrefix %>_editor/_editor-styles-wrapper` as well.
  *
  * This file should not contain or import certain css at-rules (@font-face, @page, ...),
  * Because this rules can't be nested and the editor styles will break (node-sass excepts it, but css-purge breaks).
