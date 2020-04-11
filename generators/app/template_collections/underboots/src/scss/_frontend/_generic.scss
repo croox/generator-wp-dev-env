@@ -57,3 +57,7 @@
         color: $c !important,
     }
 }
+
+// Add background gradients classes for editor_gradient_presets
+// Done via php and inline style.
+// See: /src/inc/fun/<%= funcPrefix %>_add_theme_support.php

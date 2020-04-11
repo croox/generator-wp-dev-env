@@ -72,128 +72,176 @@ if ( ! function_exists ( '<%= funcPrefix %>_add_theme_support' ) ) {
 
 		// Customize Block Color Palettes
 		// hard coded copy of scss variables
+		// See
+		//	- Bootstrap variables												src/scss/<%= funcPrefix %>_frontend/variables_site/_variables_bootstrap.scss
+		//	- Add background and text color classes for theme-color-palette 	src/scss/<%= funcPrefix %>_frontend/_generic.scss
+		//	- Add background gradients classes for editor_gradient_presets		src/scss/<%= funcPrefix %>_frontend/_generic.scss
 		// https://developer.wordpress.org/block-editor/developers/themes/theme-support/#block-color-palettes
-		$editor_color_palette = array(
-			// bootstrap theme-colors
-			array(
-				'name' => __( 'Primary', '<%= funcPrefix %>' ),
+		$editor_color_palette_assoc = array(
+			// bootstrap colors
+			'primary'	=> array(
+				'name' => __( 'Primary', '<%= textDomain %>' ),
 				'slug' => 'primary',
 				'color' => '#007bff',
 			),
-			array(
-				'name' => __( 'Secondary', '<%= funcPrefix %>' ),
+			'secondary'	=> array(
+				'name' => __( 'Secondary', '<%= textDomain %>' ),
 				'slug' => 'secondary',
 				'color' => '#6c757d',
 			),
 
-			array(
-				'name' => __( 'Blue', '<%= funcPrefix %>' ),
+			'blue'	=> array(
+				'name' => __( 'Blue', '<%= textDomain %>' ),
 				'slug' => 'blue',
 				'color' => '#007bff',
 			),
-			array(
-				'name' => __( 'Indigo', '<%= funcPrefix %>' ),
+			'indigo'	=> array(
+				'name' => __( 'Indigo', '<%= textDomain %>' ),
 				'slug' => 'indigo',
 				'color' => '#6610f2',
 			),
-			array(
-				'name' => __( 'Purple', '<%= funcPrefix %>' ),
+			'purple'	=> array(
+				'name' => __( 'Purple', '<%= textDomain %>' ),
 				'slug' => 'purple',
 				'color' => '#6f42c1',
 			),
-			array(
-				'name' => __( 'Pink', '<%= funcPrefix %>' ),
+			'pink'	=> array(
+				'name' => __( 'Pink', '<%= textDomain %>' ),
 				'slug' => 'pink',
 				'color' => '#e83e8c',
 			),
-			array(
-				'name' => __( 'Red', '<%= funcPrefix %>' ),
+			'red'	=> array(
+				'name' => __( 'Red', '<%= textDomain %>' ),
 				'slug' => 'red',
 				'color' => '#dc3545',
 			),
-			array(
-				'name' => __( 'Orange', '<%= funcPrefix %>' ),
+			'orange'	=> array(
+				'name' => __( 'Orange', '<%= textDomain %>' ),
 				'slug' => 'orange',
 				'color' => '#fd7e14',
 			),
-			array(
-				'name' => __( 'Yellow', '<%= funcPrefix %>' ),
+			'yellow'	=> array(
+				'name' => __( 'Yellow', '<%= textDomain %>' ),
 				'slug' => 'yellow',
 				'color' => '#ffc107',
 			),
-			array(
-				'name' => __( 'Green', '<%= funcPrefix %>' ),
+			'green'	=> array(
+				'name' => __( 'Green', '<%= textDomain %>' ),
 				'slug' => 'green',
 				'color' => '#28a745',
 			),
-			array(
-				'name' => __( 'Teal', '<%= funcPrefix %>' ),
+			'teal'	=> array(
+				'name' => __( 'Teal', '<%= textDomain %>' ),
 				'slug' => 'teal',
 				'color' => '#20c997',
 			),
-			array(
-				'name' => __( 'Cyan', '<%= funcPrefix %>' ),
+			'cyan'	=> array(
+				'name' => __( 'Cyan', '<%= textDomain %>' ),
 				'slug' => 'cyan',
 				'color' => '#17a2b8',
 			),
 			// bootstrap grays
-			array(
-				'name' => __( 'White', '<%= funcPrefix %>' ),
+			'white'	=> array(
+				'name' => __( 'White', '<%= textDomain %>' ),
 				'slug' => 'white',
 				'color' => '#ffffff',
 			),
-			array(
-				'name' => __( 'Gray 100', '<%= funcPrefix %>' ),
+			'gray-100'	=> array(
+				'name' => __( 'Gray 100', '<%= textDomain %>' ),
 				'slug' => 'gray-100',
 				'color' => '#f8f9fa',
 			),
-			array(
-				'name' => __( 'Gray 200', '<%= funcPrefix %>' ),
+			'gray-200'	=> array(
+				'name' => __( 'Gray 200', '<%= textDomain %>' ),
 				'slug' => 'gray-200',
 				'color' => '#e9ecef',
 			),
-			array(
-				'name' => __( 'Gray 300', '<%= funcPrefix %>' ),
+			'gray-300'	=> array(
+				'name' => __( 'Gray 300', '<%= textDomain %>' ),
 				'slug' => 'gray-300',
 				'color' => '#dee2e6',
 			),
-			array(
-				'name' => __( 'Gray 400', '<%= funcPrefix %>' ),
+			'gray-400'	=> array(
+				'name' => __( 'Gray 400', '<%= textDomain %>' ),
 				'slug' => 'gray-400',
 				'color' => '#ced4da',
 			),
-			array(
-				'name' => __( 'Gray 500', '<%= funcPrefix %>' ),
+			'gray-500'	=> array(
+				'name' => __( 'Gray 500', '<%= textDomain %>' ),
 				'slug' => 'gray-500',
 				'color' => '#adb5bd',
 			),
-			array(
-				'name' => __( 'Gray 600', '<%= funcPrefix %>' ),
+			'gray-600'	=> array(
+				'name' => __( 'Gray 600', '<%= textDomain %>' ),
 				'slug' => 'gray-600',
 				'color' => '#6c757d',
 			),
-			array(
-				'name' => __( 'Gray 700', '<%= funcPrefix %>' ),
+			'gray-700'	=> array(
+				'name' => __( 'Gray 700', '<%= textDomain %>' ),
 				'slug' => 'gray-700',
 				'color' => '#495057',
 			),
-			array(
-				'name' => __( 'Gray 800', '<%= funcPrefix %>' ),
+			'gray-800'	=> array(
+				'name' => __( 'Gray 800', '<%= textDomain %>' ),
 				'slug' => 'gray-800',
 				'color' => '#343a40',
 			),
-			array(
-				'name' => __( 'Gray 900', '<%= funcPrefix %>' ),
+			'gray-900'	=> array(
+				'name' => __( 'Gray 900', '<%= textDomain %>' ),
 				'slug' => 'gray-900',
 				'color' => '#212529',
 			),
-			array(
-				'name' => __( 'Black', '<%= funcPrefix %>' ),
+			'black'	=> array(
+				'name' => __( 'Black', '<%= textDomain %>' ),
 				'slug' => 'black',
 				'color' => '#000000',
 			),
 		);
-		add_theme_support( 'editor-color-palette', $editor_color_palette );
+		add_theme_support( 'editor-color-palette', array_values( $editor_color_palette_assoc ) );
+
+		/**
+		 * Example: Configure the predefined set of gradients.
+		 * And add inline style, generic css classes.
+		 */
+		/*
+		if ( method_exists( 'croox\wde\utils\Color', 'build_editor_gradient_presets' )
+			&& method_exists( 'croox\wde\utils\Color', 'build_gradient_presets_css' )
+		) {
+			$editor_gradient_presets = utils\Color::build_editor_gradient_presets( array(
+				array(
+					'type' => 'linear',
+					'deg' => '90',
+					'steps' => array(
+						// 		slug 			alpha 	step
+						array( 'primary', 		1,		0 ),
+						array( 'secondary', 	1, 		100 ),
+					),
+				),
+				array(
+					'type' => 'radial',
+					'steps' => array(
+						// 		slug 			alpha 	step
+						array( 'white',			1, 		0 ),
+						array( 'black', 		1, 		100 ),
+					),
+				),
+			), $editor_color_palette_assoc );
+
+			add_theme_support(
+				'editor-gradient-presets',
+				$editor_gradient_presets
+			);
+
+			// Add inline style, generic css classes, for $editor_gradient_presets
+			$gradient_presets_css = utils\Color::build_gradient_presets_css( $editor_gradient_presets );
+			add_action( 'wp_enqueue_scripts', function() use ( $gradient_presets_css ) {
+				wp_add_inline_style( '<%= funcPrefix %>_frontend', $gradient_presets_css );
+			}, 20 );
+			add_action( 'admin_enqueue_scripts', function() use ( $gradient_presets_css ) {
+				wp_add_inline_style( '<%= funcPrefix %>_editor', $gradient_presets_css );
+			}, 20 );
+		}
+		*/
 
 		// Add Support For Block Editor Alignments
 		// https://developer.wordpress.org/block-editor/developers/themes/theme-support/#wide-alignment
