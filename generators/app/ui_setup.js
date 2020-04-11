@@ -22,6 +22,8 @@ const ui_setup = function( self ){
 		verticalLayout: 'fitted'
 	} ) ) );
 
+	const skipValidate = get( self.options, ['skipValidate'], '' ).split( ',' );
+
 	const getInitial = ( choiceName, prompt ) => {
 		switch( choiceName ){
 
@@ -32,7 +34,9 @@ const ui_setup = function( self ){
 				return startCase( ( prompt.values.name || getInitial( 'name' ) ).replace( /-/g, ' ' ) );
 
 			case 'name':
-				return wpFeSanitizeTitle( path.basename( process.cwd() ) );
+				return skipValidate.includes( 'name' )
+					? path.basename( process.cwd() )
+					: wpFeSanitizeTitle( path.basename( process.cwd() ) );
 
 			case 'authorUri':
 				const author = get( prompt, ['values','author'], getInitial( 'author' ) );
@@ -79,7 +83,7 @@ const ui_setup = function( self ){
 			validate( value, state, field ) {
 
 				const formValidation = formValidate( value, state, {
-					skipValidate: get( self.options, ['skipValidate'], '' ).split( ',' ),
+					skipValidate: skipValidate,
 					sanitized: [
 						'funcPrefix',
 						'textDomain',
