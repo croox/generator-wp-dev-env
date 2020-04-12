@@ -20,7 +20,7 @@ $container = get_theme_mod( '<%= funcPrefix %>_container_type' );
 
 		<?php if ( have_posts() ) : ?>
 
-			<header class="page-header">
+			<div class="page-header">
 
 				<h1 class="page-title">
 					<?php
@@ -32,7 +32,7 @@ $container = get_theme_mod( '<%= funcPrefix %>_container_type' );
 					?>
 				</h1>
 
-			</header><!-- .page-header -->
+			</div><!-- .page-header -->
 
 			<?php /* Start the Loop */ ?>
 			<?php while ( have_posts() ) : the_post(); ?>

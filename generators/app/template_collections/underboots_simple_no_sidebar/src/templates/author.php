@@ -18,7 +18,7 @@ $container = get_theme_mod( '<%= funcPrefix %>_container_type' );
 <main class="site-main my-3" id="main">
 	<div class="<?php echo esc_attr( $container ); ?>" id="content" tabindex="-1">
 
-		<header class="page-header author-header">
+		<div class="page-header author-header">
 
 			<?php
 			if ( isset( $_GET['author_name'] ) ) {
@@ -52,7 +52,7 @@ $container = get_theme_mod( '<%= funcPrefix %>_container_type' );
 
 			<h2><?php echo esc_html( 'Posts by', '<%= textDomain %>' ) . ' ' . esc_html( $curauth->nickname ); ?>:</h2>
 
-		</header><!-- .page-header -->
+		</div><!-- .page-header -->
 
 		<ul>
 

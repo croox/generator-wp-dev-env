@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <article <?php post_class(); ?> id="post-<?php the_ID(); ?>">
 
-	<header class="entry-header">
+	<div class="entry-header">
 
 		<?php
 		the_title(
@@ -31,7 +31,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<?php endif; ?>
 
-	</header><!-- .entry-header -->
+	</div><!-- .entry-header -->
 
 	<div class="entry-summary">
 
@@ -39,10 +39,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	</div><!-- .entry-summary -->
 
-	<footer class="entry-footer">
+	<div class="entry-footer">
 
 		<?php <%= funcPrefix %>_entry_footer(); ?>
 
-	</footer><!-- .entry-footer -->
+	</div><!-- .entry-footer -->
 
 </article><!-- #post-## -->
