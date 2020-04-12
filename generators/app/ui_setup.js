@@ -24,39 +24,27 @@ const ui_setup = function( self ){
 
 	const skipValidate = get( self.options, ['skipValidate'], '' ).split( ',' );
 
+	const getChoiceInput = ( prompt, key, fallback ) => {
+		fallback = fallback ? fallback : '';
+		const choice = undefined === prompt ? undefined : prompt.state._choices.find( _choice => key === _choice.name );
+		if ( choice && choice.input && choice.input.length > 0 ) {
+			return choice.input;
+		} else {
+			return get( prompt, ['values',key], fallback );
+		}
+	};
+
 	const getInitial = ( choiceName, prompt ) => {
+
 		switch( choiceName ){
 
 			case 'author':
 				return 'example';	/// ??? get initial, remember
 
-			case 'displayName':
-				return startCase( ( prompt.values.name || getInitial( 'name' ) ).replace( /-/g, ' ' ) );
-
 			case 'name':
 				return skipValidate.includes( 'name' )
 					? path.basename( process.cwd() )
 					: wpFeSanitizeTitle( path.basename( process.cwd() ) );
-
-			case 'authorUri':
-				const author = get( prompt, ['values','author'], getInitial( 'author' ) );
-				return 'https://github.com/' + author;
-
-			case 'funcPrefix':
-				let name = prompt.values.name || getInitial( 'name' );
-				name = kebabCase( name );
-				let nameParts = name.split('-');
-				switch( true ) {
-					case nameParts.length === 1:
-						return name.replace( /\-/, '' ).substring( 0, 4 );
-					case nameParts.length === 2:
-						return [...nameParts].map( part => part.substring( 0, 2 ) ).slice( 0, 2 ).join( '' );
-					case nameParts.length >= 3:
-						return [...nameParts].map( part => part.substring( 0, 1 ) ).slice( 0, 4 ).join( '' );
-				}
-
-			case 'textDomain':
-				return getInitial( 'funcPrefix', prompt );
 
 			case 'wpRequiresAtLeast':
 				return '5.0.0';
@@ -77,7 +65,15 @@ const ui_setup = function( self ){
 	const prompts = [
 		{
 			name: 'setup',
-			message: chalk.yellow( 'Setup ' + projectTypeExplicitSC ),
+			message: [
+				chalk.yellow( 'Setup ' + projectTypeExplicitSC ),
+				'',
+				'🡡	Navigate up.',
+				'🡣	Navigate down.',
+				'tab	Use initial value and maybe edit it.',
+				'↲	Submit. ' + chalk.red.dim( 'Bug: before submit, press multible 🡡 🡣 until all inital values updated!' ),
+				'',
+			].join( '\n' ),
 			type: 'form',
 			initial: get( self.props.answers, ['setup'], null ),
 			validate( value, state, field ) {
@@ -125,13 +121,17 @@ const ui_setup = function( self ){
 					name: 'name',
 					message: 'Sanitized Name',
 					initial: getInitial( 'name' ),
+					onChoice( state, choice, i ) {
+						choice.initial = getInitial( 'name', this );;
+					},
 				},
 
 				{
 					name: 'displayName',
 					message: 'Display Name',
 					onChoice( state, choice, i ) {
-						choice.initial = getInitial( 'displayName', this );
+						const name = getChoiceInput( this, 'name', getInitial( 'name', this ) );
+						choice.initial = startCase( name.replace( /[-_]/g, ' ' ) );
 					},
 				},
 
@@ -156,7 +156,8 @@ const ui_setup = function( self ){
 					name: 'authorUri',
 					message: 'Author Uri',
 					onChoice( state, choice, i ) {
-						choice.initial = getInitial( 'authorUri', this );
+						const author = getChoiceInput( this, 'author', getInitial( 'author', this ) );
+						choice.initial = 'https://github.com/' + author;
 					},
 				},
 
@@ -164,23 +165,23 @@ const ui_setup = function( self ){
 					name: 'repositoryUri',
 					message: 'Repository URL',
 					onChoice( state, choice, i ) {
-						const name = this.values.name || getInitial( 'name' );
-						const author = this.values.author || getInitial( 'author' );
+						const author = getChoiceInput( this, 'author', getInitial( 'author', this ) );
+						const name = getChoiceInput( this, 'name', getInitial( 'name', this ) );
 						choice.initial = 'https://github.com/' + author + '/' + name;
 					}
 				},
+
 
 				{
 					name: 'uri',
 					message: startCase( projectType ) + ' URL',
 					onChoice( state, choice, i ) {
-						const name = this.values.name || getInitial( 'name' );
-						const author = this.values.author || getInitial( 'author' );
-						if ( this.values.authorUri ) {
-							choice.initial = this.values.authorUri + '/' + name;
-						} else {
-							choice.initial = 'https://github.com/' + author + '/' + name;
-						}
+						const name = getChoiceInput( this, 'name', getInitial( 'name', this ) );
+						const authorUri = getChoiceInput( this, 'authorUri' );
+						const author = getChoiceInput( this, 'author', getInitial( 'author', this ) );
+						choice.initial = authorUri.length
+							? authorUri + '/' + name
+							: 'https://github.com/' + author + '/' + name;
 					}
 				},
 
@@ -188,12 +189,12 @@ const ui_setup = function( self ){
 					name: 'donateLink',
 					message: 'Donate Link',
 					onChoice( state, choice, i ) {
-						const author = this.values.author || getInitial( 'author' )
-						if ( undefined === this.values.authorUri || getInitial( 'authorUri', this ) + '/' + author === this.values.authorUri ){
-							choice.initial = 'https://example.com/donate';
-						} else {
-							choice.initial = this.values.authorUri + '/donate';
-						}
+						const name = getChoiceInput( this, 'name', getInitial( 'name', this ) );
+						const authorUri = getChoiceInput( this, 'authorUri' );
+						const author = getChoiceInput( this, 'author', getInitial( 'author', this ) );
+						choice.initial = authorUri.length
+							? authorUri + '/donate'
+							: 'https://github.com/' + author + '/' + name;
 					}
 				},
 
@@ -206,7 +207,20 @@ const ui_setup = function( self ){
 					name: 'funcPrefix',
 					message: 'Function Prefix',
 					onChoice( state, choice, i ) {
-						choice.initial = snakeCase( getInitial( choice.name, this ) );
+						let name = getChoiceInput( this, 'name', getInitial( 'name', this ) );
+						name = kebabCase( name );
+						let nameParts = name.split('-');
+						switch( true ) {
+							case nameParts.length === 1:
+								choice.initial = name.replace( /\-/, '' ).substring( 0, 4 );
+								return;
+							case nameParts.length === 2:
+								choice.initial = [...nameParts].map( part => part.substring( 0, 2 ) ).slice( 0, 2 ).join( '' );
+								return;
+							case nameParts.length >= 3:
+								choice.initial = [...nameParts].map( part => part.substring( 0, 1 ) ).slice( 0, 4 ).join( '' );
+								return;
+						}
 					},
 				},
 
@@ -214,7 +228,8 @@ const ui_setup = function( self ){
 					name: 'textDomain',
 					message: 'Text Domain',
 					onChoice( state, choice, i ) {
-						choice.initial = this.values.funcPrefix || getInitial( 'funcPrefix', this );
+						let funcPrefix = getChoiceInput( this, 'funcPrefix', getInitial( 'funcPrefix', this ) );
+						choice.initial = funcPrefix;
 					}
 				},
 
