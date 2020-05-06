@@ -13,7 +13,7 @@ function <%= funcPrefix %>_enqueue_style_<%= assets.name %>(){
 		'deps'		=> array(),
 		// 'media'		=> 'all',
 		'enqueue'	=> true,
-	);
+	) );
 
 }
 <% if( assets.enqueueFrontend ) { %>add_action( 'wp_enqueue_scripts', '<%= funcPrefix %>_enqueue_style_<%= assets.name %>', 10 ); <% } %>
