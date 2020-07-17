@@ -19,7 +19,7 @@
 @import "<%= funcPrefix %>_frontend/fonts/fonts_master";
 
 // Load and overwrite Bootstrap variables
-@import "<%= funcPrefix %>_frontend/variables_site/variables_bootstrap";
+@import "<%= funcPrefix %>_frontend/variables_site/variables_site";
 
 // Loads Bootstrap4 base
 @import "~bootstrap/scss/functions";
