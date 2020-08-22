@@ -6,6 +6,7 @@
 # include some root files
 !.gitignore
 !Gruntfile.js
+!index.php
 !package.json
 !package-lock.json
 !.eslintrc.json

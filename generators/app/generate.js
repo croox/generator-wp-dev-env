@@ -151,6 +151,7 @@ const generate = ( self, options ) => {
 		// root
 		{ src: '_gitignore',			dest: '.gitignore' },
 		{ src: '_Gruntfile.js',			dest: 'Gruntfile.js' },
+		{ src: '_index.php',			dest: 'index.php' },
 		{ src: '_README.md',			dest: 'README.md' },
 		// src
 		{ src: 'src/_readme.txt',	dest: 'src/readme.txt' },
