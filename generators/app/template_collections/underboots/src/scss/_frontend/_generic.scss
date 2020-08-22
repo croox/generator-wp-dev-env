@@ -43,12 +43,7 @@
 }
 @each $k, $c in map-merge(
     $colors,
-    (
-        "primary":    $primary,
-        "secondary":  $secondary,
-        "white": $white,
-        "black": $black,
-    )
+    $theme-colors
 ) {
     .has-background.has-#{$k}-background-color {
         background-color: $c !important,
