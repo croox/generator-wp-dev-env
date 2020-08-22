@@ -7,9 +7,10 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-use croox\wde;
+use croox\wde\Block;
+use croox\wde\utils\Arr;
 
-class <%= block.class_name %> extends wde\Block {
+class <%= block.class_name %> extends Block {
 
 	protected function initialize() {
 		// Block type name excluding namespace. Use dashes.
@@ -19,6 +20,40 @@ class <%= block.class_name %> extends wde\Block {
 
 		$this->project_class_name = '<%= project_class %>';
 	}
+
+	/**
+	 * Example hooks
+	 */
+	/*
+	public function hooks() {
+		parent::hooks();
+		$prefix = $this->project_class_name::get_instance()->prefix;
+		add_filter( "{$prefix}_block_{$this->name}_script_deps_editor", array( $this, 'script_deps_editor' ) );
+		add_filter( "{$prefix}_block_{$this->name}_localize_data_editor", array( $this, 'localize_data_editor' ) );
+		add_filter( "{$prefix}_block_{$this->name}_script_deps_frontend", array( $this, 'script_deps_frontend' ) );
+		add_filter( "{$prefix}_block_{$this->name}_localize_data_frontend", array( $this, 'localize_data_frontend' ) );
+		add_filter( "{$prefix}_block_{$this->name}_style_deps_editor", array( $this, 'style_deps_editor' ) );
+		add_filter( "{$prefix}_block_{$this->name}_style_deps_frontend", array( $this, 'style_deps_frontend' ) );
+	}
+	public function script_deps_editor( $deps ) {
+		return $deps;
+	}
+	public function localize_data_editor( $localize_data ) {
+		return $localize_data;
+	}
+	public function script_deps_frontend( $deps ) {
+		return $deps;
+	}
+	public function localize_data_frontend( $localize_data ) {
+		return $localize_data;
+	}
+	public function style_deps_editor( $deps ) {
+		return $deps;
+	}
+	public function style_deps_frontend( $deps ) {
+		return $deps;
+	}
+	*/
 
 	protected function setup_handles() {
 		$prefix = $this->project_class_name::get_instance()->prefix;
@@ -50,13 +85,18 @@ class <%= block.class_name %> extends wde\Block {
 	 */
 	/*
 	public function render( $attributes, $name ) {
-		// Decode stringified Block Attributes
-		$attributes_stringified_keys = array();
-		$attributes = wde\Block::decode_attributes( $attributes, $attributes_stringified_keys );
+		// // Decode stringified Block Attributes
+		// $attributes_stringified_keys = array();
+		// $attributes = Block::decode_attributes( $attributes, $attributes_stringified_keys );
+
+		$class_name = implode( ' ', array_filter( array(
+			'wp-block-<%= funcPrefix %>-' . $this->name,
+			Arr::get( $attributes, 'className', '' ),
+		), 'strlen' ) );
 
 		$html_arr = array(
 			'<div ',
-				'class="<%= 'wp-block-' + funcPrefix + '-' + block.name %>" ',
+				'class="' . $class_name . '" ',
 				'data-<%= block.name %>="' . htmlspecialchars( json_encode( $attributes ), ENT_QUOTES, 'UTF-8' ) . '" ',
 			'>',
 				// markup
