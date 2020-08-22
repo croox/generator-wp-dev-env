@@ -36,8 +36,11 @@ html, body {
     overflow-x: hidden;
 }
 body {
-    font-display: swap;
     position: relative;
+}
+// remove content outline
+#content {
+    outline: 0;
 }
 
 @import "<%= funcPrefix %>_frontend/frontend_master";
