@@ -14,6 +14,8 @@ class <%= startCase( kebabCase( funcPrefix ) ) %> extends wde\<%= parent_class %
 	public function hooks(){
         parent::hooks();
 
+		// $this->_include( 'css_properties' ); // Includes function <%= funcPrefix %>_get_css_property
+
         // // Fix WPML global active language variable for REST Requests.
         // if ( class_exists( 'SitePress' ) ) {
         // 	add_action( 'after_setup_theme', array( 'croox\wde\utils\Wpml', 'rest_setup_switch_lang' ) );

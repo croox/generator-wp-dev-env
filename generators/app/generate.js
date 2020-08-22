@@ -254,7 +254,7 @@ const generate = ( self, options ) => {
 				/**
 				 * js
 				 */
-				// copy js templates, exclude _script/* and entry files
+				// copy js templates, exclude _script/*, _script_editor/* and entry files
 				copyTemplatesBulk(
 					self,
 					self.templatePath( '../template_collections/' + tplContext.generator.themeBase + '/src/js/' ),
@@ -265,14 +265,17 @@ const generate = ( self, options ) => {
 							'**/*.js',
 							'!script.js',
 							'!_script/**/*.js',
+							'!script_editor.js',
+							'!_script_editor/**/*.js',
 							'!customizer.js',
 							'!_customizer/**/*.js',
 						],
 					}
 				);
-				// copy js templates _script/* _customizer/*
+				// copy js templates _script/* _script_editor/* _customizer/*
 				[
 					'_script',
+					'_script_editor',
 					'_customizer',
 				].map( dir => copyTemplatesBulk(
 					self,
@@ -288,6 +291,7 @@ const generate = ( self, options ) => {
 				// copy js entry files
 				[
 					'script',
+					'script_editor',
 					'customizer',
 				].map( basename => {
 					self.fs.copyTpl(

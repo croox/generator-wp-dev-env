@@ -23,12 +23,40 @@ class <%= startCase( kebabCase( funcPrefix ) ) %> extends wde\<%= parent_class %
 
 		// add_action( 'init', array( $this, 'do_something_on_init' ), 10 );
 
+		add_action( 'current_screen', array( $this, 'enqueue_script_editor' ), 10 );
 		add_action( 'current_screen', array( $this, 'enqueue_style_editor' ), 10 );
 	}
 
 	// public function do_something_on_init(){
 	// 	// ...
 	// }
+
+	public function enqueue_script_editor( $screen ){
+		if ( ! is_admin() || 'post' !== $screen->base ) {
+			return;
+		}
+
+		$handle = $this->prefix . '_script_editor';
+
+		$deps = array(
+			'wp-blocks',
+			'wp-dom-ready',
+			'wp-edit-post',
+		);
+
+		// // If script contains lapo customization, enqueue it after lapo script.
+		// if ( class_exists( 'lapo\Block_Latest_Posts' ) ) {
+		// 	$deps[] = 'lapo_block_latest_posts_admin';
+		// }
+
+		$this->register_script( array(
+			'handle'		=> $handle,
+			'deps'			=> $deps,
+			'in_footer'		=> true,	// default false
+			'enqueue'		=> true,
+			// 'localize_data'	=> array(),
+		) );
+	}
 
 	public function enqueue_style_editor( $screen ){
 		if ( ! is_admin() || 'post' !== $screen->base ) {
