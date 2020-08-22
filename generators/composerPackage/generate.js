@@ -5,6 +5,7 @@ const {
 	union,
 	find,
 	has,
+	uniq,
 } = require('lodash');
 
 const copyDirStructure = require('../../utils/copyDirStructure');
@@ -32,13 +33,45 @@ const generate = self => {
 		// maybe set repository
 		if ( get( packageConfig, ['repository'] ) ) {
 			let newRepositories = [ ...get( newComposerJson, ['repositories'], [] ) ];
-			if ( has( packageConfig, ['repository','url'] ) && undefined === find( newRepositories, { 'url': packageConfig.repository.url } ) ) {
-				newRepositories = [
-					...newRepositories,
-					packageConfig.repository,
-				];
-				set( newComposerJson, ['repositories'], newRepositories );
+			switch( get( packageConfig, ['repository','type'] ) ) {
+				case 'vcs':
+					// check if already existing, and add packageConfig.repository
+					if ( has( packageConfig, ['repository','url'] ) && undefined === find( newRepositories, { 'url': packageConfig.repository.url } ) ) {
+						newRepositories = [
+							...newRepositories,
+							packageConfig.repository,
+						];
+						set( newComposerJson, ['repositories'], newRepositories );
+					}
+					break;
+				case 'package':
+					if ( undefined === newRepositories.find( repo =>
+						'package' === repo.type
+						&& get( packageConfig.repository, ['package','name'] ) === get( repo, ['package','name'] )
+					) ) {
+						newRepositories = [
+							...newRepositories,
+							packageConfig.repository,
+						];
+						set( newComposerJson, ['repositories'], newRepositories );
+					}
+					break;
+				default:
+					// add packageConfig.repository
+					newRepositories = [
+						...newRepositories,
+						packageConfig.repository,
+					];
+					set( newComposerJson, ['repositories'], newRepositories );
 			}
+		}
+
+		// maybe set autoload
+		if ( false !== get( packageConfig, ['autoload'], false ) ) {
+			set( newComposerJson, ['autoload','psr-4', packageConfig.autoload ], union(
+				get( newComposerJson, ['autoload','psr-4', packageConfig.autoload ], [] ),
+				['vendor/' + packageConfig.key + '/'],
+			) );
 		}
 
 		// write new composer.json
@@ -46,6 +79,24 @@ const generate = self => {
 			self.destinationPath( 'composer.json' ),
 			newComposerJson
 		);
+	};
+
+	const updateCopyComposerPackagesJson = ( composerPkg, packageConfig ) => {
+		// get file
+		const filePath = self.destinationPath( 'grunt/copyComposerPackages.json' );
+		const copyComposerPackagesJson = self.fs.readJSON( filePath );
+
+		// add packages
+		const newCopyComposerPackagesJson = {
+			...( copyComposerPackagesJson && copyComposerPackagesJson ),
+			packages: uniq( [
+				...( copyComposerPackagesJson && copyComposerPackagesJson.packages ? copyComposerPackagesJson.packages : [] ),
+				packageConfig.key,
+			] ),
+		};
+
+		// write new file
+		self.fs.writeJSON( filePath, newCopyComposerPackagesJson );
 	};
 
 	const copyTpls = tpls => [...tpls].map( tpl => self.fs.copyTpl(
@@ -59,6 +110,7 @@ const generate = self => {
 	[...tplContext.composerPkgs].map( composerPkg => {
 		const packageConfig = find( packageConfigs, { 'key': composerPkg } );
 		updateComposerJson( composerPkg, packageConfig );
+		updateCopyComposerPackagesJson( composerPkg, packageConfig );
 		if ( get( packageConfig, ['templates'] ) )
 			copyTpls( packageConfig.templates );
 	} );
