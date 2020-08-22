@@ -14,6 +14,10 @@ The basic setup is handled by `wp-dev-env-grunt` package. The projects `Gruntfil
 
 Hooked function can be added to `./grunt/hooked/` ???link. Each file should export a function named equally to the files basename, containing one or more hooked functions.
 
+### Copy composer packages
+
+To simply get a composer package copied, add an entry to `./grunt/copyComposerPackages.json`.
+
 ### Filter
 
 Every built in grunt task configuration is filterable. As well as some options, replacements and more. Following lists all built in filter:

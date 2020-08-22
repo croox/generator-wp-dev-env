@@ -41,6 +41,8 @@ Combination of <code>watch</code> and <code>sync</code>. Runs necessary tasks to
 <h2 id="customization">Customization</h2>
 <p><a href="https://www.npmjs.com/package/@wordpress/hooks">@wordpress/hooks</a> is used to create action and filter hooks.</p>
 <p>Hooked function can be added to <code>./grunt/hooked/</code> ???link. Each file should export a function named equally to the files basename, containing one or more hooked functions.</p>
+<h3 id="copy-composer-packages">Copy composer packages</h3>
+<p>To simply get a composer package copied, add an entry to <code>./grunt/copyComposerPackages.json</code>.</p>
 <h3 id="filter">Filter</h3>
 <p>Every built in grunt task configuration is filterable. As well as some options, replacements and more. Following lists all built in filter:</p>
 <ul>
