@@ -6,4 +6,4 @@ Files in [`./grunt/hooked`](./grunt___hooked.html) are loaded by default.
 
 Check the [`customization section`](../Guide/grunt_taskrunner.html#customization) for details.
 
-
+To simply get a composer package copied, add an entry to `./grunt/copyComposerPackages.json`.

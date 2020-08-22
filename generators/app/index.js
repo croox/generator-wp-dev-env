@@ -360,6 +360,8 @@ module.exports = class extends Generator {
 			cancel: this.props.cancel,
 			calledBy: 'app',
 			tplContext: this.tplContext,
+			...( this.options['verbose'] && { 		['verbose']: 		this.options['verbose'] } ),
+			...( this.options['skip-validate'] && {	['skip-validate']: 	this.options['skip-validate'] } ),
 		};
 
 		let done = null;

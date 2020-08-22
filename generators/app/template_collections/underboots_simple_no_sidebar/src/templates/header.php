@@ -62,7 +62,7 @@ $header_image_class = 'header-image';
 							'fallback_cb'     => '',
 							'menu_id'         => 'main-menu',
 							'depth'           => 2,
-							'walker'          => new <%= funcPrefix %>\WP_Bootstrap_Navwalker(),
+							'walker'          => new \WP_Bootstrap_Navwalker(),
 						)
 					); ?>
 

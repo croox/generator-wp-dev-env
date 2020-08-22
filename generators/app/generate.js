@@ -36,24 +36,44 @@ const generate = ( self, options ) => {
 		{
 			dest: 'composer.json',
 			data: {
+				['minimum-stability']: 'dev',
+				['prefer-stable']: true,
 				require: {},
 				['require-dev']: {
 					['croox/wp-dev-env-frame']: tplContext.generatorPkg.subModules['croox/wp-dev-env-frame'],
 					['composer/installers']: '*',
 					['dealerdirect/phpcodesniffer-composer-installer']: '0.5.0',
 					['wptrt/wpthemereview']: '0.1.0',
+					...( 'theme' === tplContext.projectType && {
+						['wp-bootstrap/wp-bootstrap-navwalker']: '^4.3',
+					} ),
 				},
 				repositories: [
 					{
 						type: 'vcs',
 						url: 'https://github.com/croox/wp-dev-env-frame',
 					},
+					{
+						type: 'vcs',
+						url: 'https://github.com/wp-bootstrap/wp-bootstrap-navwalker',
+					},
 				],
 				autoload: {
 					['psr-4']: {
-						[ tplContext.funcPrefix + '\\']: 'src/classes/',
+						[tplContext.funcPrefix + '\\']: 'src/classes/',
+						['']: [
+							...( 'theme' === tplContext.projectType ? ['vendor/wp-bootstrap/wp-bootstrap-navwalker/'] : [] ),
+						],
 					},
 				},
+			},
+		},
+		{
+			dest: 'grunt/copyComposerPackages.json',
+			data: {
+				packages: [
+					...( 'theme' === tplContext.projectType ? ['wp-bootstrap/wp-bootstrap-navwalker'] : [] ),
+				],
 			},
 		},
 		{
@@ -89,7 +109,7 @@ const generate = ( self, options ) => {
 					test: 'echo \"Error: no test specified\" && exit 1',
 				},
 				devDependencies: {
-					grunt: '^1.1.0',
+					grunt: '^1.3.0',
 					['wp-dev-env-grunt']: 'git+ssh://git@github.com/croox/wp-dev-env-grunt.git#' + tplContext.generatorPkg.subModules['wp-dev-env-grunt'],
 				},
 				['browserify-shim']: {
