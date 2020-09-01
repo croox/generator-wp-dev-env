@@ -1,18 +1,20 @@
 
 [class^='wp-block-'], [class*=' wp-block-'] {
-    &.alignwide,
-    &.alignfull {
-        position: relative;
-        left: - map-get( $spacers, 3 );
-        width: calc( 100% + #{ 2 * map-get( $spacers, 3 ) } );
-        max-width: calc(100% + #{ 2 * map-get( $spacers, 3 ) } );
-    }
-    &.alignfull {
-        // properties set by js
-	// See: /src/js/_script/theme_support_align_full.js
-        position: relative;
-        left: - map-get( $spacers, 5 );
-        width: calc( 100% + #{ 2 * map-get( $spacers, 5 ) } );
-        max-width: calc(100% + #{ 2 * map-get( $spacers, 5 ) } );
+    @include media-breakpoint-up( sm ) {
+        &.alignwide,
+        &.alignfull {
+            position: relative;
+            left: - map-get( $spacers, 3 );
+            width: calc( 100% + #{ 2 * map-get( $spacers, 3 ) } );
+            max-width: calc(100% + #{ 2 * map-get( $spacers, 3 ) } );
+        }
+        &.alignfull {
+            // properties set by js
+        // See: /src/js/_script/theme_support_align_full.js
+            position: relative;
+            left: - map-get( $spacers, 5 );
+            width: calc( 100% + #{ 2 * map-get( $spacers, 5 ) } );
+            max-width: calc(100% + #{ 2 * map-get( $spacers, 5 ) } );
+        }
     }
 }
