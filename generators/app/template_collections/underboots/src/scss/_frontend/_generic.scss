@@ -35,10 +35,10 @@
 // See: /src/inc/fun/<%= funcPrefix %>_add_theme_support.php
 @each $k, $c in $grays {
     .has-background.has-gray-#{$k}-background-color {
-        background-color: $c !important,
+        background-color: $c !important;
     }
     .has-text-color.has-gray-#{$k}-color {
-        color: $c !important,
+        color: $c !important;
     }
 }
 @each $k, $c in map-merge(
@@ -46,10 +46,10 @@
     $theme-colors
 ) {
     .has-background.has-#{$k}-background-color {
-        background-color: $c !important,
+        background-color: $c !important;
     }
     .has-text-color.has-#{$k}-color {
-        color: $c !important,
+        color: $c !important;
     }
 }
 
