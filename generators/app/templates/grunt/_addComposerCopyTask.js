@@ -11,7 +11,7 @@ const addComposerCopyTask = ( grunt, props ) => {
 	const path = ['vendor',...name.split('/')].join( '/' );
 
 	// Add task to config copy
-	grunt.hooks.addFilter( 'config.copy', 'mzc.config.copy.' + taskName, config => {
+	grunt.hooks.addFilter( 'config.copy', 'config.copy.' + taskName, config => {
 		const newConfig = {
 			...config,
 			[taskName]: {
@@ -25,7 +25,7 @@ const addComposerCopyTask = ( grunt, props ) => {
 	}, 10 );
 
 	// Run task on priority 20
-	grunt.hooks.addFilter( 'tasks.build.tasks', 'mzc.tasks.build.tasks.' + taskName, tasks => {
+	grunt.hooks.addFilter( 'tasks.build.tasks', 'tasks.build.tasks.' + taskName, tasks => {
 		const newTasks = [
 			...tasks,
 			'copy:' + taskName,

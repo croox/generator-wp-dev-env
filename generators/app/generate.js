@@ -53,10 +53,12 @@ const generate = ( self, options ) => {
 						type: 'vcs',
 						url: 'https://github.com/croox/wp-dev-env-frame',
 					},
-					{
-						type: 'vcs',
-						url: 'https://github.com/wp-bootstrap/wp-bootstrap-navwalker',
-					},
+					...( 'theme' === tplContext.projectType ? [
+						{
+							type: 'vcs',
+							url: 'https://github.com/wp-bootstrap/wp-bootstrap-navwalker',
+						},
+					] : [] ),
 				],
 				autoload: {
 					['psr-4']: {
@@ -153,6 +155,9 @@ const generate = ( self, options ) => {
 		{ src: '_Gruntfile.js',			dest: 'Gruntfile.js' },
 		{ src: '_index.php',			dest: 'index.php' },
 		{ src: '_README.md',			dest: 'README.md' },
+		// grunt
+		{ src: 'grunt/_addComposerCopyTask.js',	dest: 'grunt/addComposerCopyTask.js' },
+		{ src: 'grunt/hooked/_addComposerCopyTasks.js',	dest: 'grunt/hooked/addComposerCopyTasks.js' },
 		// src
 		{ src: 'src/_readme.txt',	dest: 'src/readme.txt' },
 		{ src: 'src/scss/_frontend.scss',	dest: 'src/scss/' + tplContext.funcPrefix + '_frontend.scss' },
