@@ -1,6 +1,6 @@
 {
 	"name": "generator-wp-dev-env",
-	"version": "0.16.2",
+	"version": "0.17.0",
 	"subModules": {
 		"wp-dev-env-grunt": "0.11.1",
 		"croox/wp-dev-env-frame": "0.11.0"
