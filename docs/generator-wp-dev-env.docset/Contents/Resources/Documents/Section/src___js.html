@@ -16,17 +16,17 @@
 This files can be seen as entry points that <code>import</code> files from subdirectories.</p>
 <blockquote>
   <p>Ready to code in ES6 and <a href="???">React.js</a>.<br />
-  Thanks to <a href="???">browserify</a> and <a href="???">babelify</a>.</p>
+  Thanks to <a href="???">webpack</a> and <a href="???">babel</a>.</p>
 </blockquote>
-<p>Some global variables are shimmed in order to be used within the script.<br />
+<p>Some global variables are shimmed in order to be used within the script. The list of variables can be found in package.json -&gt; <code>shim</code>.<br />
 It means that scripts enqueued earlier by WordPress are available as a module.<br />
 For Example: If the script is enqueued by WordPress with <code>jquery</code> as dependency, access it like this:</p>
-<pre><code class="hljs js language-js"><span class="hljs-keyword">import</span> $ <span class="hljs-keyword">from</span> <span class="hljs-string">'jquery'</span>;
-<span class="hljs-built_in">console</span>.log( <span class="hljs-string">'this is jquery: '</span>, $ );</code></pre>
+<pre><code class="hljs js language-js"><span class="hljs-keyword">import</span> $ <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;jquery&#x27;</span>;
+<span class="hljs-built_in">console</span>.log( <span class="hljs-string">&#x27;this is jquery: &#x27;</span>, $ );</code></pre>
 <p>WordPress highly recommends to use scripts already registered by WordPress, instead of using your own version of jQuery, react or what ever.<br />
 See <a href="https://developer.wordpress.org/reference/functions/wp_register_script/#core-registered-scripts">wp_register_script</a> for detailed list of registered scripts.</p>
 <h3 id="what-happens-on-build-and-dist">What happens on <code>build</code> and <code>dist</code></h3>
-<p>Linting and browserifying.<br />
+<p>Linting and bundling.<br />
 On <code>dist</code> (or if task run with <code>--compress="true"</code>) the destination files are compressed.</p>
 <p>Generating pot <code>files</code> ???</p>
 <h3 id="what-happens-on-watch">What happens on <code>watch</code></h3>

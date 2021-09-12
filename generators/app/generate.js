@@ -114,11 +114,11 @@ const generate = ( self, options ) => {
 					grunt: '^1.3.0',
 					['wp-dev-env-grunt']: 'git+ssh://git@github.com/croox/wp-dev-env-grunt.git#' + tplContext.generatorPkg.subModules['wp-dev-env-grunt'],
 				},
-				['browserify-shim']: {
-					jquery: 'global:jQuery',
-					react: 'global:React',
-					'react-dom': 'global:ReactDOM',
-					lodash: 'global:lodash',
+				['shim']: {
+					jquery: 'jQuery',
+					react: 'React',
+					'react-dom': 'ReactDOM',
+					lodash: 'lodash',
 				},
 			},
 		},

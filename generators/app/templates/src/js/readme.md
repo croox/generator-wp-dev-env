@@ -6,9 +6,9 @@ Bundles will be generated for files within `./src/js` (not recursively).
 This files can be seen as entry points that `import` files from subdirectories.
 
 > Ready to code in ES6 and [React.js](???).
-Thanks to [browserify](???) and [babelify](???).
+Thanks to [webpack](???) and [babel](???).
 
-Some global variables are shimmed in order to be used within the script.
+Some global variables are shimmed in order to be used within the script. The list of variables can be found in package.json -> `shim`.
 It means that scripts enqueued earlier by WordPress are available as a module.
 For Example: If the script is enqueued by WordPress with `jquery` as dependency, access it like this:
 ```js
@@ -20,7 +20,7 @@ See [wp_register_script](https://developer.wordpress.org/reference/functions/wp_
 
 ### What happens on `build` and `dist`
 
-Linting and browserifying.
+Linting and bundling.
 On `dist` (or if task run with `--compress="true"`) the destination files are compressed.
 
 Generating pot `files` ???

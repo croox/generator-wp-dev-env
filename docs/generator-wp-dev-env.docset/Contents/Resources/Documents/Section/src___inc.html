@@ -59,27 +59,27 @@
 You could do one of the following.</p>
 <p>Add a file <code>./src/inc/fun/prefix_include_inc_custom.php</code>:</p>
 <pre><code class="hljs php language-php"><span class="hljs-comment">// If this file is called directly, abort.</span>
-<span class="hljs-keyword">if</span> ( ! defined( <span class="hljs-string">'WPINC'</span> ) ) {
+<span class="hljs-keyword">if</span> ( ! defined( <span class="hljs-string">&#x27;WPINC&#x27;</span> ) ) {
     <span class="hljs-keyword">die</span>;
 }
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">prefix_include_inc_custom</span><span class="hljs-params">()</span> </span>{
-    prefix\Prefix::get_instance()-&gt;_include( <span class="hljs-string">'custom'</span> );
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">prefix_include_inc_custom</span>(<span class="hljs-params"></span>) </span>{
+    prefix\Prefix::get_instance()-&gt;_include( <span class="hljs-string">&#x27;custom&#x27;</span> );
 }
-add_action( <span class="hljs-string">'plugins_loaded'</span>, <span class="hljs-string">'prefix_include_inc_custom'</span> );</code></pre>
+add_action( <span class="hljs-string">&#x27;plugins_loaded&#x27;</span>, <span class="hljs-string">&#x27;prefix_include_inc_custom&#x27;</span> );</code></pre>
 <p>Extend the project base class <code>auto_include</code> method:</p>
-<pre><code class="hljs php language-php"><span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">auto_include</span><span class="hljs-params">()</span> </span>{
-    <span class="hljs-keyword">parent</span>::auto_include();
-    <span class="hljs-keyword">$this</span>-&gt;_include( <span class="hljs-string">'custom'</span> );
+<pre><code class="hljs php language-php"><span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">auto_include</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-built_in">parent</span>::auto_include();
+    <span class="hljs-keyword">$this</span>-&gt;_include( <span class="hljs-string">&#x27;custom&#x27;</span> );
 }</code></pre>
 <p>Add a method to the project base class and extend the <code>hooks</code> method:</p>
-<pre><code class="hljs php language-php"><span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">hooks</span><span class="hljs-params">()</span></span>{
-    <span class="hljs-keyword">parent</span>::hooks();
-    add_action( <span class="hljs-string">'plugins_loaded'</span>, <span class="hljs-keyword">array</span>( <span class="hljs-keyword">$this</span>, <span class="hljs-string">'include_inc_custom'</span> ), <span class="hljs-number">10</span> );
+<pre><code class="hljs php language-php"><span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">hooks</span>(<span class="hljs-params"></span>)</span>{
+    <span class="hljs-built_in">parent</span>::hooks();
+    add_action( <span class="hljs-string">&#x27;plugins_loaded&#x27;</span>, <span class="hljs-keyword">array</span>( <span class="hljs-keyword">$this</span>, <span class="hljs-string">&#x27;include_inc_custom&#x27;</span> ), <span class="hljs-number">10</span> );
 }
 
-<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">include_inc_custom</span><span class="hljs-params">()</span></span>{
-    <span class="hljs-keyword">$this</span>-&gt;_include( <span class="hljs-string">'custom'</span> );
+<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">include_inc_custom</span>(<span class="hljs-params"></span>)</span>{
+    <span class="hljs-keyword">$this</span>-&gt;_include( <span class="hljs-string">&#x27;custom&#x27;</span> );
 }</code></pre>
 	</div>
 </body>
