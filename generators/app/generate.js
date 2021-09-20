@@ -42,8 +42,6 @@ const generate = ( self, options ) => {
 				['require-dev']: {
 					['croox/wp-dev-env-frame']: tplContext.generatorPkg.subModules['croox/wp-dev-env-frame'],
 					['composer/installers']: '*',
-					['dealerdirect/phpcodesniffer-composer-installer']: '0.5.0',
-					['wptrt/wpthemereview']: '0.1.0',
 					...( 'theme' === tplContext.projectType && {
 						['wp-bootstrap/wp-bootstrap-navwalker']: '^4.3',
 					} ),

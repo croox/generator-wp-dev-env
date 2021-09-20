@@ -11,7 +11,6 @@
 - `grunt` is used to automate processes and run repetitive tasks, see ???.
   - It may watch file changes in `./src` and performs the required tasks to update the `./test_build` directory and optionally syncs it to a WordPress installation on a local or remote system.
 
-  - Tasks for code linting, formatting and applying [WordPress coding standards](https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards).
 - Generates releases with readme that adheres to the [WordPress plugin readme file standard](https://wordpress.org/plugins/developers/#readme), a Changelog based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Uses `git` and creates tags and releases with description and assets automatically.
 - Generated projects are ready to be used with [github-updater](https://github.com/afragen/github-updater).
