@@ -61,9 +61,6 @@ const generate = ( self, options ) => {
 				autoload: {
 					['psr-4']: {
 						[tplContext.funcPrefix + '\\']: 'src/classes/',
-						['']: [
-							...( 'theme' === tplContext.projectType ? ['vendor/wp-bootstrap/wp-bootstrap-navwalker/'] : [] ),
-						],
 					},
 				},
 			},

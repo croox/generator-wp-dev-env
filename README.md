@@ -37,10 +37,10 @@ Packages:
 
 We assume you have pre-installed [node.js](https://nodejs.org/) and [npm.js](http://npmjs.com/)
 
-- `yo` tested version `2.0.5` [Yeoman](http://yeoman.io)
-- `composer` tested version `1.2.2`
+- `yo` tested version `4.3.0` [Yeoman](http://yeoman.io)
+- `composer` tested version `2.1.8`
 - `git` tested version `2.7.4`
-- `grunt` tested version `1.0.4` and `grunt-cli`
+- `grunt` tested version `1.4.1` and `grunt-cli`
 - `rsync` tested version `3.1.2`
 - `convert` from ImageMagick. Tested with ImageMagick `6.8.9-9`
 

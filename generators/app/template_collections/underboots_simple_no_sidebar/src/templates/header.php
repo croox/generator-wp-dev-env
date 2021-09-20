@@ -11,6 +11,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+if ( ! class_exists( 'WP_Bootstrap_Navwalker' ) ) {
+	require_once( <%= funcPrefix %>\<%= startCase( kebabCase( funcPrefix ) ) %>::get_instance()->dir_path . 'vendor/wp-bootstrap/wp-bootstrap-navwalker/class-wp-bootstrap-navwalker.php' );
+}
+
 $container = get_theme_mod( '<%= funcPrefix %>_container_type' );
 
 $custom_header = get_custom_header();
