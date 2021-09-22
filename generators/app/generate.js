@@ -106,7 +106,7 @@ const generate = ( self, options ) => {
 					test: 'echo \"Error: no test specified\" && exit 1',
 				},
 				devDependencies: {
-					grunt: '^1.3.0',
+					grunt: '^1.4.1',
 					['wp-dev-env-grunt']: 'git+ssh://git@github.com/croox/wp-dev-env-grunt.git#' + tplContext.generatorPkg.subModules['wp-dev-env-grunt'],
 				},
 				['shim']: {
