@@ -36,6 +36,12 @@ const pkg = require('../../package.json');
 
 module.exports = class extends Generator {
 
+	constructor( args, opts ) {
+		opts['nodePackageManager'] = 'custom';
+		super(args, opts);
+		this.env.options['nodePackageManager'] = 'custom';
+	  }
+
 	initializing() {
 		const destPkg = getDestPkg( this );
 
