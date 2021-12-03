@@ -45,6 +45,7 @@ grunt build
 - `git`
 - `grunt`  and  `grunt-cli`
 - `rsync`
+- `gettext`
 - `convert` from ImageMagick. Tested with ImageMagick `6.8.9-9`
 
 # Support and feedback

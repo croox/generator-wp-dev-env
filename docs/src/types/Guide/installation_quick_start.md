@@ -25,6 +25,7 @@ We assume you have pre-installed [node.js](https://nodejs.org/) and [npm.js](htt
 - `git` tested version `2.7.4`
 - `grunt` tested version `1.4.1` and `grunt-cli`
 - `rsync` tested version `3.1.2`
+- `gettext` tested version `0.19.8.1`
 - `convert` from ImageMagick. Tested with ImageMagick `6.8.9-9`
 
 All dependencies must be accessible from CLI via their respective command. To test this, run something like: `composer --version` or `which composer` ...
