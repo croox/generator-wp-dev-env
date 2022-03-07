@@ -337,6 +337,9 @@ module.exports = class extends Generator {
 						case 'enfold':
 							this.tplContext.parent_class = 'Childtheme_Enfold';
 							break;
+						case 'hello-elementor':
+							this.tplContext.parent_class = 'Childtheme_Hello_Elementor';
+							break;
 						default:
 							this.tplContext.parent_class = 'Childtheme';
 					}
