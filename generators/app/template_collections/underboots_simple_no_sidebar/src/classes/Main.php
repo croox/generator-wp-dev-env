@@ -11,6 +11,21 @@ use croox\wde;
 
 class <%= startCase( kebabCase( funcPrefix ) ) %> extends wde\<%= parent_class %> {
 
+	public function initialize() {
+
+		// // Run Updates when <%= projectType %> version changes.
+		// add_filter( $this->prefix . '_update_version', function( $success, $new_version, $old_version ) {
+		// 	return $success;
+		// }, 10, 3 );
+
+		// // Run Updates when <%= projectType %> db_version changes.
+		// add_filter( $this->prefix . '_update_db_version', function( $success, $new_db_version, $old_db_version ) {
+		// 	return $success;
+		// }, 10, 3 );
+
+		parent::initialize();
+	}
+
 	public function hooks(){
         parent::hooks();
 
