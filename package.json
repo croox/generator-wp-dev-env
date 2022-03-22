@@ -41,8 +41,8 @@
 		"lint-staged": "^12.3.7",
 		"prettier": "^2.6.0",
 		"replace-in-file": "^6.3.2",
-		"showdown": "^1.9.1",
-		"showdown-highlight": "^2.1.8",
+		"showdown": "^2.0.3",
+		"showdown-highlight": "^3.0.0",
 		"sqlite3": "^5.0.2",
 		"yeoman-assert": "^3.1.0",
 		"yeoman-test": "^6.3.0"
