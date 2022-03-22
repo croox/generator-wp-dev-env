@@ -22,7 +22,7 @@ This files can be seen as entry points that <code>import</code> files from subdi
 It means that scripts enqueued earlier by WordPress are available as a module.<br />
 For Example: If the script is enqueued by WordPress with <code>jquery</code> as dependency, access it like this:</p>
 <pre><code class="hljs js language-js"><span class="hljs-keyword">import</span> $ <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;jquery&#x27;</span>;
-<span class="hljs-built_in">console</span>.log( <span class="hljs-string">&#x27;this is jquery: &#x27;</span>, $ );</code></pre>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>( <span class="hljs-string">&#x27;this is jquery: &#x27;</span>, $ );</code></pre>
 <p>WordPress highly recommends to use scripts already registered by WordPress, instead of using your own version of jQuery, react or what ever.<br />
 See <a href="https://developer.wordpress.org/reference/functions/wp_register_script/#core-registered-scripts">wp_register_script</a> for detailed list of registered scripts.</p>
 <h3 id="what-happens-on-build-and-dist">What happens on <code>build</code> and <code>dist</code></h3>
