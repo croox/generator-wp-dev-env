@@ -194,7 +194,7 @@ const generate = ( self, options ) => {
 				set( jsonFiles, [[packageJsonIndex],'data','dependencies'], {
 					...get( jsonFiles, [[packageJsonIndex],'data','dependencies'], {} ),
 					bootstrap: '^4.3.1',
-					['font-awesome']: '^4.7.0',
+		 	   		['@fortawesome/fontawesome-free']: "^6.1.0",
 					['popper.js']: '^1.15.0',
 				} );
 

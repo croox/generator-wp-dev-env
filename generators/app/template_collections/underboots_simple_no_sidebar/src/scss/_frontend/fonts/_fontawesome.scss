@@ -1,15 +1,84 @@
+/**
+ * Import functions
+ */
+ @import "~@fortawesome/fontawesome-free/scss/functions";
 
-// Font Awesome Icon font
-@import "~font-awesome/scss/variables";
-@import "~font-awesome/scss/mixins";
-@import "~font-awesome/scss/path";
-@import "~font-awesome/scss/core";
-@import "~font-awesome/scss/larger";
-@import "~font-awesome/scss/fixed-width";
-@import "~font-awesome/scss/list";
-@import "~font-awesome/scss/bordered-pulled";
-@import "~font-awesome/scss/animated";
-@import "~font-awesome/scss/rotated-flipped";
-@import "~font-awesome/scss/stacked";
-@import "~font-awesome/scss/icons";
-@import "~font-awesome/scss/screen-reader";
+ /**
+  * Overwrite and import variables
+  */
+ $fa-font-path: "../fonts";
+ $fa-style-family-regular: "Font Awesome 6 Free Regular";
+ $fa-style-family-solid: "Font Awesome 6 Free Solid";
+ $fa-style-family: $fa-style-family-solid;
+ @import "~@fortawesome/fontawesome-free/scss/variables";
+
+ /**
+  * Regular
+  * See node_modules/@fortawesome/fontawesome-free/scss/regular.scss
+  */
+ :root, :host {
+     --#{$fa-css-prefix}-font-regular: normal 400 1em/1 "#{ $fa-style-family-regular }";
+ }
+
+ @font-face {
+     font-family: 'Font Awesome 6 Free Regular';
+     font-style: normal;
+     font-weight: 400;
+     font-display: $fa-font-display;
+     src: url('#{$fa-font-path}/fa-regular-400.woff2') format('woff2'),
+         url('#{$fa-font-path}/fa-regular-400.ttf') format('truetype');
+ }
+
+ .far,
+ .#{$fa-css-prefix}-regular {
+     font-family: 'Font Awesome 6 Free Regular';
+     font-weight: 400;
+ }
+
+
+ /**
+  * Solid
+  * See node_modules/@fortawesome/fontawesome-free/scss/solid.scss
+  */
+ :root, :host {
+     --#{$fa-css-prefix}-font-solid: normal 900 1em/1 "#{ $fa-style-family-solid }";
+ }
+
+ @font-face {
+     font-family: 'Font Awesome 6 Free Solid';
+     font-style: normal;
+     font-weight: 900;
+     font-display: $fa-font-display;
+     src: url('#{$fa-font-path}/fa-solid-900.woff2') format('woff2'),
+         url('#{$fa-font-path}/fa-solid-900.ttf') format('truetype');
+ }
+
+ .fas,
+ .#{$fa-css-prefix}-solid {
+     font-family: 'Font Awesome 6 Free Solid';
+     font-weight: 900;
+ }
+
+
+ /**
+  * Brands
+  * See node_modules/@fortawesome/fontawesome-free/scss/brands.scss
+  */
+ @import "~@fortawesome/fontawesome-free/scss/brands";
+
+
+ /**
+  * Font awesome
+  * Same as node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss
+  */
+ @import "~@fortawesome/fontawesome-free/scss/mixins";
+ @import "~@fortawesome/fontawesome-free/scss/core";
+ @import "~@fortawesome/fontawesome-free/scss/sizing";
+ @import "~@fortawesome/fontawesome-free/scss/fixed-width";
+ @import "~@fortawesome/fontawesome-free/scss/list";
+ @import "~@fortawesome/fontawesome-free/scss/bordered-pulled";
+ @import "~@fortawesome/fontawesome-free/scss/animated";
+ @import "~@fortawesome/fontawesome-free/scss/rotated-flipped";
+ @import "~@fortawesome/fontawesome-free/scss/stacked";
+ @import "~@fortawesome/fontawesome-free/scss/icons";
+ @import "~@fortawesome/fontawesome-free/scss/screen-reader";

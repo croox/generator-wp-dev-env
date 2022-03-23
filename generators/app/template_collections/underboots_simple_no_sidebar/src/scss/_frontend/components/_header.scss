@@ -38,7 +38,7 @@
         // // Append font awesome icon
         // &:not(:last-child):after {
         //     // @extend .fa;
-        //     // content: $fa-var-chevron-right;
+        //     // content: unquote("\"#{ $fa-var-chevron-right }\"");
         //     content: '>';
         //     margin-left: map-get( $spacers, 2 );
         // }
