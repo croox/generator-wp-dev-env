@@ -43,7 +43,7 @@
 		"replace-in-file": "^6.3.2",
 		"showdown": "^2.0.3",
 		"showdown-highlight": "^3.0.0",
-		"sqlite3": "^5.0.2",
+		"sqlite3": "^5.0.3",
 		"yeoman-assert": "^3.1.0",
 		"yeoman-test": "^6.3.0"
 	},
