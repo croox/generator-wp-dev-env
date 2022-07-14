@@ -193,7 +193,7 @@ const generate = ( self, options ) => {
 				const packageJsonIndex = jsonFiles.findIndex( file => 'package.json' === file.dest );
 				set( jsonFiles, [[packageJsonIndex],'data','dependencies'], {
 					...get( jsonFiles, [[packageJsonIndex],'data','dependencies'], {} ),
-					bootstrap: '^4.3.1',
+					bootstrap: '^4.6.1',
 		 	   		['@fortawesome/fontawesome-free']: "^6.1.0",
 					['popper.js']: '^1.15.0',
 				} );
