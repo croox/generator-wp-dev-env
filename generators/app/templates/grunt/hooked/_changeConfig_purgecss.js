@@ -1,13 +1,17 @@
 const changeConfig_purgecss = grunt => {
 
-	// // Filter tasks, remove all purgecss tasks.
-	// grunt.hooks.addFilter( 'tasks.build.tasks', 'tasks.build.tasks.removePurge', ( tasks ) => {
+	// // Remove all purgecss tasks.
+	// const removePurgecssTasks = tasks => {
 	// 	const index = tasks.findIndex( task => task.startsWith( 'purgecss' ) );
 	// 	if ( index !== -1 ) {
 	// 		tasks.splice( index, 1 );
 	// 	}
 	// 	return tasks;
-	// }, 999999 );
+	// }
+	// // Filter build tasks, remove all purgecss tasks.
+	// grunt.hooks.addFilter( 'tasks.build.tasks', 'tasks.build.tasks.removePurge', removePurgecssTasks, 999999 );
+	// // Filter dist tasks, remove all purgecss tasks.
+	// grunt.hooks.addFilter( 'tasks.dist.tasks', 'tasks.dist.tasks.removePurge', removePurgecssTasks, 999999 );
 
 	// Filter purgecss config filesGlob.
 	grunt.hooks.addFilter( 'config.purgecss.filesGlob', 'config.purgecss.filesGlob', ( filesGlob ) => {
