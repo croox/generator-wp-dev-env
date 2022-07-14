@@ -151,8 +151,10 @@ const generate = ( self, options ) => {
 		{ src: '_index.php',			dest: 'index.php' },
 		{ src: '_README.md',			dest: 'README.md' },
 		// grunt
-		{ src: 'grunt/_addComposerCopyTask.js',	dest: 'grunt/addComposerCopyTask.js' },
-		{ src: 'grunt/hooked/_addComposerCopyTasks.js',	dest: 'grunt/hooked/addComposerCopyTasks.js' },
+		{ src: 'grunt/_addComposerCopyTask.js',						dest: 'grunt/addComposerCopyTask.js' },
+		{ src: 'grunt/hooked/_addComposerCopyTasks.js',				dest: 'grunt/hooked/addComposerCopyTasks.js' },
+		{ src: 'grunt/hooked/_changeConfig_purgecss.js',			dest: 'grunt/hooked/changeConfig_purgecss.js' },
+		{ src: 'grunt/hooked/_changeConfig_make_html_snapshots.js',	dest: 'grunt/hooked/changeConfig_make_html_snapshots.js' },
 		// src
 		{ src: 'src/_readme.txt',	dest: 'src/readme.txt' },
 		{ src: 'src/scss/_frontend.scss',	dest: 'src/scss/' + tplContext.funcPrefix + '_frontend.scss' },
