@@ -38,7 +38,9 @@ const generate = ( self, options ) => {
 			data: {
 				['minimum-stability']: 'dev',
 				['prefer-stable']: true,
-				require: {},
+				require: {
+					['php']: ">=" + tplContext.phpRequiresAtLeast + "",
+				},
 				['require-dev']: {
 					['croox/wp-dev-env-frame']: tplContext.generatorPkg.subModules['croox/wp-dev-env-frame'],
 					['composer/installers']: '*',
@@ -61,6 +63,11 @@ const generate = ( self, options ) => {
 				autoload: {
 					['psr-4']: {
 						[tplContext.funcPrefix + '\\']: 'src/classes/',
+					},
+				},
+				config: {
+					['allow-plugins']: {
+						['composer/installers']: true,
 					},
 				},
 			},

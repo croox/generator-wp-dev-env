@@ -50,10 +50,10 @@ const ui_setup = function( self ){
 				return '5.0.0';
 
 			case 'wpVersionTested':
-				return '5.4.0';
+				return '6.3.0';
 
 			case 'phpRequiresAtLeast':
-				return '5.6.0';
+				return '8.0.0';
 
 		}
 	};
