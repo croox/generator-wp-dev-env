@@ -7,7 +7,7 @@ const gitAddOriginUpstream = ( generator ) => {
 
 	return new Promise( ( resolve, reject ) => {
 
-		const { repositoryUri } = generator.tplContext;
+		const { repositoryUri, branchMainName } = generator.tplContext;
 
 		const initial = repositoryUri.startsWith( 'https://github.com/' )
 			? repositoryUri.replace( 'https://github.com/', 'git@github.com:' ) + '.git'
@@ -32,7 +32,7 @@ const gitAddOriginUpstream = ( generator ) => {
 
 			if ( origin.length > 0 && 'skip' !== origin ) {
 				simpleGit.addRemote( 'origin', origin )
-				.checkout( 'master' ).push( ['-u', 'origin', 'master'] )
+				.checkout( branchMainName ).push( ['-u', 'origin', branchMainName] )
 				.checkout( 'generated' ).push( ['-u', 'origin', 'generated'] )
 				.checkout( 'develop' ).push( ['-u', 'origin', 'develop'] )
 				.exec( () => resolve() );

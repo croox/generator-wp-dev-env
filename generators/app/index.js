@@ -100,6 +100,27 @@ module.exports = class extends Generator {
 
 	}
 
+	addBranchMainNameTplContext() {
+		const done = this.async();
+		simpleGit.getConfig( 'init.defaultBranch', 'global' ).then( resBranch => {
+			if ( this.props.isNewProject ) {
+				this.tplContext = {
+					...this.tplContext,
+					branchMainName: resBranch.value && null !== resBranch.value
+						? resBranch.value
+						: 'main' ,
+				};
+			} else {
+				const destPkg = getDestPkg( this );
+				this.tplContext = {
+					...this.tplContext,
+					branchMainName: destPkg.branchMainName || 'master' ,
+				};
+			}
+			done();
+		} );
+	}
+
 	_updateProps( result ) {
 		if ( result ) {
 			this.props = {
@@ -313,6 +334,7 @@ module.exports = class extends Generator {
 					'template'
 				] : [] ),
 			].map( destPkgPropToTplContext );
+
 		}
 
 
@@ -485,6 +507,10 @@ module.exports = class extends Generator {
 					},
 					{
 						cmd: 'git',
+						args: ['branch','-M',self.tplContext.branchMainName],
+					},
+					{
+						cmd: 'git',
 						args: ['add','--all'],
 					},
 					{
@@ -522,7 +548,7 @@ module.exports = class extends Generator {
 						chalk.green.bold( '✔ Everything is ready!' ),
 						'',
 						'Currently on branch ' + chalk.bgBlack( 'develop' ),
-						'The ' + chalk.bgBlack( 'master' ) + ' branch should not be modified manually. ???',
+						'The ' + chalk.bgBlack( self.tplContext.branchMainName ) + ' branch should not be modified manually. ???',
 						'The ' + chalk.bgBlack( 'dev' ) + ' branch reflects a state with the latest delivered development changes for the next release.',
 						'The ' + chalk.bgBlack( 'generated' ) + ' branch should not be modified manually. It should contain plain generated projects only.',
 						'Read the documentation\'s "git_branching_model" section for further information about the git branching model.',

@@ -86,6 +86,7 @@ const generate = ( self, options ) => {
 				name: tplContext.name,
 				displayName: tplContext.displayName,
 				funcPrefix:  tplContext.funcPrefix,
+				branchMainName:  tplContext.branchMainName,
 				uri: tplContext.uri,
 				textDomain: tplContext.textDomain,
 				...( tplContext.template && { template: tplContext.template } ),
