@@ -1,50 +1,48 @@
 const chalk = require('chalk');
 const figlet = require('figlet');
-const { prompt } = require('enquirer');
-const semver = require('semver')
-const {
-	startCase,
-	kebabCase,
-	get,
-	snakeCase,
-} = require('lodash');
+const semver = require('semver');
+const { startCase, kebabCase, get } = require('lodash');
 const path = require('path');
 
-const ui__resolver = require( '../../utils/ui/ui__resolver' );
-const wpFeSanitizeTitle = require( '../../utils/wpFeSanitizeTitle' );
-const formValidate = require( '../../utils/ui/formValidate' );
+const ui__resolver = require('../../utils/ui/ui__resolver');
+const wpFeSanitizeTitle = require('../../utils/wpFeSanitizeTitle');
+const formValidate = require('../../utils/ui/formValidate');
 
-const ui_setup = function( self ){
+const ui_setup = function (self) {
+	console.log(
+		chalk.green(
+			figlet.textSync(get(self.props.answers, ['type'], 'Setup'), {
+				font: 'Ogre',
+				horizontalLayout: 'fitted',
+				verticalLayout: 'fitted',
+			})
+		)
+	);
 
-	console.log( chalk.green( figlet.textSync( get( self.props.answers, ['type'], 'Setup' ), {
-		font: 'Ogre',
-		horizontalLayout: 'fitted',
-		verticalLayout: 'fitted'
-	} ) ) );
+	const skipValidate = get(self.options, ['skipValidate'], '').split(',');
 
-	const skipValidate = get( self.options, ['skipValidate'], '' ).split( ',' );
-
-	const getChoiceInput = ( prompt, key, fallback ) => {
+	const getChoiceInput = (prompt, key, fallback) => {
 		fallback = fallback ? fallback : '';
-		const choice = undefined === prompt ? undefined : prompt.state._choices.find( _choice => key === _choice.name );
-		if ( choice && choice.input && choice.input.length > 0 ) {
+		const choice =
+			undefined === prompt
+				? undefined
+				: prompt.state._choices.find((_choice) => key === _choice.name);
+		if (choice && choice.input && choice.input.length > 0) {
 			return choice.input;
-		} else {
-			return get( prompt, ['values',key], fallback );
 		}
+
+		return get(prompt, ['values', key], fallback);
 	};
 
-	const getInitial = ( choiceName, prompt ) => {
-
-		switch( choiceName ){
-
+	const getInitial = (choiceName, _prompt) => {
+		switch (choiceName) {
 			case 'author':
-				return 'example';	/// ??? get initial, remember
+				return 'example'; /// ??? get initial, remember
 
 			case 'name':
-				return skipValidate.includes( 'name' )
-					? path.basename( process.cwd() )
-					: wpFeSanitizeTitle( path.basename( process.cwd() ) );
+				return skipValidate.includes('name')
+					? path.basename(process.cwd())
+					: wpFeSanitizeTitle(path.basename(process.cwd()));
 
 			case 'wpRequiresAtLeast':
 				return '5.0.0';
@@ -55,45 +53,46 @@ const ui_setup = function( self ){
 			case 'phpRequiresAtLeast':
 				return '8.0.0';
 
+			default:
+				break;
 		}
 	};
 
-	const projectType = 'plugin' === get( self.props.answers, ['type'], '' ) ? 'plugin' : 'theme';
-	const projectTypeExplicit = get( self.props.answers, ['type'], '' );
-	const projectTypeExplicitSC = startCase( projectTypeExplicit );
+	const projectType = get(self.props.answers, ['type'], '') === 'plugin' ? 'plugin' : 'theme';
+	const projectTypeExplicit = get(self.props.answers, ['type'], '');
+	const projectTypeExplicitSC = startCase(projectTypeExplicit);
 
 	const prompts = [
 		{
 			name: 'setup',
 			message: [
-				chalk.yellow( 'Setup ' + projectTypeExplicitSC ),
+				chalk.yellow('Setup ' + projectTypeExplicitSC),
 				'',
 				'🡡	Navigate up.',
 				'🡣	Navigate down.',
 				'tab	Use initial value and maybe edit it.',
-				'↲	Submit. ' + chalk.red.dim( 'Bug: before submit, press multible 🡡 🡣 until all inital values updated!' ),
+				'↲	Submit. ' +
+					chalk.red.dim(
+						'Bug: before submit, press multible 🡡 🡣 until all inital values updated!'
+					),
 				'',
-			].join( '\n' ),
+			].join('\n'),
 			type: 'form',
-			initial: get( self.props.answers, ['setup'], null ),
-			validate( value, state, field ) {
-
-				const formValidation = formValidate( value, state, {
-					skipValidate: skipValidate,
+			initial: get(self.props.answers, ['setup'], null),
+			validate(value, state, _field) {
+				const formValidation = formValidate(value, state, {
+					skipValidate,
 					sanitized: [
 						'funcPrefix',
 						'textDomain',
 						'name',
-						...( 'childtheme' === projectTypeExplicit ? ['template'] : [] ),
+						...(projectTypeExplicit === 'childtheme' ? ['template'] : []),
 					],
-					snakeCase: [
-						'funcPrefix',
-						'textDomain',
-					],
+					snakeCase: ['funcPrefix', 'textDomain'],
 					notEmpty: [
 						'name',
 						'displayName',
-						...( 'childtheme' === projectTypeExplicit ? ['template'] : [] ),
+						...(projectTypeExplicit === 'childtheme' ? ['template'] : []),
 						'description',
 						'author',
 						'authorUri',
@@ -106,39 +105,41 @@ const ui_setup = function( self ){
 						'wpVersionTested',
 						'phpRequiresAtLeast',
 					],
-				} );
-				if ( true !== formValidation )
-					return formValidation;
+				});
+				if (formValidation !== true) return formValidation;
 
-				if ( semver.compare( value['wpRequiresAtLeast'], value['wpVersionTested'] ) > 0 )
-					return 'Required wp version can\'t be higher then tested wp verison';
+				if (semver.compare(value.wpRequiresAtLeast, value.wpVersionTested) > 0)
+					return "Required wp version can't be higher then tested wp verison";
 
 				return true;
 			},
 			choices: [
-
 				{
 					name: 'name',
 					message: 'Sanitized Name',
-					initial: getInitial( 'name' ),
-					onChoice( state, choice, i ) {
-						choice.initial = getInitial( 'name', this );;
+					initial: getInitial('name'),
+					onChoice(state, choice, _i) {
+						choice.initial = getInitial('name', this);
 					},
 				},
 
 				{
 					name: 'displayName',
 					message: 'Display Name',
-					onChoice( state, choice, i ) {
-						const name = getChoiceInput( this, 'name', getInitial( 'name', this ) );
-						choice.initial = startCase( name.replace( /[-_]/g, ' ' ) );
+					onChoice(state, choice, _i) {
+						const name = getChoiceInput(this, 'name', getInitial('name', this));
+						choice.initial = startCase(name.replace(/[-_]/g, ' '));
 					},
 				},
 
-				...( 'childtheme' === projectTypeExplicit ? [ {
-					name: 'template',
-					message: 'Parent Theme (template)',
-				} ] : [] ),
+				...(projectTypeExplicit === 'childtheme'
+					? [
+							{
+								name: 'template',
+								message: 'Parent Theme (template)',
+							},
+						]
+					: []),
 
 				{
 					name: 'description',
@@ -149,14 +150,14 @@ const ui_setup = function( self ){
 				{
 					name: 'author',
 					message: 'Author',
-					initial: getInitial( 'author' ),
+					initial: getInitial('author'),
 				},
 
 				{
 					name: 'authorUri',
 					message: 'Author Uri',
-					onChoice( state, choice, i ) {
-						const author = getChoiceInput( this, 'author', getInitial( 'author', this ) );
+					onChoice(state, choice, _i) {
+						const author = getChoiceInput(this, 'author', getInitial('author', this));
 						choice.initial = 'https://github.com/' + author;
 					},
 				},
@@ -164,38 +165,37 @@ const ui_setup = function( self ){
 				{
 					name: 'repositoryUri',
 					message: 'Repository URL',
-					onChoice( state, choice, i ) {
-						const author = getChoiceInput( this, 'author', getInitial( 'author', this ) );
-						const name = getChoiceInput( this, 'name', getInitial( 'name', this ) );
+					onChoice(state, choice, _i) {
+						const author = getChoiceInput(this, 'author', getInitial('author', this));
+						const name = getChoiceInput(this, 'name', getInitial('name', this));
 						choice.initial = 'https://github.com/' + author + '/' + name;
-					}
+					},
 				},
-
 
 				{
 					name: 'uri',
-					message: startCase( projectType ) + ' URL',
-					onChoice( state, choice, i ) {
-						const name = getChoiceInput( this, 'name', getInitial( 'name', this ) );
-						const authorUri = getChoiceInput( this, 'authorUri' );
-						const author = getChoiceInput( this, 'author', getInitial( 'author', this ) );
+					message: startCase(projectType) + ' URL',
+					onChoice(state, choice, _i) {
+						const name = getChoiceInput(this, 'name', getInitial('name', this));
+						const authorUri = getChoiceInput(this, 'authorUri');
+						const author = getChoiceInput(this, 'author', getInitial('author', this));
 						choice.initial = authorUri.length
 							? authorUri + '/' + name
 							: 'https://github.com/' + author + '/' + name;
-					}
+					},
 				},
 
 				{
 					name: 'donateLink',
 					message: 'Donate Link',
-					onChoice( state, choice, i ) {
-						const name = getChoiceInput( this, 'name', getInitial( 'name', this ) );
-						const authorUri = getChoiceInput( this, 'authorUri' );
-						const author = getChoiceInput( this, 'author', getInitial( 'author', this ) );
+					onChoice(state, choice, _i) {
+						const name = getChoiceInput(this, 'name', getInitial('name', this));
+						const authorUri = getChoiceInput(this, 'authorUri');
+						const author = getChoiceInput(this, 'author', getInitial('author', this));
 						choice.initial = authorUri.length
 							? authorUri + '/donate'
 							: 'https://github.com/' + author + '/' + name;
-					}
+					},
 				},
 
 				{
@@ -206,20 +206,28 @@ const ui_setup = function( self ){
 				{
 					name: 'funcPrefix',
 					message: 'Function Prefix',
-					onChoice( state, choice, i ) {
-						let name = getChoiceInput( this, 'name', getInitial( 'name', this ) );
-						name = kebabCase( name );
-						let nameParts = name.split('-');
-						switch( true ) {
+					onChoice(state, choice, _i) {
+						let name = getChoiceInput(this, 'name', getInitial('name', this));
+						name = kebabCase(name);
+						const nameParts = name.split('-');
+						switch (true) {
 							case nameParts.length === 1:
-								choice.initial = name.replace( /\-/, '' ).substring( 0, 4 );
+								choice.initial = name.replace(/-/, '').substring(0, 4);
 								return;
 							case nameParts.length === 2:
-								choice.initial = [...nameParts].map( part => part.substring( 0, 2 ) ).slice( 0, 2 ).join( '' );
+								choice.initial = [...nameParts]
+									.map((part) => part.substring(0, 2))
+									.slice(0, 2)
+									.join('');
 								return;
 							case nameParts.length >= 3:
-								choice.initial = [...nameParts].map( part => part.substring( 0, 1 ) ).slice( 0, 4 ).join( '' );
-								return;
+								choice.initial = [...nameParts]
+									.map((part) => part.substring(0, 1))
+									.slice(0, 4)
+									.join('');
+								break;
+							default:
+								break;
 						}
 					},
 				},
@@ -227,43 +235,49 @@ const ui_setup = function( self ){
 				{
 					name: 'textDomain',
 					message: 'Text Domain',
-					onChoice( state, choice, i ) {
-						let funcPrefix = getChoiceInput( this, 'funcPrefix', getInitial( 'funcPrefix', this ) );
+					onChoice(state, choice, _i) {
+						const funcPrefix = getChoiceInput(
+							this,
+							'funcPrefix',
+							getInitial('funcPrefix', this)
+						);
 						choice.initial = funcPrefix;
-					}
+					},
 				},
 
 				{
 					name: 'wpRequiresAtLeast',
 					message: 'WP Requires At Least',
-					initial: getInitial( 'wpRequiresAtLeast' ),
+					initial: getInitial('wpRequiresAtLeast'),
 				},
 
 				{
 					name: 'wpVersionTested',
 					message: 'WP Version Tested',
-					onChoice( state, choice, i ) {
-						choice.initial = this.values.wpRequiresAtLeast && semver.valid( this.values.wpRequiresAtLeast )
-							? 1 === semver.compare( this.values.wpRequiresAtLeast, getInitial( 'wpVersionTested' ) )
-								? this.values.wpRequiresAtLeast
-								: getInitial( 'wpVersionTested' )
-							: getInitial( 'wpVersionTested' );
-					}
+					onChoice(state, choice, _i) {
+						choice.initial =
+							this.values.wpRequiresAtLeast &&
+							semver.valid(this.values.wpRequiresAtLeast)
+								? semver.compare(
+										this.values.wpRequiresAtLeast,
+										getInitial('wpVersionTested')
+									) === 1
+									? this.values.wpRequiresAtLeast
+									: getInitial('wpVersionTested')
+								: getInitial('wpVersionTested');
+					},
 				},
 
 				{
 					name: 'phpRequiresAtLeast',
 					message: 'PHP Requires At Least',
-					initial:getInitial( 'phpRequiresAtLeast' )
+					initial: getInitial('phpRequiresAtLeast'),
 				},
 			],
-
-
 		},
 	];
 
-	return ui__resolver( this.name, prompts );
-
+	return ui__resolver(this.name, prompts);
 };
 
 module.exports = ui_setup;

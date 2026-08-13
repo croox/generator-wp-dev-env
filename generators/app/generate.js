@@ -1,18 +1,12 @@
-const {
-	startCase,
-	kebabCase,
-	set,
-	get,
-} = require('lodash');
+const { startCase, kebabCase, set, get } = require('lodash');
 
 const copyDirStructure = require('../../utils/copyDirStructure');
 const copyTemplatesBulk = require('../../utils/copyTemplatesBulk');
 
-const generate = ( self, options ) => {
-
+const generate = (self, options) => {
 	const { tplContext } = options;
 
-	let jsonFiles = [
+	const jsonFiles = [
 		{
 			dest: '.wde_nextRelease.json',
 			data: {
@@ -36,38 +30,41 @@ const generate = ( self, options ) => {
 		{
 			dest: 'composer.json',
 			data: {
-				['minimum-stability']: 'dev',
-				['prefer-stable']: true,
+				'minimum-stability': 'dev',
+				'prefer-stable': true,
 				require: {
-					['php']: ">=" + tplContext.phpRequiresAtLeast + "",
+					php: String('>=' + tplContext.phpRequiresAtLeast),
 				},
-				['require-dev']: {
-					['croox/wp-dev-env-frame']: tplContext.generatorPkg.subModules['croox/wp-dev-env-frame'],
-					['composer/installers']: '*',
-					...( 'theme' === tplContext.projectType && {
-						['wp-bootstrap/wp-bootstrap-navwalker']: '^4.3',
-					} ),
+				'require-dev': {
+					'croox/wp-dev-env-frame':
+						tplContext.generatorPkg.subModules['croox/wp-dev-env-frame'],
+					'composer/installers': '*',
+					...(tplContext.projectType === 'theme' && {
+						'wp-bootstrap/wp-bootstrap-navwalker': '^4.3',
+					}),
 				},
 				repositories: [
 					{
 						type: 'vcs',
 						url: 'https://github.com/croox/wp-dev-env-frame',
 					},
-					...( 'theme' === tplContext.projectType ? [
-						{
-							type: 'vcs',
-							url: 'https://github.com/wp-bootstrap/wp-bootstrap-navwalker',
-						},
-					] : [] ),
+					...(tplContext.projectType === 'theme'
+						? [
+								{
+									type: 'vcs',
+									url: 'https://github.com/wp-bootstrap/wp-bootstrap-navwalker',
+								},
+							]
+						: []),
 				],
 				autoload: {
-					['psr-4']: {
+					'psr-4': {
 						[tplContext.funcPrefix + '\\']: 'src/classes/',
 					},
 				},
 				config: {
-					['allow-plugins']: {
-						['composer/installers']: true,
+					'allow-plugins': {
+						'composer/installers': true,
 					},
 				},
 			},
@@ -76,7 +73,9 @@ const generate = ( self, options ) => {
 			dest: 'grunt/copyComposerPackages.json',
 			data: {
 				packages: [
-					...( 'theme' === tplContext.projectType ? ['wp-bootstrap/wp-bootstrap-navwalker'] : [] ),
+					...(tplContext.projectType === 'theme'
+						? ['wp-bootstrap/wp-bootstrap-navwalker']
+						: []),
 				],
 			},
 		},
@@ -85,11 +84,11 @@ const generate = ( self, options ) => {
 			data: {
 				name: tplContext.name,
 				displayName: tplContext.displayName,
-				funcPrefix:  tplContext.funcPrefix,
-				branchMainName:  tplContext.branchMainName,
+				funcPrefix: tplContext.funcPrefix,
+				branchMainName: tplContext.branchMainName,
 				uri: tplContext.uri,
 				textDomain: tplContext.textDomain,
-				...( tplContext.template && { template: tplContext.template } ),
+				...(tplContext.template && { template: tplContext.template }),
 				domainPath: '/languages',
 				version: '0.0.0',
 				description: tplContext.description,
@@ -108,16 +107,20 @@ const generate = ( self, options ) => {
 				phpRequiresAtLeast: tplContext.phpRequiresAtLeast,
 				generator: {
 					version: tplContext.generatorPkg.version,
-					...( tplContext.generator.themeBase && { themeBase: tplContext.generator.themeBase } ),
+					...(tplContext.generator.themeBase && {
+						themeBase: tplContext.generator.themeBase,
+					}),
 				},
 				scripts: {
-					test: 'echo \"Error: no test specified\" && exit 1',
+					test: 'echo "Error: no test specified" && exit 1',
 				},
 				devDependencies: {
 					grunt: '^1.5.3',
-					['wp-dev-env-grunt']: 'git+ssh://git@github.com/croox/wp-dev-env-grunt.git#' + tplContext.generatorPkg.subModules['wp-dev-env-grunt'],
+					'wp-dev-env-grunt':
+						'git+ssh://git@github.com/croox/wp-dev-env-grunt.git#' +
+						tplContext.generatorPkg.subModules['wp-dev-env-grunt'],
 				},
-				['shim']: {
+				shim: {
 					jquery: 'jQuery',
 					react: 'React',
 					'react-dom': 'ReactDOM',
@@ -129,96 +132,115 @@ const generate = ( self, options ) => {
 			dest: 'wde_wp_installs-sample.json',
 			data: {
 				installSlug: {
-					plugins: '/home/' + tplContext.author + '/abs_path/to/local_wp/wp-content/plugins/',
-					themes: '/home/' + tplContext.author + '/abs_path/to/local_wp/wp-content/themes/',
+					plugins:
+						'/home/' + tplContext.author + '/abs_path/to/local_wp/wp-content/plugins/',
+					themes:
+						'/home/' + tplContext.author + '/abs_path/to/local_wp/wp-content/themes/',
 				},
 				otherInstallSlugSilent: {
-					plugins: '/home/' + tplContext.author + '/abs_path/to/other/local_wp/wp-content/plugins/',
-					themes: '/home/' + tplContext.author + '/abs_path/to/other/local_wp/wp-content/themes/',
-					args: [
-						"!--verbose",
-						"!--stats",
-					],
+					plugins:
+						'/home/' +
+						tplContext.author +
+						'/abs_path/to/other/local_wp/wp-content/plugins/',
+					themes:
+						'/home/' +
+						tplContext.author +
+						'/abs_path/to/other/local_wp/wp-content/themes/',
+					args: ['!--verbose', '!--stats'],
 				},
 				remoteInstallSlug: {
 					plugins: tplContext.author + '@example.com:/abs_path/to/wp/wp-content/plugins/',
 					themes: tplContext.author + '@example.com:/abs_path/to/wp/wp-content/themes/',
 					port: 1234,
-					args: [
-						"--size-only",
-					],
+					args: ['--size-only'],
 				},
 			},
 		},
 	];
 
-	const copyBaseTpls = () => [
-		// root
-		{ src: '_gitignore',			dest: '.gitignore' },
-		{ src: '_Gruntfile.js',			dest: 'Gruntfile.js' },
-		{ src: '_index.php',			dest: 'index.php' },
-		{ src: '_README.md',			dest: 'README.md' },
-		// grunt
-		{ src: 'grunt/_addComposerCopyTask.js',						dest: 'grunt/addComposerCopyTask.js' },
-		{ src: 'grunt/hooked/_addComposerCopyTasks.js',				dest: 'grunt/hooked/addComposerCopyTasks.js' },
-		{ src: 'grunt/hooked/_changeConfig_purgecss.js',			dest: 'grunt/hooked/changeConfig_purgecss.js' },
-		{ src: 'grunt/hooked/_changeConfig_make_html_snapshots.js',	dest: 'grunt/hooked/changeConfig_make_html_snapshots.js' },
-		// src
-		{ src: 'src/_readme.txt',	dest: 'src/readme.txt' },
-		{ src: 'src/scss/_frontend.scss',	dest: 'src/scss/' + tplContext.funcPrefix + '_frontend.scss' },
-		...( 'plugin' === tplContext.projectType ? [
-			{ src: 'src/_plugin_main_file.php',	dest: 'src/' + tplContext.name + '.php' },
- 		] : [] ),
-		...( 'theme' === tplContext.projectType ? [
-			{ src: 'src/_functions.php',	dest: 'src/functions.php' },
-			// ... ???
-		] : [] ),
-	].map( tpl => self.fs.copyTpl(
-		self.templatePath( tpl.src ),
-		self.destinationPath( tpl.dest ),
-		tplContext
-	) );
+	const copyBaseTpls = () =>
+		[
+			// Root
+			{ src: '_gitignore', dest: '.gitignore' },
+			{ src: '_Gruntfile.js', dest: 'Gruntfile.js' },
+			{ src: '_index.php', dest: 'index.php' },
+			{ src: '_README.md', dest: 'README.md' },
+			// Grunt
+			{ src: 'grunt/_addComposerCopyTask.js', dest: 'grunt/addComposerCopyTask.js' },
+			{
+				src: 'grunt/hooked/_addComposerCopyTasks.js',
+				dest: 'grunt/hooked/addComposerCopyTasks.js',
+			},
+			{
+				src: 'grunt/hooked/_changeConfig_purgecss.js',
+				dest: 'grunt/hooked/changeConfig_purgecss.js',
+			},
+			{
+				src: 'grunt/hooked/_changeConfig_make_html_snapshots.js',
+				dest: 'grunt/hooked/changeConfig_make_html_snapshots.js',
+			},
+			// Src
+			{ src: 'src/_readme.txt', dest: 'src/readme.txt' },
+			{
+				src: 'src/scss/_frontend.scss',
+				dest: 'src/scss/' + tplContext.funcPrefix + '_frontend.scss',
+			},
+			...(tplContext.projectType === 'plugin'
+				? [{ src: 'src/_plugin_main_file.php', dest: 'src/' + tplContext.name + '.php' }]
+				: []),
+			...(tplContext.projectType === 'theme'
+				? [
+						{ src: 'src/_functions.php', dest: 'src/functions.php' },
+						// ... ???
+					]
+				: []),
+		].map((tpl) =>
+			self.fs.copyTpl(self.templatePath(tpl.src), self.destinationPath(tpl.dest), tplContext)
+		);
 
-	// copy directory structure
-	copyDirStructure( self, null, {
-		...( 'plugin' === tplContext.projectType && { exclude: ['src/templates'] } ),
-	} );
+	// Copy directory structure
+	copyDirStructure(self, null, {
+		...(tplContext.projectType === 'plugin' && { exclude: ['src/templates'] }),
+	});
 
-	// copy templates
+	// Copy templates
 	copyBaseTpls();
 
-	// copy all readme
-	self.fs.copyTpl(
-		self.templatePath( '**/readme.md' ),
-		self.destinationPath(),
-		tplContext
-	);
+	// Copy all readme
+	self.fs.copyTpl(self.templatePath('**/readme.md'), self.destinationPath(), tplContext);
 
-	if ( tplContext.generator.themeBase ) {
-		switch( tplContext.generator.themeBase ){
+	if (tplContext.generator.themeBase) {
+		switch (tplContext.generator.themeBase) {
 			case 'underboots':
-			case 'underboots_simple_no_sidebar':
-
-				// json files
-				const packageJsonIndex = jsonFiles.findIndex( file => 'package.json' === file.dest );
-				set( jsonFiles, [[packageJsonIndex],'data','dependencies'], {
-					...get( jsonFiles, [[packageJsonIndex],'data','dependencies'], {} ),
+			case 'underboots_simple_no_sidebar': {
+				// Json files
+				const packageJsonIndex = jsonFiles.findIndex(
+					(file) => file.dest === 'package.json'
+				);
+				set(jsonFiles, [[packageJsonIndex], 'data', 'dependencies'], {
+					...get(jsonFiles, [[packageJsonIndex], 'data', 'dependencies'], {}),
 					bootstrap: '^4.6.1',
-		 	   		['@fortawesome/fontawesome-free']: "^6.1.0",
-					['popper.js']: '^1.15.0',
-				} );
+					'@fortawesome/fontawesome-free': '^6.1.0',
+					'popper.js': '^1.15.0',
+				});
 
-				// copy main class
+				// Copy main class
 				self.fs.copyTpl(
-					self.templatePath( '../template_collections/' + tplContext.generator.themeBase + '/src/classes/Main.php' ),
-					self.destinationPath( 'src/classes/' + startCase( kebabCase( tplContext.funcPrefix ) ) + '.php' ),
+					self.templatePath(
+						'../template_collections/' +
+							tplContext.generator.themeBase +
+							'/src/classes/Main.php'
+					),
+					self.destinationPath(
+						'src/classes/' + startCase(kebabCase(tplContext.funcPrefix)) + '.php'
+					),
 					tplContext
 				);
 
-				// copy templates, exclude all scss js
+				// Copy templates, exclude all scss js
 				copyTemplatesBulk(
 					self,
-					self.templatePath( '../template_collections/' + tplContext.generator.themeBase ),
+					self.templatePath('../template_collections/' + tplContext.generator.themeBase),
 					self.destinationPath(),
 					tplContext,
 					{
@@ -232,44 +254,53 @@ const generate = ( self, options ) => {
 				);
 
 				/**
-				 * scss
+				 * Scss
 				 */
 				// copy scss subdir files
-				[
-					'_frontend',
-					'_editor',
-				].map( dir => copyTemplatesBulk(
-					self,
-					self.templatePath( '../template_collections/' + tplContext.generator.themeBase + '/src/scss/' + dir + '/' ),
-					self.destinationPath( 'src/scss/' + tplContext.funcPrefix + dir ),
-					tplContext,
-					{
-						globPattern: [
-							'**/*.scss',
-						],
-					}
-				) );
-				// copy scss entry files
-				[
-					'_frontend',
-					'_editor',
-					'_classic_editor_tiny_mce',
-				].map( basename => {
+				['_frontend', '_editor'].map((dir) =>
+					copyTemplatesBulk(
+						self,
+						self.templatePath(
+							'../template_collections/' +
+								tplContext.generator.themeBase +
+								'/src/scss/' +
+								dir +
+								'/'
+						),
+						self.destinationPath('src/scss/' + tplContext.funcPrefix + dir),
+						tplContext,
+						{
+							globPattern: ['**/*.scss'],
+						}
+					)
+				);
+				// Copy scss entry files
+				['_frontend', '_editor', '_classic_editor_tiny_mce'].forEach((basename) => {
 					self.fs.copyTpl(
-						self.templatePath( '../template_collections/' + tplContext.generator.themeBase + '/src/scss/' + basename + '.scss' ),
-						self.destinationPath( 'src/scss/' + tplContext.funcPrefix + basename + '.scss' ),
+						self.templatePath(
+							'../template_collections/' +
+								tplContext.generator.themeBase +
+								'/src/scss/' +
+								basename +
+								'.scss'
+						),
+						self.destinationPath(
+							'src/scss/' + tplContext.funcPrefix + basename + '.scss'
+						),
 						tplContext
 					);
-				} );
+				});
 
 				/**
-				 * js
+				 * Js
 				 */
 				// copy js templates, exclude _script/*, _script_editor/* and entry files
 				copyTemplatesBulk(
 					self,
-					self.templatePath( '../template_collections/' + tplContext.generator.themeBase + '/src/js/' ),
-					self.destinationPath( 'src/js/' ),
+					self.templatePath(
+						'../template_collections/' + tplContext.generator.themeBase + '/src/js/'
+					),
+					self.destinationPath('src/js/'),
 					tplContext,
 					{
 						globPattern: [
@@ -283,82 +314,90 @@ const generate = ( self, options ) => {
 						],
 					}
 				);
-				// copy js templates _script/* _script_editor/* _customizer/*
-				[
-					'_script',
-					'_script_editor',
-					'_customizer',
-				].map( dir => copyTemplatesBulk(
-					self,
-					self.templatePath( '../template_collections/' + tplContext.generator.themeBase + '/src/js/' + dir + '/' ),
-					self.destinationPath( 'src/js/' + tplContext.funcPrefix + dir ),
-					tplContext,
-					{
-						globPattern: [
-							'**/*.js',
-						],
-					}
-				) );
-				// copy js entry files
-				[
-					'script',
-					'script_editor',
-					'customizer',
-				].map( basename => {
+				// Copy js templates _script/* _script_editor/* _customizer/*
+				['_script', '_script_editor', '_customizer'].map((dir) =>
+					copyTemplatesBulk(
+						self,
+						self.templatePath(
+							'../template_collections/' +
+								tplContext.generator.themeBase +
+								'/src/js/' +
+								dir +
+								'/'
+						),
+						self.destinationPath('src/js/' + tplContext.funcPrefix + dir),
+						tplContext,
+						{
+							globPattern: ['**/*.js'],
+						}
+					)
+				);
+				// Copy js entry files
+				['script', 'script_editor', 'customizer'].forEach((basename) => {
 					self.fs.copyTpl(
-						self.templatePath( '../template_collections/' + tplContext.generator.themeBase + '/src/js/' + basename + '.js' ),
-						self.destinationPath( 'src/js/' + tplContext.funcPrefix + '_' + basename + '.js' ),
+						self.templatePath(
+							'../template_collections/' +
+								tplContext.generator.themeBase +
+								'/src/js/' +
+								basename +
+								'.js'
+						),
+						self.destinationPath(
+							'src/js/' + tplContext.funcPrefix + '_' + basename + '.js'
+						),
 						tplContext
 					);
-				} );
+				});
 
 				break;
-			case 'empty':
+			}
 
-				// copy templates
+			case 'empty':
+				// Copy templates
 				copyTemplatesBulk(
 					self,
-					self.templatePath( '../template_collections/empty' ),
+					self.templatePath('../template_collections/empty'),
 					self.destinationPath(),
 					tplContext,
 					{
-						globPattern: [
-							'**/*',
-							'!src/classes/Main.php',
-						],
+						globPattern: ['**/*', '!src/classes/Main.php'],
 					}
 				);
 
-				// copy main class
+				// Copy main class
 				self.fs.copyTpl(
-					self.templatePath( '../templates/src/classes/Main.php' ),
-					self.destinationPath( 'src/classes/' + startCase( kebabCase( tplContext.funcPrefix ) ) + '.php' ),
+					self.templatePath('../templates/src/classes/Main.php'),
+					self.destinationPath(
+						'src/classes/' + startCase(kebabCase(tplContext.funcPrefix)) + '.php'
+					),
 					tplContext
 				);
 
 				break;
 
+			default:
+				break;
 		}
 	} else {
 		self.fs.copyTpl(
-			self.templatePath( '../templates/src/classes/Main.php' ),
-			self.destinationPath( 'src/classes/' + startCase( kebabCase( tplContext.funcPrefix ) ) + '.php' ),
+			self.templatePath('../templates/src/classes/Main.php'),
+			self.destinationPath(
+				'src/classes/' + startCase(kebabCase(tplContext.funcPrefix)) + '.php'
+			),
 			tplContext
 		);
 	}
 
-	// generate json
-	[...jsonFiles].map( obj => self.fs.writeJSON(
-		obj.dest,
-		obj.data
-	) );
+	// Generate json
+	[...jsonFiles].map((obj) => self.fs.writeJSON(obj.dest, obj.data));
 
 	// Return a promise.
 	// But can't find a way to wait for mem-fs-editor to be done.
 	// So the promise resolves directly. And whatever calls this function
 	// has to handle it somehow and wait that all is done.
-	return new Promise( resolve => resolve() );
-
+	return new Promise((resolve) => {
+		resolve();
+	});
 };
 
 module.exports = generate;

@@ -5,171 +5,143 @@ const fs = require('fs-extra');
 const replace = require('replace-in-file');
 const compressing = require('compressing');
 const DocBlock = require('docblock');
-const {
-	get,
-	uniq,
-	dropWhile,
-	mapValues,
-} = require('lodash');
+const { get, uniq, dropWhile } = require('lodash');
 
-const pkg = require( path.resolve( 'package.json' ) );
-const md2html = require( './utils/md2html' );
-const html2docset = require( './utils/html2docset' );
-const buildTree = require( './utils/buildTree' );
+const pkg = require(path.resolve('package.json'));
+const md2html = require('./utils/md2html');
+const html2docset = require('./utils/html2docset');
+const buildTree = require('./utils/buildTree');
 
-// copies all readme.md from templates to tmp
+// Copies all readme.md from templates to tmp
 const copyReadmesDirectory = () => {
-	const sourceDir = path.resolve( 'generators', 'app', 'templates' )
+	const sourceDir = path.resolve('generators', 'app', 'templates');
 
-	const files = glob.sync( [
-		'**/readme.md',
-		'!**/*~',
-		'!**/*#',
-	] ,{
+	const files = glob.sync(['**/readme.md', '!**/*~', '!**/*#'], {
 		cwd: sourceDir,
-	} );
+	});
 
-
-	[...files].map( file => {
-		const newFileName = file.replace(  /\/readme/g, '' ).replace( /\//g, '___' );
+	[...files].forEach((file) => {
+		const newFileName = file.replace(/\/readme/g, '').replace(/\//g, '___');
 		fs.copySync(
-			path.resolve( sourceDir, file ),
-			path.resolve( 'tmp', 'docs', 'types', 'Section', newFileName )
+			path.resolve(sourceDir, file),
+			path.resolve('tmp', 'docs', 'types', 'Section', newFileName)
 		);
-	} );
-}
+	});
+};
 
-// copies all readme.md from docs/src/types to tmp
+// Copies all readme.md from docs/src/types to tmp
 const copyReadmesDocsSrc = () => {
-	const sourceDir = path.resolve( 'docs', 'src', 'types' )
+	const sourceDir = path.resolve('docs', 'src', 'types');
 
-	const files = glob.sync( [
-		'**/*.md',
-		'!**/*~',
-		'!**/*#',
-	] ,{
+	const files = glob.sync(['**/*.md', '!**/*~', '!**/*#'], {
 		cwd: sourceDir,
-	} );
+	});
 
-	[...files].map( file => {
-		fs.copySync(
-			path.resolve( sourceDir, file ),
-			path.resolve( 'tmp', 'docs', 'types', file )
-		);
-	} );
-}
+	[...files].forEach((file) => {
+		fs.copySync(path.resolve(sourceDir, file), path.resolve('tmp', 'docs', 'types', file));
+	});
+};
 
 const getDirTree = () => {
-	const sourceDir = path.resolve( 'generators', 'app', 'templates' )
+	const sourceDir = path.resolve('generators', 'app', 'templates');
 
-	const files = uniq( [
+	const files = uniq([
 		'root/',
-		...( glob.sync( [
-			'**/readme.md',
-			'!**/*~',
-			'!**/*#',
-		] ,{
-			cwd: sourceDir,
-		} ).map( file => file.replace( 'readme.md', '' ) ).map( file => 'root/' + file ) ),
-	] );
+		...glob
+			.sync(['**/readme.md', '!**/*~', '!**/*#'], {
+				cwd: sourceDir,
+			})
+			.map((file) => file.replace('readme.md', ''))
+			.map((file) => 'root/' + file),
+	]);
 
 	let text = '\n';
 
-	const loopTree = ( tree, i, lasts ) => {
-		const loopNode = ( node ) => {
-
-			Object.entries( node ).forEach( entry => {
+	const loopTree = (tree, i, lasts) => {
+		const loopNode = (node) => {
+			Object.entries(node).forEach((entry) => {
 				const [key, value] = entry;
 
-				const fileName = [
-					...dropWhile( lasts, n => 'root' === n ),
-					key,
-				].join( '___' )
+				const fileName = [...dropWhile(lasts, (n) => n === 'root'), key].join('___');
 
+				const link =
+					key === 'root' ? 'root' : '[' + key + '](../Section/' + fileName + '.html)';
 
-				const link = 'root' === key
-					? 'root'
-					: '[' + key + '](../Section/' + fileName + '.html)';
+				text += (i > 0 ? '--'.repeat(i) + ' ' : '') + link + '\n';
 
-				text += ( i > 0 ? '--'.repeat( i ) + ' ' : '' ) + link + '\n'
+				loopTree(value, i + 1, [...lasts, key]);
+			});
+		};
 
-				loopTree( value, i + 1, [...lasts, key] );
-			} );
-		}
-
-		[...tree].map( node => loopNode( node ) );
+		[...tree].forEach((node) => loopNode(node));
 	};
 
-	loopTree( buildTree( files ), 0, [] );
+	loopTree(buildTree(files), 0, []);
 
 	return text;
-}
+};
 
 const getTaskList = () => {
-	const sourceDir = path.resolve( 'docs', 'src', 'types', 'Command' )
+	const sourceDir = path.resolve('docs', 'src', 'types', 'Command');
 
-	const files = glob.sync( [
-		'**/*.md',
-		'!**/*~',
-		'!**/*#',
-	] ,{
+	const files = glob.sync(['**/*.md', '!**/*~', '!**/*#'], {
 		cwd: sourceDir,
-	} );
+	});
 
 	let text = '\n';
 
-	[...files].map( file => {
-		const taskName = file.replace( '.md', '' );
-		const taskDesc = fs.readFileSync( path.resolve( sourceDir, file ), { encoding: 'utf8' } ).match( /(>[\s][\s\S]*?\n)([\S][\s\S]*?\n)*/ );
-		text += '- [' + taskName + '](../Command/' + taskName + '.html)',
-		text += taskDesc ? '\n' + taskDesc[0].replace( '> ', '' ) + '\n' : '';
-		text += '\n'
-	} );
+	[...files].forEach((file) => {
+		const taskName = file.replace('.md', '');
+		const taskDesc = fs
+			.readFileSync(path.resolve(sourceDir, file), { encoding: 'utf8' })
+			.match(/(>[\s][\s\S]*?\n)([\S][\s\S]*?\n)*/);
+		text += '- [' + taskName + '](../Command/' + taskName + '.html)';
+		text += taskDesc ? '\n' + taskDesc[0].replace('> ', '') + '\n' : '';
+		text += '\n';
+	});
 
 	return text;
-}
+};
 
-const getHookList = functionName => {
-	const sourceDir = path.resolve( '..', 'wp-dev-env-grunt', 'grunt' );
+const getHookList = (functionName) => {
+	const sourceDir = path.resolve('..', 'wp-dev-env-grunt', 'grunt');
 
-	const files = glob.sync( [
-		'**/*.js',
-		'!**/*~',
-		'!**/*#',
-	] ,{
+	const files = glob.sync(['**/*.js', '!**/*~', '!**/*#'], {
 		cwd: sourceDir,
-	} );
+	});
 
 	let text = '\n';
 
-	if ( files.length === 0 ) {
-		console.log( 'No files found!' );
-		console.log( '"wp-dev-env-grunt" needs to be in same directory like "generator-wp-dev-env"' );
+	if (files.length === 0) {
+		console.log('No files found!');
+		console.log('"wp-dev-env-grunt" needs to be in same directory like "generator-wp-dev-env"');
 	}
 
-	[...files].map( file => {
-
-		// find hook function and optional above docblock
+	[...files].forEach((file) => {
+		// Find hook function and optional above docblock
 		const functionRegex = new RegExp(
-			'(\\/\\*\\*[\\r\\n](.|[\\r\\n])*?\\*\\/)?[\\r\\n].*(' +
-			functionName +
-			'\\()[\\s\\S]*?' +
-			( 'applyFilters' === functionName ? ',' : '' ) +
-			( 'doAction' === functionName ? '\\)' : '' ) +
-			'',
-		'g' );
-		const matches = fs.readFileSync( path.resolve( sourceDir, file ), { encoding: 'utf8' } ).match( functionRegex );
+			String(
+				'(\\/\\*\\*[\\r\\n](.|[\\r\\n])*?\\*\\/)?[\\r\\n].*(' +
+					functionName +
+					'\\()[\\s\\S]*?' +
+					(functionName === 'applyFilters' ? ',' : '') +
+					(functionName === 'doAction' ? '\\)' : '')
+			),
+			'g'
+		);
+		const matches = fs
+			.readFileSync(path.resolve(sourceDir, file), { encoding: 'utf8' })
+			.match(functionRegex);
 
-		if ( matches ) {
-			[...matches].map( match => {
-
-				// parse docblock or just store the entire match
+		if (matches) {
+			[...matches].forEach((match) => {
+				// Parse docblock or just store the entire match
 				let doc = null;
-				if ( match.startsWith( '/**' ) ) {
-					const docBlock = new DocBlock( {
+				if (match.startsWith('/**')) {
+					const docBlock = new DocBlock({
 						skipMarkdown: true,
-					} );
-					const parsed = docBlock.parse( match, 'js' );
+					});
+					const parsed = docBlock.parse(match, 'js');
 					doc = parsed ? parsed[0] : null;
 				} else {
 					doc = {
@@ -177,62 +149,68 @@ const getHookList = functionName => {
 					};
 				}
 
-				if ( doc ) {
-
+				if (doc) {
 					let key = '';
-					switch( functionName ) {
+					switch (functionName) {
 						case 'applyFilters':
-							key = doc['code'].match( /(applyFilters\()[\s\S]*?,/g )[0].replace( /(applyFilters\()[\s]*['"]/, '' ).replace( /['"],/, '' );
+							key = doc.code
+								.match(/(applyFilters\()[\s\S]*?,/g)[0]
+								.replace(/(applyFilters\()[\s]*['"]/, '')
+								.replace(/['"],/, '');
 							break;
 						case 'doAction':
-							key = doc['code'].replace( /[\s\S]*grunt\.hooks\.doAction.*?['"]/, '' ).replace( /['"][\s\S]*/, '' );
+							key = doc.code
+								.replace(/[\s\S]*grunt\.hooks\.doAction.*?['"]/, '')
+								.replace(/['"][\s\S]*/, '');
+							break;
+						default:
 							break;
 					}
 
-					// start
+					// Start
 					text += '- **' + key + '**';
 
-					// description
-					if ( get( doc, ['description'], false ) ) {
-						text += '\n' + doc['description'].replace( '\n', '' );
+					// Description
+					if (get(doc, ['description'], false)) {
+						text += '\n' + doc.description.replace('\n', '');
 					}
 
-					// filepath
-					text += '\n*File:* ' + path.join( 'wp-dev-env-grunt', 'grunt', file );
+					// Filepath
+					text += '\n*File:* ' + path.join('wp-dev-env-grunt', 'grunt', file);
 
-					// params
-					const params = get( doc, ['tags','params'], false );
-					if ( params ) {
-						text += '\n*Params:* ' + '\n';
-						[...params].map( param => {
-							text += '\n  - *' + param.type + '*\t' + param.name + '\t' + param.description + '\n';
-						} );
+					// Params
+					const params = get(doc, ['tags', 'params'], false);
+					if (params) {
+						text += '\n*Params:* \n';
+						[...params].forEach((param) => {
+							text +=
+								'\n  - *' +
+								param.type +
+								'*\t' +
+								param.name +
+								'\t' +
+								param.description +
+								'\n';
+						});
 					}
 
-					// end
-					text += '\n'
+					// End
+					text += '\n';
 				}
-
-			} );
+			});
 		}
-
-	} );
+	});
 
 	return text;
-}
+};
 
-const replacePatterns = ( typesDir ) => {
-
-	const files = glob.sync( [
-		'**/*.md',
-		'!**/*~',
-		'!**/*#',
-	] ,{
+const replacePatterns = (typesDir) => {
+	const files = glob.sync(['**/*.md', '!**/*~', '!**/*#'], {
 		cwd: typesDir,
-	} );
+	});
 
 	const options = {
-		files:[...files].map( file => path.resolve( typesDir, file ) ),
+		files: [...files].map((file) => path.resolve(typesDir, file)),
 		from: [],
 		to: [],
 	};
@@ -240,95 +218,80 @@ const replacePatterns = ( typesDir ) => {
 	[
 		{
 			from: /@include::project_structure_tree/g,
-			to: ( match ) => getDirTree(),
+			to: () => getDirTree(),
 		},
 		{
 			from: /@include::task_list/g,
-			to: ( match ) => getTaskList(),
+			to: () => getTaskList(),
 		},
 		{
 			from: /@include::filter_list/g,
-			to: ( match ) => getHookList( 'applyFilters' ),
+			to: () => getHookList('applyFilters'),
 		},
 		{
 			from: /@include::action_list/g,
-			to: ( match ) => getHookList( 'doAction' ),
+			to: () => getHookList('doAction'),
 		},
-
-	].map( repl => {
-		options.from.push( repl.from );
-		options.to.push( repl.to );
-	} );
+	].forEach((repl) => {
+		options.from.push(repl.from);
+		options.to.push(repl.to);
+	});
 
 	try {
-		const results = replace.sync( options );
+		replace.sync(options);
+	} catch (error) {
+		console.error('Error occurred:', error);
 	}
-	catch (error) {
-		console.error('Error occurred:', error );
-	}
-
 };
 
-const compressDocset = () => {
+const compressDocset = () =>
+	new Promise((resolve) => {
+		const promises = ['tar', 'tgz', 'zip'].map(
+			(method) =>
+				new Promise((resolve) => {
+					compressing[method]
+						.compressDir(
+							path.resolve('docs', pkg.name + '.docset'),
+							path.resolve('docs', pkg.name + '.docset.' + method)
+						)
+						.then((res) => resolve(res))
+						.catch((err) => console.log(err));
+				})
+		);
 
-	return new Promise( ( resolve, reject ) => {
-
-		const promises = [
-			'tar',
-			'tgz',
-			'zip',
-		].map( method => {
-			return new Promise( ( resolve, reject ) => {
-				compressing[method]['compressDir'](
-					path.resolve( 'docs', pkg.name + '.docset' ),
-					path.resolve( 'docs', pkg.name + '.docset.' + method ),
-				).then( res => resolve( res ) ).catch( err => console.log( err ) );
-			} ).catch( err => reject( err ) );
-		} );
-
-		Promise.all( promises ).then( res => resolve( res ) );
-	} );
-};
+		Promise.all(promises).then((res) => resolve(res));
+	});
 
 const buildDocs = () => {
+	// Ensure empty tmp and docset dirs
+	[path.resolve('tmp', 'docs'), path.resolve('docs', pkg.name + '.docset')].forEach((dir) => {
+		fs.emptyDirSync(dir);
+		fs.ensureDirSync(dir);
+	});
 
-	// ensure empty tmp and docset dirs
-	[
-		path.resolve( 'tmp', 'docs' ),
-		path.resolve( 'docs', pkg.name + '.docset' ),
-	].map( dir => {
-		fs.emptyDirSync( dir );
-		fs.ensureDirSync( dir )
-	} );
-
-	// get all markdown into tmp/docs/types
+	// Get all markdown into tmp/docs/types
 	copyReadmesDirectory();
 	copyReadmesDocsSrc();
 
-	const typesDir = path.resolve( 'tmp', 'docs', 'types' );
-	const htmlDir = path.resolve( 'tmp', 'docs', 'html' );
+	const typesDir = path.resolve('tmp', 'docs', 'types');
+	const htmlDir = path.resolve('tmp', 'docs', 'html');
 
-	replacePatterns( typesDir );
+	replacePatterns(typesDir);
 
-	md2html( typesDir, htmlDir );
+	md2html(typesDir, htmlDir);
 
-	html2docset( typesDir, htmlDir ).then( res => {
+	html2docset(typesDir, htmlDir).then(() => {
+		compressDocset().then(() => {
+			fs.removeSync(path.resolve('tmp', 'docs'));
 
-		compressDocset().then( res => {
-
-			fs.removeSync( path.resolve( 'tmp', 'docs' ) );
-
-			console.log( '' );
-			console.log( chalk.green( 'Created docs, see: ' ) );
-			console.log( path.resolve( 'docs', pkg.name + '.docset' ) );
-			console.log( path.resolve( 'docs', pkg.name + '.docset.tar' ) );
-			console.log( path.resolve( 'docs', pkg.name + '.docset.tgz' ) );
-			console.log( path.resolve( 'docs', pkg.name + '.docset.zip' ) );
-
-		} );
-
-	} );
-
+			console.log('');
+			console.log(chalk.green('Created docs, see: '));
+			console.log(path.resolve('docs', pkg.name + '.docset'));
+			console.log(path.resolve('docs', pkg.name + '.docset.tar'));
+			console.log(path.resolve('docs', pkg.name + '.docset.tgz'));
+			console.log(path.resolve('docs', pkg.name + '.docset.zip'));
+		});
+	});
 };
 
 buildDocs();

@@ -1,6 +1,4 @@
-
-const getPackageConfigs = tplContext => {
-
+const getPackageConfigs = (tplContext) => {
 	const defaultInstallPath = 'vendor/{$vendor}/{$name}';
 
 	const packageConfigs = [
@@ -23,7 +21,7 @@ const getPackageConfigs = tplContext => {
 					source: {
 						type: 'git',
 						reference: 'master',
-						url: 'https://github.com/daggerhart/wp-custom-menu-items.git'
+						url: 'https://github.com/daggerhart/wp-custom-menu-items.git',
 					},
 				},
 			},
@@ -50,7 +48,10 @@ const getPackageConfigs = tplContext => {
 			templates: [
 				{
 					src: 'src/inc/fun/_init_jcchavezs_cmb2_conditionals.php',
-					dest: 'src/inc/fun/' + tplContext.funcPrefix + '_init_jcchavezs_cmb2_conditionals.php',
+					dest:
+						'src/inc/fun/' +
+						tplContext.funcPrefix +
+						'_init_jcchavezs_cmb2_conditionals.php',
 				},
 			],
 		},
@@ -61,7 +62,10 @@ const getPackageConfigs = tplContext => {
 			templates: [
 				{
 					src: 'src/inc/fun/_init_johnbillion_extended_cpts.php',
-					dest: 'src/inc/fun/' + tplContext.funcPrefix + '_init_johnbillion_extended_cpts.php',
+					dest:
+						'src/inc/fun/' +
+						tplContext.funcPrefix +
+						'_init_johnbillion_extended_cpts.php',
 				},
 			],
 		},

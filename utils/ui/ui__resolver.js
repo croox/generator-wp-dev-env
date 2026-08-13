@@ -2,28 +2,25 @@
 
 const { prompt } = require('enquirer');
 
-
 let lastUiElementName = '';
-const ui__resolver = ( uiElementName, prompts ) => {
-	return new Promise( ( resolve, reject ) => {
-		resolve( prompt( prompts ) );
-	} ).then( answers => {
-		return {
+const ui__resolver = (uiElementName, prompts) =>
+	new Promise((resolve) => {
+		resolve(prompt(prompts));
+	})
+		.then((answers) => ({
 			uiElementName,
-			answers: answers,
-		};
-	} ).catch( e => {
+			answers,
+		}))
+		.catch(() => {
+			if (lastUiElementName === uiElementName) {
+				process.exit();
+			}
 
-		if ( lastUiElementName === uiElementName ) {
-			process.exit();
-		}
-		lastUiElementName = uiElementName;
+			lastUiElementName = uiElementName;
 
-		return {
-			uiElementName,
-		};
-	} );
-
-}
+			return {
+				uiElementName,
+			};
+		});
 
 module.exports = ui__resolver;

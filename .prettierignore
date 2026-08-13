@@ -1,0 +1,7 @@
+node_modules
+coverage
+tmp
+docs
+package-lock.json
+**/templates
+**/template_collections

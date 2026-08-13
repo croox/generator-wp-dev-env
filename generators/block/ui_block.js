@@ -1,77 +1,70 @@
 'use strict';
 const chalk = require('chalk');
-const {
-	startCase,
-	get,
-} = require('lodash');
+const { startCase, get } = require('lodash');
 const figlet = require('figlet');
-const { prompt } = require('enquirer');
-const path = require( 'path' );
 
 const ui__resolver = require('../../utils/ui/ui__resolver');
-const wpFeSanitizeTitle = require( '../../utils/wpFeSanitizeTitle' );
-const getDestPkg = require( '../../utils/getDestPkg' );
-const formValidate = require( '../../utils/ui/formValidate' );
+const wpFeSanitizeTitle = require('../../utils/wpFeSanitizeTitle');
+const formValidate = require('../../utils/ui/formValidate');
 
-const ui_block = function( self ){
+const ui_block = function (self) {
+	console.log(
+		chalk.green(
+			figlet.textSync('Block', {
+				font: 'Ogre',
+				horizontalLayout: 'fitted',
+				verticalLayout: 'fitted',
+			})
+		)
+	);
 
-	console.log( chalk.green( figlet.textSync( 'Block', {
-		font: 'Ogre',
-		horizontalLayout: 'fitted',
-		verticalLayout: 'fitted'
-	} ) ) );
-
-	const destPkg = getDestPkg( this );
-
-	const getInitial = ( choiceName, prompt ) => {
-		switch( choiceName ){
-
+	const getInitial = (choiceName, prompt) => {
+		switch (choiceName) {
 			case 'displayName':
-				return get( prompt, ['values','name'], false ) ? startCase( prompt.values.name.replace( /-/g, ' ' ) ) : '';
+				return get(prompt, ['values', 'name'], false)
+					? startCase(prompt.values.name.replace(/-/g, ' '))
+					: '';
 
 			case 'name':
-				return get( prompt, ['values','displayName'], false ) ? wpFeSanitizeTitle( prompt.values.displayName ) : '';
+				return get(prompt, ['values', 'displayName'], false)
+					? wpFeSanitizeTitle(prompt.values.displayName)
+					: '';
 
+			default:
+				break;
 		}
 	};
 
 	const prompts = [
 		{
 			name: 'block',
-			message: chalk.yellow( 'Add new gutenberg block' ),
+			message: chalk.yellow('Add new gutenberg block'),
 			type: 'form',
-			initial: get( self.props.answers, ['setup'], null ),
-			validate( value, state, field ) {
-				return formValidate( value, state, {
-					sanitized: [
-						'name',
-					],
-					notEmpty: [
-						'name',
-						'displayName',
-					],
-				} );
+			initial: get(self.props.answers, ['setup'], null),
+			validate(value, state, _field) {
+				return formValidate(value, state, {
+					sanitized: ['name'],
+					notEmpty: ['name', 'displayName'],
+				});
 			},
 			choices: [
-
 				{
 					name: 'name',
 					message: 'Slugified Block Name',
-					initial: getInitial( 'name', this ),
-					onChoice( state, choice, i ) {
-						choice.initial = getInitial( 'name', this );
+					initial: getInitial('name', this),
+					onChoice(state, choice, _i) {
+						choice.initial = getInitial('name', this);
 					},
 				},
 
 				{
 					name: 'displayName',
 					message: 'Block Display Name',
-					initial: getInitial( 'displayName', this ),
-					onChoice( state, choice, i ) {
-						choice.initial = getInitial( 'displayName', this );
+					initial: getInitial('displayName', this),
+					onChoice(state, choice, _i) {
+						choice.initial = getInitial('displayName', this);
 					},
 				},
-
 
 				// {
 				// 	name: 'isAcfBlock',
@@ -92,14 +85,11 @@ const ui_block = function( self ){
 				// 		return choice.enabled;
 				// 	}
 				// },
-
 			],
-
 		},
 	];
 
-	return ui__resolver( this.name, prompts );
+	return ui__resolver(this.name, prompts);
 };
-
 
 module.exports = ui_block;

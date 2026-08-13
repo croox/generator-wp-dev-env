@@ -1,32 +1,35 @@
-const chalk = require( 'chalk' );
-const {
-	isBoolean,
-} = require('lodash');
+const chalk = require('chalk');
+const { isBoolean } = require('lodash');
 
-const formFormatBool = function( input, choice, options, self ) {
+const formFormatBool = function (input, choice, options, self) {
 	self = self ? self : this;
 
 	choice.input = '';
 	choice.cursor = 0;
 
-	let { success } = self.styles;
+	const { success } = self.styles;
 
-	let check = () => choice.enabled
-		? options.msgEnabled ? options.msgEnabled : chalk.bold(success('✔'))
-		: options.msgDisabled ? options.msgDisabled : chalk.red.bold('x');
+	const check = () =>
+		choice.enabled
+			? options.msgEnabled
+				? options.msgEnabled
+				: chalk.bold(success('✔'))
+			: options.msgDisabled
+				? options.msgDisabled
+				: chalk.red.bold('x');
 
-	if ( choice.value === choice.name && choice.input.length === 0 ) {
-		if ( isBoolean( choice.initial ) ) {
+	if (choice.value === choice.name && choice.input.length === 0) {
+		if (isBoolean(choice.initial)) {
 			choice.value = choice.initial;
 			choice.input = choice.initial;
 			choice.enabled = choice.initial;
 		}
-
 	} else {
 		if (input !== ' ') {
 			self.alert();
 			return check();
 		}
+
 		choice.enabled = !choice.enabled;
 	}
 

@@ -1,15 +1,12 @@
-
-const getDestPkg = generator => {
-
+const getDestPkg = (generator) => {
 	let pkg = null;
 	try {
-		pkg = require( generator.destinationPath( 'package.json' ) );
+		pkg = require(generator.destinationPath('package.json'));
+	} catch {
+		// Intentionally swallow. Return null.
 	}
-	catch (e) {
-		// console.log(e);
-	}
-	return pkg;
-}
 
+	return pkg;
+};
 
 module.exports = getDestPkg;
