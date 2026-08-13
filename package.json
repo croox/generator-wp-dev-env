@@ -1,8 +1,8 @@
 {
 	"name": "generator-wp-dev-env",
-	"version": "1.7.3",
+	"version": "1.7.4",
 	"subModules": {
-		"wp-dev-env-grunt": "1.6.5",
+		"wp-dev-env-grunt": "1.7.0",
 		"croox/wp-dev-env-frame": "0.17.1"
 	},
 	"description": "Yeoman generator for scaffolding Grunt based WordPress Plugins/Themes/Childthemes development environment",
