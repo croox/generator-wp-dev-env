@@ -49,5 +49,5 @@ Remaining `npm audit` findings are dev-time tooling with no runtime exposure; fi
 - `@octokit/*` (moderate ReDoS) via `yeoman-generator` — fix is a breaking major upgrade.
 - `@tootallnate/once` via npm signing internals (`@sigstore/tuf`).
 - `brace-expansion` via eslint's pinned `minimatch@3`.
-- `marked` via `docblock`; `sequelize` + `uuid` via `docset-generator` (abandoned; part of the docset tooling planned for removal).
+- `marked` via `docblock`; `sequelize` + `uuid` + `tar`/`node-pre-gyp` via `docset-generator`/`sqlite3` (abandoned; part of the docset tooling planned for removal).
 - `showdown` (direct devDep, XSS/ReDoS advisories) — buildDocs only converts our own trusted docs markdown.
